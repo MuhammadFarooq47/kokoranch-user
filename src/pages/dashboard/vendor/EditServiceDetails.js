@@ -61,10 +61,10 @@ function EditServiceDetails({ sidebar, setSidebar }) {
   const [mainCategories, setMainCategoires] = useState([]);
   const [subCategories, setSubCategoires] = useState([]);
   const [serviceName, setServiceName] = useState([]);
-  console.log(
-    "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/agricultural-services-categories",
-    serviceName?.data
-  );
+  // console.log(
+  //   "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/agricultural-services-categories",
+  //   serviceName?.data
+  // );
 
   useEffect(async () => {
     try {
