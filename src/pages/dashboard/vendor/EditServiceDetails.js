@@ -19,52 +19,33 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 function EditServiceDetails({ sidebar, setSidebar }) {
-  const { allCategories } = useSelector((state) => state.CategoriesReducers);
   const { user } = useSelector((state) => state.authReducer);
   let navigate = useNavigate();
-  const location = useLocation();
-  const [popupOpen, setPopupOpen] = useState(false);
   const [successfulPopup, setSuccessfulPopup] = useState(false);
-  const [orderStatus, setOrderStatus] = useState("completed");
-  const [age, setAge] = React.useState("");
-  const token = localStorage.getItem("token");
   const [categories, setCategories] = useState({
     category: "",
-    subCategory: "",
   });
 
   console.log(categories, "??????????????");
 
-  const [data, setData] = useState({
-    itemLocation: "",
-    shippingTo: "",
-    delivery: "",
-    return: "",
-    shippingAndHandling: "",
-  });
-
-  const [servicetDetails, setServicetDetails] = useState({
+  const [serviceDetails, setServiceDetails] = useState({
     serviceName: "",
-    category: "",
+    category: categories?.category,
     price: "",
     pricingDetails: "",
     serviceDescription: "",
     serviceArea: "",
     images: [],
-    useSavedShippingDetails: false,
   });
 
-  console.log("Product Details ===============>>>>>>", servicetDetails);
+  console.log("Product Details ===============>>>>>>", serviceDetails);
+
+  useEffect(() => {
+    console.log(serviceDetails);
+  }, [serviceDetails]);
 
   const [productImages, setProductImages] = useState([]);
-  const [detailInputs, setDetailsInputs] = useState([1, 1]);
-  const [mainCategories, setMainCategoires] = useState([]);
-  const [subCategories, setSubCategoires] = useState([]);
   const [serviceName, setServiceName] = useState([]);
-  // console.log(
-  //   "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/agricultural-services-categories",
-  //   serviceName?.data
-  // );
 
   useEffect(async () => {
     try {
@@ -85,40 +66,10 @@ function EditServiceDetails({ sidebar, setSidebar }) {
 
   const storageToken = localStorage.getItem("token");
 
-  const getShippingDetail = async () => {
-    try {
-      // console.log("user", user._id);
-      // setLoader(true);
-      const res = await GET(
-        `/shipping-details/${user._id}`
-        // storageToken,
-      );
-      if (res.success == "fail") {
-        // setLoader(false);
-        // toast.error(res.message);
-      } else {
-        setData(res.data);
-        // setLoader(false);
-        // console.log("data", res.data);
-      }
-    } catch (err) {
-      toast.error(err.message);
-      // setLoader(false);
-    }
-  };
-
-  useEffect(() => {
-    if (storageToken && user) {
-      getShippingDetail();
-    }
-  }, [storageToken, user]);
-
-  // End shipping details api
-
   const handleFile = (e) => {
     const files = [...e.target.files];
     let arr = [...productImages];
-    let arr2 = [...servicetDetails.images];
+    let arr2 = [...serviceDetails.images];
     if (files.length > 0) {
       files.map((item) => {
         console.log("imageeeeeeeeeeee>>>>>>>>", item);
@@ -129,10 +80,14 @@ function EditServiceDetails({ sidebar, setSidebar }) {
         toast.error("only upload upto 12 images");
       } else {
         setProductImages([...arr]);
-        setServicetDetails({ ...servicetDetails, images: arr2 });
+        setServiceDetails((prevState) => ({
+          ...prevState,
+          images: [...prevState.images, ...arr2],
+        }));
       }
     }
   };
+
   const handleProductDelete = (i) => {
     // console.log("indexx>>>>>>>", i);
     let arr = [...productImages];
@@ -140,32 +95,6 @@ function EditServiceDetails({ sidebar, setSidebar }) {
     setProductImages(arr);
   };
 
-  // Dynamic input
-  const addDescriptionInput = () => {
-    let arr = [...detailInputs];
-    arr.push(1);
-    setDetailsInputs(arr);
-    toast.success("description added successfully");
-  };
-
-  const getSubCategory = async () => {
-    try {
-      const res = await GET(
-        "/subCategories/getCategoryById",
-        null,
-        `/${categories.category}`
-      );
-      // console.log('/////',res)
-      if (res.success == true) {
-        setSubCategoires(res.category);
-      } else {
-        setSubCategoires([]);
-      }
-    } catch (err) {
-      console.log("errorrrr", err);
-      setSubCategoires([]);
-    }
-  };
   const handleChangecategory = (event) => {
     setCategories({
       ...categories,
@@ -173,55 +102,58 @@ function EditServiceDetails({ sidebar, setSidebar }) {
     });
     //  getSubCategory();
   };
-  const handleChangeSubCategory = (event) => {
-    setCategories({
-      ...categories,
-      subCategory: event.target.value,
+
+  const testFunction = () => {
+    const formData = new FormData();
+
+    formData.append("serviceName", serviceDetails?.serviceName);
+    formData.append("category", categories.category);
+    formData.append("price", serviceDetails?.price);
+    formData.append("pricingDetails", serviceDetails?.pricingDetails);
+    formData.append("serviceDescription", serviceDetails?.serviceDescription);
+    formData.append("serviceArea", serviceDetails?.serviceArea);
+    formData.append("seller", user._id);
+    formData.append("allimages", serviceDetails?.images);
+    serviceDetails?.images.map((item, index) => {
+      formData.append(`images[${index}]`, item);
     });
-  };
-  const handleChangeSubSubCategory = (event) => {
-    setCategories({
-      ...categories,
-      subSubCategory: event.target.value,
-    });
+
+    const formDataObject = Object.fromEntries(formData.entries());
+    console.log(formDataObject);
   };
 
   const onSubmit = async () => {
-    // const userData= JSON.parse(user);
     try {
       const formData = new FormData();
 
-      formData.append("serviceName", servicetDetails?.serviceName);
+      formData.append("serviceName", serviceDetails?.serviceName);
       formData.append("category", categories.category);
-      formData.append("price", servicetDetails?.price);
-      formData.append("pricingDetails", servicetDetails?.pricingDetails);
-      formData.append("serviceDescription",servicetDetails?.serviceDescription);
-      formData.append("serviceArea", servicetDetails?.serviceArea);
+      formData.append("price", serviceDetails?.price);
+      formData.append("pricingDetails", serviceDetails?.pricingDetails);
+      formData.append("serviceDescription", serviceDetails?.serviceDescription);
+      formData.append("serviceArea", serviceDetails?.serviceArea);
       formData.append("seller", user._id);
-      // servicetDetails?.description.map((item) => {
-      //   formData.append('description', item);
-      // });
 
-      servicetDetails?.images.map((item) => {
+      serviceDetails?.images.map((item) => {
         formData.append("images", item);
       });
 
+      // const formDataObject = Object.fromEntries(formData.entries());
+
       console.log("formdata>>>>>>>>>>>>>>>>>>>>>>>>>>", formData);
-      // formData.append('token', token);
-      // formData.append('quantity', servicetDetails.inStock);
+
       const response = await POST(
         "/agricultural-services",
         storageToken,
         formData
       );
+
       console.log("eeeeeeeeeeeeeeeeeeeeee", response?.data);
-      toast.success("Product add successfully");
+      toast.success("Service added successfully");
       navigate("/vendor-agricultural-services");
     } catch (error) {
       console.log("Error to add products", error?.message);
     }
-
-    // setSuccessfulPopup(true);
   };
 
   return (
@@ -289,15 +221,15 @@ function EditServiceDetails({ sidebar, setSidebar }) {
                 name="firstName"
                 placeholder="Service Name"
                 required
-                value={servicetDetails.serviceName}
+                value={serviceDetails.serviceName}
                 style={{
                   border: "1px solid #FFFFFF",
                   color: "#FFFFFF",
                   backgroundColor: "transparent",
                 }}
                 onChange={(e) =>
-                  setServicetDetails({
-                    ...servicetDetails,
+                  setServiceDetails({
+                    ...serviceDetails,
                     serviceName: e.target.value,
                   })
                 }
@@ -365,15 +297,15 @@ function EditServiceDetails({ sidebar, setSidebar }) {
                 name="firstName"
                 placeholder="Add Product price"
                 required
-                value={servicetDetails?.price}
+                value={serviceDetails?.price}
                 style={{
                   border: "1px solid #FFFFFF",
                   color: "#FFFFFF",
                   backgroundColor: "transparent",
                 }}
                 onChange={(e) =>
-                  setServicetDetails({
-                    ...servicetDetails,
+                  setServiceDetails({
+                    ...serviceDetails,
                     price: e.target.value,
                   })
                 }
@@ -401,18 +333,18 @@ function EditServiceDetails({ sidebar, setSidebar }) {
                 placeholder="30 days return, Buyers will pay return shipping fee "
                 required
                 className="form-control"
-                value={servicetDetails?.serviceName}
+                value={serviceDetails?.pricingDetails}
                 style={{
                   border: "1px solid #FFFFFF",
                   color: "#FFFFFF",
                   backgroundColor: "transparent",
                 }}
                 onChange={(e) => {
-                  let arr = [...servicetDetails?.pricingDetails];
+                  let arr = [...serviceDetails?.pricingDetails];
                   arr[0] = e.target.value;
                   // arr.push(e.target.name=e.target.value)
-                  setServicetDetails({
-                    ...servicetDetails,
+                  setServiceDetails({
+                    ...serviceDetails,
                     pricingDetails: arr,
                   });
                 }}
@@ -440,18 +372,18 @@ function EditServiceDetails({ sidebar, setSidebar }) {
                 placeholder="30 days return, Buyers will pay return shipping fee "
                 required
                 className="form-control"
-                value={servicetDetails?.serviceDescription}
+                value={serviceDetails?.serviceDescription}
                 style={{
                   border: "1px solid #FFFFFF",
                   color: "#FFFFFF",
                   backgroundColor: "transparent",
                 }}
                 onChange={(e) => {
-                  let arr = [...servicetDetails?.serviceDescription];
+                  let arr = [...serviceDetails?.serviceDescription];
                   arr[0] = e.target.value;
                   // arr.push(e.target.name=e.target.value)
-                  setServicetDetails({
-                    ...servicetDetails,
+                  setServiceDetails({
+                    ...serviceDetails,
                     serviceDescription: arr,
                   });
                 }}
@@ -479,17 +411,17 @@ function EditServiceDetails({ sidebar, setSidebar }) {
                 placeholder="30 days return, Buyers will pay return shipping fee "
                 required
                 className="form-control"
-                value={servicetDetails?.serviceArea}
+                value={serviceDetails?.serviceArea}
                 style={{
                   border: "1px solid #FFFFFF",
                   color: "#FFFFFF",
                   backgroundColor: "transparent",
                 }}
                 onChange={(e) => {
-                  let arr = [...servicetDetails.serviceArea];
+                  let arr = [...serviceDetails.serviceArea];
                   arr[0] = e.target.value;
                   // arr.push(e.target.name=e.target.value)
-                  setServicetDetails({ ...servicetDetails, serviceArea: arr });
+                  setServiceDetails({ ...serviceDetails, serviceArea: arr });
                 }}
               ></textarea>
             </div>
@@ -578,6 +510,7 @@ function EditServiceDetails({ sidebar, setSidebar }) {
             <button
               onClick={() => {
                 onSubmit();
+                testFunction();
               }}
               className="btn btn-solid btn-solid-primary-rounded table-btn"
               style={{

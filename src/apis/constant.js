@@ -1,9 +1,9 @@
 const LIVE_URL = "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1";
-const LOCAL_URL = "http://192.168.100.56:3030/api/v1";
+const LOCAL_URL = "http://192.168.100.75:3030/api/v1";
 // const LIVE_URL = "https://54.89.147.184:3030/api/v1";
 
 // const BASE_URL = LIVE_URL;
-const BASE_URL = LIVE_URL;
+const BASE_URL = LOCAL_URL;
 const TOKEN = localStorage.getItem("token");
 
 export { LIVE_URL, LOCAL_URL, TOKEN, BASE_URL };
