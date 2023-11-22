@@ -1,0 +1,7 @@
+.search-wrapper {
+  & .product-wrapper {
+    @include respond(laptop-sm) {
+      margin-top: 4rem;
+    }
+  }
+}

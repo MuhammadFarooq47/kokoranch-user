@@ -1,0 +1,37 @@
+.Main-Slider {
+  & .carousel-control-next,
+  .carousel-control-prev {
+    width: 10%;
+  }
+  & .carousel-caption {
+    width: 50rem;
+    left: 15% !important;
+    top: 25%;
+    @include respond(phone) {
+      left: 5% !important;
+      top: 25%;
+      width: 80%;
+    }
+    & h2 {
+      font-weight: bolder;
+      font-size: 3rem;
+      line-height: 1.4;
+    }
+
+    & p {
+      font-size: 1.3rem;
+      text-shadow: 0.05rem 0.1rem 0.2rem $color-black;
+    }
+    & a {
+      font-size: 1.6rem;
+    }
+    & > :not(:last-child) {
+      margin-bottom: 2rem;
+    }
+  }
+  & .carousel-indicators [data-bs-target] {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+  }
+}

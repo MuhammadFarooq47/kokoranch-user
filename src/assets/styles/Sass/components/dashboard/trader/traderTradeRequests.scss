@@ -1,0 +1,605 @@
+.trader-trade-requests-main {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+  grid-template-columns: 1fr;
+  -ms-grid-rows: max-content 1fr;
+  grid-template-rows: max-content 1fr;
+  row-gap: 1rem;
+  height: 100%;
+  padding: 2rem;
+  box-shadow: 0rem 0rem 0px 0.1rem $color-grey;
+  border-radius: 1rem;
+  border: none;
+  background-color: $color-secondary;
+  & header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: -webkit-min-content;
+    height: -moz-min-content;
+    height: min-content;
+    @include respond(laptop-sm) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-align: start;
+      -ms-flex-align: start;
+      align-items: flex-start;
+      & > :not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+    & .right {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: end;
+      -ms-flex-pack: end;
+      justify-content: flex-end;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      height: -webkit-min-content;
+      height: -moz-min-content;
+      height: min-content;
+      @include respond(laptop-sm) {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        width: 100%;
+        & > :not(:last-child) {
+          margin-bottom: 1rem;
+        }
+      }
+
+      &_inner-left,
+      &_inner-right {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        height: -webkit-min-content;
+        height: -moz-min-content;
+        height: min-content;
+        @include respond(laptop-sm) {
+          width: 100%;
+        }
+        & > :not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+      & > :not(:last-child) {
+        margin-right: 1rem;
+      }
+      & .table-search-wrappper {
+        position: relative;
+        width: 25rem;
+        @include respond(laptop-sm) {
+          width: 100%;
+        }
+        & .form-control {
+          border: 0.3rem solid $color-grey-light;
+        }
+        & .table-icon-wrappper {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 4rem;
+          height: 4rem;
+          background-color: $color-primary;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          & svg {
+            width: 2rem;
+            height: 2rem;
+            fill: $color-white;
+          }
+        }
+      }
+      & .filter-dropdown {
+        width: 100%;
+        padding: 1rem;
+        & > :not(:last-child) {
+          margin-bottom: 1rem;
+        }
+        & .date-input-wrapper {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          & > label {
+            font-size: 1.2rem;
+          }
+          & > input {
+            height: 4rem;
+            border: 1px solid $color-grey-light;
+            border-radius: 1.2rem;
+            padding: 0.5rem;
+            outline: none;
+            font-size: 1.3rem;
+          }
+        }
+      }
+    }
+  }
+  & .table-container {
+    grid-row: 2/3;
+    margin: 0 !important;
+    height: 100%;
+    border-radius: 2rem;
+    border: 1px solid $color-grey-light;
+  }
+}
+
+/* trade list css */
+[data-heading="Actions"] {
+  & > {
+    :not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}
+
+/* ---------------------------------------------------single trade requesr css----------------------------------------------------- */
+.trader-trade-request-wrapper {
+  padding: 4rem;
+  box-shadow: 0rem 0rem 0px 0.1rem $color-grey;
+  border-radius: 1rem;
+  border: none;
+  background-color: $color-secondary;
+  &_top-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: -webkit-min-content;
+    height: -moz-min-content;
+    height: min-content;
+    margin-bottom: 2rem;
+    &_icon-wrapper {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      cursor: pointer;
+      & > svg {
+        width: 4rem;
+        height: 4rem;
+        fill: $color-primary;
+      }
+    }
+  }
+  &_image-desc-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    @include respond(laptop-md) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+    &_trade-image-wrapper {
+      width: 38%;
+      @include respond(laptop-md) {
+        width: 100%;
+        max-width: 100%;
+      }
+      &_trade-image {
+        margin-bottom: 1rem;
+        width: 100%;
+        @include respond(laptop-md) {
+          width: 60%;
+          margin: 0 auto;
+        }
+        @include respond(laptop-md) {
+          width: 80%;
+          margin: 0 auto;
+        }
+        @include respond(phone) {
+          width: 90%;
+          margin: 0 auto;
+        }
+        & img {
+          width: 100%;
+          height: 34rem;
+        }
+      }
+      &_trade-thumbs {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-grid-column-align: flex-start;
+        justify-items: flex-start;
+        @include respond(laptop-md) {
+          width: 60%;
+          margin: 2rem auto;
+        }
+        &_trade-thumb-image {
+          width: 5rem;
+          height: 5rem;
+          border-radius: 5rem;
+          cursor: pointer;
+        }
+        & .image-thumb-active {
+          border: 0.2rem solid $color-primary;
+        }
+        & > :not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+    }
+    &_trade-description {
+      @include respond(laptop-md) {
+        width: 100%;
+        margin-top: 2rem;
+      }
+      width: 60%;
+      &_top {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding-bottom: 0.5rem;
+        border-bottom: 0.2rem solid $color-grey-light;
+        @include respond(laptop-sm) {
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+          flex-direction: column;
+        }
+        &_left {
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          -webkit-box-pack: start !important;
+          -ms-flex-pack: start !important;
+          justify-content: start !important;
+          -webkit-box-align: start !important;
+          -ms-flex-align: start !important;
+          align-items: flex-start !important;
+          width: 57%;
+          @include respond(laptop-sm) {
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 1rem;
+          }
+          & > :not(:last-child) {
+            margin-bottom: 1rem;
+          }
+
+          & > :last-child::before {
+            content: "";
+            position: absolute;
+            top: 20%;
+            left: -1rem;
+            height: 70%;
+            width: 0.2rem;
+            background-color: $color-grey-light;
+            @include respond(laptop-md) {
+              display: none;
+            }
+          }
+        }
+
+        &_right {
+          width: 40%;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: end !important;
+          -ms-flex-pack: end !important;
+          justify-content: flex-end !important;
+          -webkit-box-align: start !important;
+          -ms-flex-align: start !important;
+          align-items: flex-start !important;
+          @include respond(laptop-sm) {
+            -webkit-box-pack: start !important;
+            -ms-flex-pack: start !important;
+            justify-content: flex-start !important;
+            width: 100%;
+          }
+          &_seller-details-wrapper {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            & > :not(:last-child) {
+              margin-bottom: 0.5rem;
+            }
+            position: relative;
+            &_title {
+              color: $color-primary;
+              font-size: 1.2rem;
+            }
+            &_vendor-btn {
+              cursor: pointer;
+              color: $color-white;
+              padding: 0;
+              font-size: 1.3rem;
+              border: none;
+              & > * {
+                margin-left: 1rem;
+              }
+            }
+            &_wishlist {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-align: center;
+              -ms-flex-align: center;
+              align-items: center;
+              & > :not(:last-child) {
+                margin-right: 1rem;
+              }
+            }
+          }
+        }
+      }
+
+      &_bottom {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: start !important;
+        -ms-flex-pack: start !important;
+        justify-content: start !important;
+        -webkit-box-align: start !important;
+        -ms-flex-align: start !important;
+        align-items: flex-start !important;
+        &_inner-top {
+          padding-bottom: 2rem;
+          & > :not(:last-child) {
+            margin-bottom: 1rem;
+          }
+
+          & > :last-child::before {
+            content: "";
+            position: absolute;
+            top: 20%;
+            left: -1rem;
+            height: 70%;
+            width: 0.2rem;
+            background-color: $color-grey-light;
+            @include respond(laptop-md) {
+              display: none;
+            }
+          }
+        }
+        &_inner-bottom {
+          width: 100%;
+          & .form-control {
+            padding: 2rem;
+            text-align: justify;
+            background-color: $color-grey-light-2 !important;
+          }
+        }
+      }
+
+      & > * {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+      }
+      & > :not(:last-child) {
+        padding-bottom: 1rem;
+      }
+      & > :not(:first-child) {
+        padding-top: 1rem;
+      }
+    }
+  }
+  &_tabs {
+    margin-top: 3rem;
+    & .nav.nav-tabs {
+      border: none;
+      & > :not(:last-child) {
+        margin-right: 1rem;
+        background-color: $color-secondary;
+      }
+      & > * button {
+        padding: 1rem;
+        color: $color-white;
+        background-color: $color-grey-light;
+        border: none;
+      }
+      & > * button.active {
+        background-color: $color-grey;
+      }
+    }
+    & .tab-content {
+      border: none;
+
+      &_ratings-reviews {
+        &_customer-reviews-wrapper {
+          margin-top: 3rem;
+          padding: 2rem;
+          border: 0.1rem solid $color-grey-light;
+          border-radius: 1.2rem;
+          &_title {
+            border-bottom: 0.2rem solid $color-grey-light;
+            padding-bottom: 2rem;
+          }
+          & > :not(:last-child) {
+            border-bottom: 0.2rem solid $color-grey-light;
+          }
+          &_review {
+            padding: 2rem 2rem 2rem 0;
+            &_inner-wrapper {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-align: center;
+              -ms-flex-align: center;
+              align-items: center;
+              -webkit-box-pack: justify;
+              -ms-flex-pack: justify;
+              justify-content: space-between;
+              margin-bottom: 1rem;
+
+              &_left {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: start;
+                -ms-flex-pack: start;
+                justify-content: flex-start;
+                width: -webkit-fit-content;
+                width: -moz-fit-content;
+                width: fit-content;
+                &_name {
+                }
+                &_date {
+                  font-size: 1rem;
+                  color: $color-grey-light;
+                }
+                & > :not(:last-child) {
+                  margin-right: 2rem;
+                }
+              }
+              &_right {
+                &_delete-btn {
+                  color: $color-danger;
+                  cursor: pointer;
+                  justify-self: flex-end;
+                }
+              }
+            }
+            &_content {
+              text-align: justify;
+            }
+            &_replay-wrapper {
+              margin-top: 1rem;
+              margin-left: 4rem;
+              @include respond(laptop-sm) {
+                margin-left: 0;
+                width: 100%;
+              }
+              width: 95%;
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-pack: end;
+              -ms-flex-pack: end;
+              justify-content: flex-end;
+              -webkit-box-align: center;
+              -ms-flex-align: center;
+              align-items: center;
+              border-left: 0.2rem solid $color-grey-light;
+
+              & > :not(:last-child) {
+                margin-right: 1rem;
+              }
+              &_reply-input {
+                position: relative;
+                resize: none;
+                border: none;
+                display: block;
+                width: 95%;
+                @include respond(laptop) {
+                  width: 93%;
+                }
+                @include respond(laptop-md) {
+                  width: 90%;
+                }
+                border-radius: 2rem;
+                padding: 1rem 5rem 1rem 1rem;
+                font-size: 1.3rem;
+
+                min-height: 4rem;
+                color: $color-white;
+                background-color: $color-grey;
+                &::-webkit-input-placeholder {
+                  color: $color-grey-light;
+                }
+                &::-moz-placeholder {
+                  color: $color-grey-light;
+                }
+                &:-ms-input-placeholder {
+                  color: $color-grey-light;
+                }
+                &::placeholder {
+                  color: $color-grey-light;
+                }
+              }
+              &_reply-btn {
+                width: 4rem;
+                height: 4rem;
+                outline: none;
+                border: none;
+                border-radius: 50%;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                background-color: $color-primary;
+                & > svg {
+                  font-size: 2rem;
+                  color: $color-white;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

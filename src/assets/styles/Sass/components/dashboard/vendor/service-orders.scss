@@ -1,0 +1,145 @@
+.so-top {
+  //   background-color: dodgerblue;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  &-filtericon {
+    margin-top: 1rem;
+  }
+}
+
+.service-orders {
+  display: flex;
+  flex-direction: column;
+}
+
+.ven-tab-container {
+  border: 1px solid $color-text-2;
+  border-radius: 10px;
+  overflow: hidden;
+  // margin-top: 3rem;
+  .ven-tab {
+    border-collapse: collapse;
+    width: 100%;
+
+    tr th {
+      padding: 1rem;
+      font-weight: 400;
+      border-bottom: 1px solid $color-text-2;
+    }
+
+    tr td {
+      padding: 2rem 1rem;
+      border-bottom: 1px solid $color-text-2;
+    }
+  }
+}
+
+.ven-h-to {
+  font-size: 2.8rem;
+  line-height: normal;
+  // background-color: darkgoldenrod;
+}
+.headsear-container {
+  display: flex;
+  // background-color: darkgray;
+  justify-content: space-between;
+  // align-items: center;
+}
+.ven-so-sandi {
+  .ven-so-s {
+    position: relative;
+    // background-color: fuchsia;
+    .ven-so-icon {
+      background-color: #bedc7c;
+      padding: 0.3rem 0.7rem;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      border-radius: 50%;
+      position: absolute;
+      right: 6.5%;
+      top: 11%;
+    }
+    .ven-so-info {
+      width: 1.5rem;
+    }
+    input[type="text"] {
+      // width: 70%;
+      width: 62rem;
+      border: 2px solid $color-text-2;
+      background-color: #1e1e1e;
+      border-radius: 2rem;
+      padding: 1.5rem 2.5rem;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+      color: white;
+    }
+  }
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+.filter-prop {
+  background-color: #14a384;
+  color: white;
+  width: 15rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  position: absolute;
+  right: 3%;
+  z-index: 2;
+  top: 10%;
+  p {
+    margin-bottom: 1rem;
+  }
+}
+.filter-prop1 {
+  background-color: #14a384;
+  color: white;
+  width: 15rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  position: absolute;
+  right: 3%;
+  z-index: 2;
+  top: 19%;
+  p {
+    margin-bottom: 1rem;
+  }
+}
+.filter-prop2 {
+  background-color: #14a384;
+  color: white;
+  width: 15rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  position: absolute;
+  right: 3%;
+  z-index: 2;
+  top: 17%;
+  p {
+    margin-bottom: 1rem;
+  }
+}
+
+.table-btn {
+  height: 3rem;
+  width: 9rem;
+}
+
+.vso-pending {
+  color: #ffdd00;
+}
+.vso-booked {
+  color: #4180fe;
+}
+.vso-completed {
+  color: #14a384;
+}
+.vso-cancelled {
+  color: $color-red;
+}

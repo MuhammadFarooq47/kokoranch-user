@@ -1,0 +1,43 @@
+.orderInfo {
+  & .tabs-head {
+    border-bottom: 1px solid $color-grey-dark-2;
+    & > * {
+      font-size: 1.3rem;
+      text-align: center;
+    }
+    & > :not(:last-child) {
+      margin-right: 0.5rem;
+    }
+    & .nav-item {
+      cursor: pointer;
+      & .nav-link {
+        color: $color-white;
+        &.active {
+          background-color: $color-primary;
+          color: $color-white;
+          border-color: $color-primary;
+        }
+      }
+    }
+  }
+}
+.orderDetails-wrapper {
+  &_inner-wrapper {
+    border: 1px solid #434141;
+    padding: 2rem;
+    border-radius: 10px;
+    & > .row > * {
+      padding: 1rem 0;
+    }
+    & > .row > :not(:last-child) {
+      border-bottom: 1px solid $color-grey-dark-2;
+      margin: 15px 0px;
+    }
+    &_product-wrapper {
+      & > :not(:last-child) {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

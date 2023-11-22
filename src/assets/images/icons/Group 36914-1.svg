@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32.86" height="30.933" viewBox="0 0 32.86 30.933">
+  <g id="Group_36914" data-name="Group 36914" transform="translate(-107.572 -453.226)">
+    <path id="Icon_open-badge" data-name="Icon open-badge" d="M6.929,0a6.929,6.929,0,1,0,6.929,6.929A6.95,6.95,0,0,0,6.929,0ZM3.465,16.665V27.717l3.465-3.465,3.465,3.465V16.665a10.43,10.43,0,0,1-3.465.658A10.43,10.43,0,0,1,3.465,16.665Z" transform="translate(114.572 460.155) rotate(-30)" fill="current"/>
+    <path id="Icon_open-badge-2" data-name="Icon open-badge" d="M6.929,27.717a6.929,6.929,0,1,1,6.929-6.929A6.95,6.95,0,0,1,6.929,27.717ZM3.465,11.052V0L6.929,3.465,10.394,0V11.052a10.43,10.43,0,0,0-3.465-.658A10.43,10.43,0,0,0,3.465,11.052Z" transform="translate(119.573 484.158) rotate(-150)" fill="current"/>
+  </g>
+</svg>

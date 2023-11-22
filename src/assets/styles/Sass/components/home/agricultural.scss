@@ -1,0 +1,10 @@
+.agricultural-section {
+  margin-top: 7rem;
+
+  & .services-card {
+    @include respond(laptop) {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}

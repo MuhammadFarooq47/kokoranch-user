@@ -1,0 +1,10 @@
+.product-carosual-section {
+  & .card-flyer {
+    width: 90%;
+    max-width: 90%;
+    @include respond(laptop-sm) {
+      width: 25rem;
+      margin: 0 auto;
+    }
+  }
+}

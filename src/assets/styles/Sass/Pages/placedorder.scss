@@ -1,0 +1,31 @@
+.placed-order {
+  max-width: 70rem;
+  padding: 2rem;
+  -webkit-box-shadow: 0px 3px 4px 10px $color-grey;
+  box-shadow: 0px 3px 4px 10px $color-grey;
+  & > :first-child {
+    border-bottom: 1px solid $color-grey-dark-2;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+  &_success-banner {
+    width: 10rem;
+    height: 10rem;
+    margin: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    border: 1px solid $color-primary;
+    border-radius: 50%;
+  }
+}

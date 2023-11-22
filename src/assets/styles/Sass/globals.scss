@@ -1,0 +1,442 @@
+/* bootstrap */
+/* import the necessary Bootstrap files */
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/variables";
+/* -------begin customization-------- */
+/* or, use an existing variable */
+$primary: #14a384 !default;
+$theme-colors: (
+  primary: $primary,
+);
+/* -------end customization-------- */
+/* finally, import Bootstrap to set the changes! */
+@import "../../../../node_modules/bootstrap/scss/bootstrap.scss";
+/*abstracts */
+@import "./abstract/variables.scss";
+@import "./abstract/mixins";
+
+/*base*/
+@import "./base/base";
+@import "./base/utilities";
+@import "./base/animations.scss";
+/* pre css */
+@import "./main.scss";
+@import "./style.scss";
+// @import "./verify.scss";
+/* layouts */
+/* page */
+@import "./Pages/product.scss";
+@import "./Pages/products.scss";
+@import "./Pages/cart.scss";
+@import "./Pages/checkout.scss";
+@import "./Pages/payment.scss";
+@import "./Pages/home.scss";
+@import "./Pages/sellerItems.scss";
+@import "./Pages/search.scss";
+@import "./Pages/service.scss";
+@import "./Pages/signupSuccess.scss";
+@import "./Pages/vendorSignupSuccess.scss";
+@import "./Pages/contact.scss";
+@import "./Pages/trade.scss";
+@import "./Pages/vendorRegister.scss";
+@import "./Pages/medicalMariguanaAds.scss";
+@import "./Pages/about.scss";
+@import "./Pages/placedorder.scss";
+/* common components */
+@import "./components/common/button.scss";
+@import "./components/common/serviceCard.scss";
+@import "./components/common/tradeCard.scss";
+@import "./components/common/header.scss";
+@import "./components/common/popup.scss";
+@import "./components/common/productcarosul.scss";
+@import "./components/common/footer.scss";
+@import "./components/common/productcard.scss";
+@import "./components/common/tradecarosual.scss";
+@import "./components/common/userSideMenu.scss";
+@import "./components/common/fullScreenLoader.scss";
+/* home components */
+@import "./components/home/categories.scss";
+@import "./components/home/MainSlider.scss";
+@import "./components/home/aboutsection.scss";
+@import "./components/home/agricultural.scss";
+@import "./components/home/trade.scss";
+@import "./components/home/delivery.scss";
+@import "./components/home/contact.scss";
+@import "./components/home/featrureddynamicsection.scss";
+/* user bashboard */
+@import "./components/dashboard/user/myprofile.scss";
+@import "./components/dashboard/user/inbox.scss";
+@import "./components/dashboard/user/orderinfo.scss";
+@import "./components/dashboard/user/traderequest.scss";
+@import "./components/dashboard/user/wishlist.scss";
+/* trader dashboard */
+@import "./components/common/traderSideBar.scss";
+@import "./components/dashboard/trader/profile.scss";
+@import "./components/dashboard/trader/traderTrades.scss";
+@import "./components/dashboard/trader/traderTradeRequests.scss";
+@import "./components/dashboard/trader/traderInbox.scss";
+@import "./components/dashboard/trader/traderSettings.scss";
+// Vendor DashBoard
+@import "./components/dashboard/vendor/sidebar.scss";
+@import "./components/dashboard/vendor/styles.scss";
+@import "./components/dashboard/vendor/InfoCard.scss";
+@import "./components/dashboard/vendor/products.scss";
+@import "./components/dashboard/vendor/service-orders.scss";
+@import "./components/dashboard/vendor/profile.scss";
+@import "./components/dashboard/vendor/Service-order.scss";
+/* override bootstrap */
+*,
+*::after,
+*::before,
+html,
+body,
+body * {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+body {
+  position: relative;
+  color: #efefef;
+  margin: 0;
+  padding: 0 !important;
+  background-color: #1e1e1e;
+  overflow-x: hidden;
+  background-size: cover;
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+}
+body .bg-overlay {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(239, 239, 239, 0.2);
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+html,
+body {
+  overflow-x: hidden;
+  /* This defines what 1rem is */
+  font-size: 60%; /*1 rem = 10px; 10px/16px = 62.5% */
+
+  @include respond(big-desktop) {
+    font-size: 90%; /*1rem = 12, 12/16*/
+  }
+  @include respond(desktop) {
+    font-size: 80%; /*1rem = 12, 12/16 */
+  }
+  @include respond(laptop) {
+    /* width < 1440px ? */
+    font-size: 60%; /* 1 rem = 11.2px, 11.2px/16 = 50% */
+  }
+  @include respond(laptop-md) {
+    /* width < 1024px */
+    font-size: 55%; /*1 rem = 10px; 10px/16px = 62.5% */
+  }
+  @include respond(laptop-sm) {
+    /* width < 768px ? */
+    font-size: 50%; /*1 rem = 8px; 8px/16px = 50% */
+  }
+  @include respond(phone) {
+    /* width < 425px? */
+    font-size: 45%; /*1 rem = 7.2px, 7.2/16 = 45%*/
+  }
+
+  @include respond(phone-md) {
+    /* width < 375px? */
+    font-size: 43.75%; /*1 rem = 7px, 7/16 = 43.75%*/
+  }
+  @include respond(phone-sm) {
+    /* width < 320px? */
+    font-size: 42%; /*1 rem = 6.72px, 6.72/16 = 42% */
+  }
+  @include respond(phone-xs) {
+    /* width < 280px? */
+    font-size: 40%; /*1 rem = 6.4px, 6.4/16 = 40%*/
+  }
+}
+/* responsive table css start */
+.table-container {
+  max-width: 100%;
+  margin: 0 auto 0;
+  position: relative;
+  overflow-y: auto;
+  &__table {
+    height: -webkit-min-content;
+    height: -moz-min-content;
+    height: min-content;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1.2rem;
+
+    tbody {
+      & > :not(:last-child) {
+        border-bottom: 1px solid $color-grey-light;
+      }
+    }
+    td,
+    th {
+      border: none;
+      padding-left: 2rem;
+      font-size: $fs-1-half;
+      vertical-align: middle !important;
+
+      @include respond(phone) {
+        font-size: $fs-1-half;
+      }
+      text-align: left;
+    }
+
+    &--break-md {
+      position: relative;
+      @include respond(laptop-md) {
+        tbody {
+          tr {
+            padding: 1rem;
+          }
+        }
+        thead {
+          display: none;
+        }
+        tr {
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+
+        td {
+          display: block;
+          position: relative;
+          padding-left: 13rem;
+          padding-bottom: 2rem;
+          text-align: right;
+          border-bottom: 0;
+
+          &:last-child {
+            border-bottom: 0.1rem solid $color-grey-light-2;
+          }
+
+          &::before {
+            content: attr(data-heading);
+            position: absolute;
+            top: 0.5rem;
+            left: 0;
+            width: -webkit-max-content;
+            width: -moz-max-content;
+            width: max-content;
+            height: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: left;
+            -ms-flex-align: left;
+            align-items: left;
+
+            font-size: 1.6rem;
+            text-transform: capitalCase;
+            @include respond(phone) {
+              font-size: 1.3rem;
+            }
+            padding: 0 0.2rem;
+            -webkit-box-pack: left;
+            -ms-flex-pack: left;
+            justify-content: left;
+          }
+        }
+      }
+    }
+  }
+}
+/* responsive table css end */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* error */
+.error {
+  color: $color-red;
+}
+
+/* Nav Link */
+.nav-item.nav-link {
+  padding: 0;
+}
+.nav-item.nav-link.active {
+  color: $color-white;
+  & > * {
+    color: $color-white;
+  }
+}
+
+/* END Martin Wolf CodePen Standard */
+
+$line-height: 1.4;
+$lines-to-show: 2;
+
+.ellipsis {
+  display: block; /* Fallback for non-webkit */
+  display: -webkit-box;
+  max-width: 30rem;
+  height: 4rem; /* Fallback for non-webkit */
+  margin: 0 auto;
+  line-height: $line-height;
+  -webkit-line-clamp: $lines-to-show;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+/* dropdown start */
+.dropdown.custom-dropdown {
+  ul {
+    inset: 0px 0px auto auto !important;
+    border-radius: 1rem;
+  }
+}
+.dropdown-toggle::after {
+  display: none;
+}
+/* dropdown end */
+
+/* phone input start */
+.react-tel-input .form-control {
+  font-size: inherit;
+  letter-spacing: inherit;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-left: 4.8rem;
+  margin-left: 0;
+  background-color: #2b2b2b;
+  border: none;
+  border-radius: none;
+  line-height: inherit;
+  height: 4rem;
+  width: 100%;
+  outline: none;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-clip: padding-box;
+  border: 0.1rem solid $color-grey-light-2;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.25rem;
+  -webkit-transition: border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+}
+.react-tel-input .form-control::-webkit-input-placeholder {
+  font-size: 1.4rem;
+}
+.react-tel-input .form-control::-moz-placeholder {
+  font-size: 1.4rem;
+}
+.react-tel-input .form-control:-ms-input-placeholder {
+  font-size: 1.4rem;
+}
+.react-tel-input .form-control::-ms-input-placeholder {
+  font-size: 1.4rem;
+}
+.react-tel-input .form-control::placeholder {
+  font-size: 1.4rem;
+}
+.react-tel-input .form-control:focus {
+  background-color: #232323;
+  border-color: #383838;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #efefef;
+}
+
+.react-tel-input .flag-dropdown,
+.react-tel-input .flag-dropdown:focus,
+.react-tel-input .selected-flag:hover {
+  background-color: #2b2b2b;
+  border-right: none;
+  border-color: $color-grey-light-2;
+}
+.react-tel-input .country-list {
+  background-color: #2b2b2b;
+}
+
+.react-tel-input .country-list .country {
+  width: 100%;
+}
+.react-tel-input .country-list .country:hover,
+.react-tel-input .country-list .country.highlight {
+  color: $color-black;
+}
+
+.react-tel-input .country-list .search {
+  width: 100%;
+}
+
+/* phone input end */
+
+.form-label {
+  font-size: 1.3rem;
+}
+
+/* override default bootstrap .nav-tabs */
+.nav-tabs {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+/* override default bootstrap .table */
+.table {
+  & thead {
+    & tr {
+      & th {
+        color: $color-table-heads;
+      }
+    }
+  }
+  & tbody {
+    & tr {
+      & td {
+        color: $color-table-rows;
+      }
+    }
+  }
+}
+
+.success {
+  color: #40988a !important;
+}
+.warning {
+  color: #ffc524 !important ;
+}
+.danger {
+  color: #f61616 !important ;
+}
+.danger {
+  color: #f61616 !important ;
+}
+.process {
+  color: #e66f14 !important ;
+}

@@ -1,0 +1,21 @@
+.delivery-section {
+  & .delivery-card-container {
+    & > :not(:last-child) {
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        right: 0;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        width: 1px;
+        height: 30%;
+        border-left: 1px dashed $color-grey-dark-2;
+        @include respond(laptop-md) {
+          content: none;
+        }
+      }
+    }
+  }
+}

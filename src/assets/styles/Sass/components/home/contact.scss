@@ -1,0 +1,20 @@
+.contact-section {
+  & .form-agreement-wrapper {
+    & .row {
+      & > :not(:last-child) {
+        margin-bottom: 1rem;
+      }
+      &:last-child {
+        & button {
+          float: right;
+          width: 10rem;
+          @include respond(laptop-sm) {
+            width: 20rem;
+            float: none;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,154 @@
+.vendor-profile-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  padding: 4rem;
+  overflow: hidden;
+
+  box-shadow: 0rem 0rem 0px 0.1rem $color-grey;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  // background-color: $color-secondary;
+  background-color: #1e1e1e;
+  @include respond(laptop-sm) {
+    padding: 4rem 1rem;
+  }
+  &_form {
+    width: 100%;
+    // background-color: sandybrown;
+    @include respond(laptop-sm) {
+      width: 100%;
+    }
+    & form {
+      & > :not(:last-child) {
+        margin-bottom: 2rem;
+        @include respond(laptop-sm) {
+          margin-bottom: 0;
+        }
+      }
+      & .row > * {
+        @include respond(laptop-sm) {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    &_image-input-wrapper {
+      position: relative;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      &_preview {
+        width: 100%;
+        max-width: 10rem;
+        // height: 8rem;
+        border-radius: 50%;
+        background-color: $color-primary;
+      }
+      &_input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        opacity: 0;
+        cursor: pointer;
+      }
+      &_icon-wrapper {
+        position: absolute;
+        bottom: 0.2rem;
+        right: 0;
+        width: 2.3rem;
+        height: 2.3rem;
+        border-radius: 50%;
+        background: transparent -webkit-linear-gradient(
+            top,
+            $color-primary-light 0%,
+            $color-primary 100%
+          ) 0% 0% padding-box;
+        background: transparent
+          linear-gradient(180deg, $color-primary-light 0%, $color-primary 100%)
+          0% 0% padding-box;
+        &_icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-40%, -50%);
+          transform: translate(-40%, -50%);
+          color: $color-white;
+          font-size: 1.2rem;
+        }
+      }
+    }
+    & .form-label {
+      color: $color-text-2;
+    }
+    & p.preview {
+      color: $color-text-2;
+    }
+  }
+}
+.vendor-profile-info {
+  margin-left: -3rem;
+  @media (max-width: 1299px) {
+    margin-left: 0;
+  }
+  @media (max-width: 1099px) {
+    padding-left: 2rem;
+  }
+  @media (max-width: 950px) {
+    padding-left: 3rem;
+  }
+  @media (max-width: 900px) {
+    padding-left: 4rem;
+  }
+  @media (max-width: 860px) {
+    padding-left: 5rem;
+  }
+  @media (max-width: 800px) {
+    padding-left: 6rem;
+  }
+  @media (max-width: 575px) {
+    padding-left: 4rem;
+  }
+}
+
+.scroll-bar-hide::-webkit-scrollbar{
+  display: none;
+}
+.vendor-main-container{
+  background-color: #1e1e1e;
+  color: white;
+  padding: 4rem;
+  box-shadow: 0rem 0rem 0px 0.1rem #00000047;
+}
+
+.vendor-id {
+  color: $color-primary;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.vendor-text {
+  margin-top: 1rem;
+  letter-spacing: 1px;
+}
+.bank-details-heading {
+  margin-bottom: 3rem;
+}
+.bank-detail {
+  margin-top: 1rem;
+  // font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+.bank-detail-light {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.3rem;
+  font-weight: 400;
+  font-size: 1.25rem;
+}

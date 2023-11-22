@@ -1,0 +1,20 @@
+.trade-section {
+  margin-top: 10rem;
+  padding-top: 4rem;
+  & .container > :first-child {
+    width: 80rem;
+    @include respond(laptop-sm) {
+      width: 100%;
+    }
+  }
+  & .container > :last-child {
+    & > * {
+      margin-bottom: 1rem;
+    }
+  }
+  & .text-left {
+    & > :not(:last-child) {
+      margin-bottom: 2rem;
+    }
+  }
+}

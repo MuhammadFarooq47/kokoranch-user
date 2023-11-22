@@ -1,0 +1,87 @@
+.filter-section {
+  .category-side {
+    background: #393939;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+  }
+  .filter-section {
+    border-top: 0.1rem solid #666666;
+    border-bottom: 0.1rem solid #666666;
+  }
+  .multi-range-slider .thumb * {
+    background-color: $color-primary;
+  }
+
+  .multi-range-slider {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    padding: 0 !important;
+  }
+  .multi-range-slider .bar-inner {
+    background-color: $color-primary !important;
+  }
+  .multi-range-slider .thumb::before {
+    background-color: $color-primary !important ;
+    border: 0 !important;
+  }
+  .small-input {
+    width: 7rem !important;
+    height: 3.5rem !important;
+    padding: 1rem !important;
+  }
+
+  & .price-div {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    @include respond(laptop) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+    }
+    & > * {
+      margin-top: 0.5rem;
+    }
+    & > :not(:last-child) {
+      margin-right: 0.5rem;
+    }
+    & .price-input-div {
+      max-width: 20rem;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: start;
+      -ms-flex-pack: start;
+      justify-content: flex-start;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      @include respond(laptop) {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+      }
+      & > :not(:last-child) {
+        margin-right: 0.5rem;
+      }
+    }
+    & button {
+    }
+  }
+}

@@ -1,0 +1,309 @@
+#container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  font-size: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: $color-grey;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: max-content 1fr;
+  grid-template-columns: max-content 1fr;
+  -ms-grid-rows: 1fr;
+  grid-template-rows: 1fr;
+  & aside {
+    display: inline-block;
+    font-size: 1.5rem;
+    vertical-align: top;
+    border-right: 0.2rem solid $color-grey-light-2;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    &.side-navbar {
+      width: -webkit-max-content;
+      width: -moz-max-content;
+      width: max-content;
+      grid-row: 1 / -1;
+      position: static;
+      margin-left: -36rem;
+      -webkit-transition: 0.5s;
+      transition: 0.5s;
+    }
+    &.side-navbar .nav {
+      display: block;
+      padding-left: 0;
+      margin: 0;
+      list-style-type: none;
+      height: 100%;
+      overflow: auto;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      & .chat-search-input {
+        margin: 0.5rem;
+        width: 90%;
+        display: block;
+        margin: auto;
+        margin: 1rem auto;
+      }
+
+      & li {
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+        padding: 1rem;
+        cursor: pointer;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        margin: 1rem;
+        border-radius: 1.2rem;
+        & > :not(:last-child) {
+          margin-right: 1rem;
+        }
+        & > :last-child {
+          margin-left: 2rem;
+        }
+        &:hover,
+        &.recipient-item-active {
+          background-color: #5e616a;
+        }
+        & h2,
+        & h3 {
+          margin: 0;
+        }
+        & img {
+          border-radius: 50%;
+          width: 5rem;
+          height: 5rem;
+          margin-left: 0.2rem;
+          margin-right: 0.2rem;
+        }
+        & div {
+          display: inline-block;
+          vertical-align: top;
+        }
+
+        & > :last-child {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          -webkit-box-pack: end;
+          -ms-flex-pack: end;
+          justify-content: flex-end;
+          -webkit-box-align: end;
+          -ms-flex-align: end;
+          align-items: flex-end;
+        }
+
+        & h2 {
+          font-size: 1.4rem;
+          color: #fff;
+          font-weight: normal;
+          margin-bottom: 0.5rem;
+        }
+        & h3 {
+          font-size: 1.2rem;
+          color: #7e818a;
+          font-weight: normal;
+        }
+        & .unread-count {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 50%;
+          background-color: $color-primary;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+        }
+      }
+    }
+    &.active-nav {
+      margin-left: 0;
+    }
+  }
+
+  /*   main chat */
+  & main {
+    width: 100%;
+    grid-row: 1 / -1;
+    display: inline-block;
+    font-size: 1.5rem;
+    vertical-align: top;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+    -ms-grid-rows: min-content min-content min-content;
+    grid-template-rows: min-content min-content min-content;
+    & header {
+      height: 100%;
+      padding: 0.5rem 0 0.5rem 0.5rem;
+      & .navbar {
+        & #menu-btn {
+          background-color: $color-primary;
+          color: #fff;
+          border-radius: 0.5rem;
+          padding: 0.5rem;
+          cursor: pointer;
+        }
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        & > * {
+          display: inline-block;
+          vertical-align: top;
+        }
+      }
+
+      & .info-wrapper {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        main header .info-wrapper h2 {
+          font-size: 1.6rem;
+          margin-bottom: 0.5rem;
+          @include respond(phone-md) {
+            font-size: 1rem;
+          }
+        }
+        main header .info-wrapper h3 {
+          font-size: 1.4rem;
+          font-weight: normal;
+          color: #7e818a;
+        }
+      }
+    }
+    & #chat {
+      padding-left: 0;
+      margin: 0;
+      list-style-type: none;
+      height: 45rem;
+      overflow: auto;
+
+      & li {
+        padding: 1rem 3rem;
+      }
+      & h2,
+      & h3 {
+        display: inline-block;
+        font-size: 1.3rem;
+        font-weight: normal;
+      }
+      & h3 {
+        color: #bbb;
+      }
+
+      & .message {
+        padding: 2rem;
+        color: #fff;
+        line-height: 2.5rem;
+        max-width: 90%;
+        display: inline-block;
+        text-align: left;
+        border-radius: 0.5rem;
+      }
+      & .me {
+        width: 100%;
+        text-align: right;
+      }
+      & .you .message {
+        background-color: $color-grey;
+        color: $color-grey-light;
+      }
+      & .me .message {
+        background-color: $color-primary;
+      }
+    }
+    & footer {
+      height: 100%;
+      padding: 0.5rem;
+      & .input-wrapper {
+        position: relative;
+        &::before {
+          position: absolute;
+          top: 20%;
+          right: 5rem;
+          content: "";
+          width: 0.2rem;
+          height: 70%;
+          background-color: $color-grey-light;
+        }
+        & textarea {
+          resize: none;
+          border: none;
+          display: block;
+          width: 100%;
+          border-radius: 2rem;
+          padding: 1rem 5rem 1rem 1rem;
+          font-size: 1.3rem;
+          margin-bottom: 1.3rem;
+          min-height: 4rem;
+          color: $color-white;
+          background-color: $color-grey;
+          &::-webkit-input-placeholder {
+            color: $color-grey-light;
+          }
+          &::-moz-placeholder {
+            color: $color-grey-light;
+          }
+          &:-ms-input-placeholder {
+            color: $color-grey-light;
+          }
+          &::placeholder {
+            color: $color-grey-light;
+          }
+        }
+        & button {
+          position: absolute;
+          font-size: 2rem;
+          top: 50%;
+          right: 1rem;
+          -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+          fill: $color-primary;
+        }
+        & svg {
+          font-size: 2rem;
+
+          fill: $color-primary;
+        }
+      }
+    }
+  }
+}
+
+/* sidebar css start */
+
+.nav-link:active,
+.nav-link:focus,
+.nav-link:hover {
+  background-color: #ffffff26;
+}
+
+/* sidebar css end */

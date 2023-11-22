@@ -1,0 +1,13 @@
+.contact-page-wrapper {
+  &_inner-wrapper {
+    &_left-wrapper {
+      border-right: 0.05rem dotted white;
+      & * {
+        z-index: 2;
+      }
+      @include respond(laptop-md) {
+        border: none;
+      }
+    }
+  }
+}

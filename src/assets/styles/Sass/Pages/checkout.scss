@@ -1,0 +1,42 @@
+.checkout-form {
+  background-color: $color-grey;
+}
+
+.checkout-summery-wrapper {
+  border: 0.2rem solid $color-grey-light;
+  border-radius: 1.2rem;
+  padding: 3rem;
+  background: rgba( 2, 2, 2, 0.25 );
+// box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 4px );
+-webkit-backdrop-filter: blur( 4px );
+// border-radius: 10px;
+// border: 1px solid rgba( 255, 255, 255, 0.18 );
+  & > :not(:last-child) {
+    padding-bottom: 2rem;
+    padding-top: 1rem;
+    border-bottom: 0.2rem solid $color-grey-light;
+  }
+  & > :not(:first-child),
+  & > :not(:last-child) {
+    padding-top: 1rem;
+  }
+  &_inner-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    & p {
+      display: inline-block;
+    }
+    & h5 {
+      display: inline-block;
+    }
+  }
+  &_button {
+    display: block;
+    margin: 2rem auto 0 auto;
+  }
+}

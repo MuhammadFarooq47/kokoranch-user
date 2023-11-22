@@ -1,0 +1,22 @@
+.u-center-text {
+  text-align: center !important;
+}
+
+.u-margin-bottom-small {
+  margin-bottom: $fs-1-half !important;
+}
+.u-margin-bottom-medium {
+  margin-bottom: $fs-4 !important;
+
+  @include respond(laptop-md) {
+    margin-bottom: $fs-3 !important;
+  }
+}
+
+.u-margin-bottom-big {
+  margin-bottom: 8rem !important;
+
+  @include respond(laptop-md) {
+    margin-bottom: 5rem !important;
+  }
+}

@@ -1,0 +1,271 @@
+.trader-trades-main {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+  grid-template-columns: 1fr;
+  -ms-grid-rows: max-content 1fr;
+  grid-template-rows: max-content 1fr;
+  row-gap: 1rem;
+  height: 100%;
+  padding: 4rem;
+  box-shadow: 0rem 0rem 0px 0.1rem $color-grey;
+  border-radius: 1rem;
+  border: none;
+  background-color: $color-secondary;
+  & header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: -webkit-min-content;
+    height: -moz-min-content;
+    height: min-content;
+    @include respond(laptop-sm) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-align: start;
+      -ms-flex-align: start;
+      align-items: flex-start;
+      & > :not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+    & .right {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      height: -webkit-min-content;
+      height: -moz-min-content;
+      height: min-content;
+      @include respond(laptop-sm) {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        width: 100%;
+        & > :not(:last-child) {
+          margin-bottom: 1rem;
+        }
+      }
+
+      &_inner-left,
+      &_inner-right {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        height: -webkit-min-content;
+        height: -moz-min-content;
+        height: min-content;
+        @include respond(laptop-sm) {
+          width: 100%;
+        }
+        & > :not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+      & > :not(:last-child) {
+        margin-right: 1rem;
+      }
+      & .table-search-wrappper {
+        position: relative;
+        width: 25rem;
+        @include respond(laptop-sm) {
+          width: 100%;
+        }
+        & .form-control {
+          border: 0.3rem solid $color-grey-light;
+        }
+        & .table-icon-wrappper {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 4rem;
+          height: 4rem;
+          background-color: $color-primary;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          & svg {
+            width: 2rem;
+            height: 2rem;
+            fill: $color-white;
+          }
+        }
+      }
+      & .filter-dropdown {
+        width: 100%;
+        padding: 1rem;
+        & > :not(:last-child) {
+          margin-bottom: 1rem;
+        }
+        & .date-input-wrapper {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          & > label {
+            font-size: 1.2rem;
+          }
+          & > input {
+            height: 4rem;
+            border: 1px solid $color-grey-light;
+            border-radius: 1.2rem;
+            padding: 0.5rem;
+            outline: none;
+            font-size: 1.3rem;
+          }
+        }
+      }
+    }
+  }
+  & .table-container {
+    grid-row: 2/3;
+    margin: 0 !important;
+    height: 100%;
+    border-radius: 2rem;
+    border: 1px solid $color-grey-light;
+  }
+}
+
+/* trade list css */
+[data-heading="Actions"] {
+  & > {
+    :not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}
+
+/* single trade css */
+.single-trade {
+  border: 0.3rem solid $color-primary;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 1.2rem;
+  &_top {
+    margin: 3rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    & .back-button {
+      cursor: pointer;
+      & svg {
+        width: 2rem;
+        height: 2rem;
+        fill: $color-primary;
+      }
+    }
+    & > :not(:last-child) {
+      margin-right: 2rem;
+    }
+    & .btn {
+      width: 12rem;
+    }
+  }
+  &_bottom {
+    border-bottom: 0.3rem solid $color-primary;
+    & .row {
+      & > :not(:last-child) {
+        margin-bottom: 2rem;
+      }
+
+      & .uploaded-images-wrapper {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        & .uploaded-image-container {
+          width: 10rem;
+          height: 10rem;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          border: 0.2rem solid $color-grey-light;
+          position: relative;
+          & input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+          }
+        }
+        & > * {
+          margin-right: 1rem;
+        }
+        & > * {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+  & .button-wrapper {
+    margin: 3rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    & > :not(:last-child) {
+      margin-right: 2rem;
+    }
+    & .btn {
+      width: 12rem;
+    }
+  }
+}

@@ -1,0 +1,75 @@
+.about-section {
+  margin-top: 7rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  .home-banner {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+
+    & > :not(:last-child) {
+      margin-right: 6rem;
+    }
+    @include respond(laptop-md) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      & > :not(:last-child) {
+        margin-right: 0rem;
+        margin-bottom: 4rem;
+      }
+    }
+    &_left {
+      width: 45rem;
+      & img {
+        width: 100%;
+        @include respond(phone-sm) {
+          width: 90vw;
+        }
+      }
+    }
+    &_right {
+      width: 60rem;
+      background-image: url("../../../../images/brown-left-leaf.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      @include respond(laptop-md) {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 90%;
+        & > p {
+          text-align: justify;
+        }
+      }
+    }
+  }
+}

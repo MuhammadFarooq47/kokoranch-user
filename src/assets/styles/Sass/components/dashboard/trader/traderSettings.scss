@@ -1,0 +1,141 @@
+.trader-trade-settings-wrapper {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: max-content 1fr;
+  grid-template-columns: max-content 1fr;
+  -ms-grid-rows: 1fr;
+  grid-template-rows: 1fr;
+  -webkit-column-gap: 2rem;
+  -moz-column-gap: 2rem;
+  column-gap: 2rem;
+  row-gap: 2rem;
+  height: 100%;
+  padding: 2rem 4rem;
+  box-shadow: 0rem 0rem 0px 0.1rem $color-grey;
+  border-radius: 1rem;
+  border: none;
+  @include respond(laptop-md) {
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+    -ms-grid-rows: max-content 1fr;
+    grid-template-rows: max-content 1fr;
+  }
+  &_left {
+  }
+  &_right {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+    -ms-grid-rows: max-content 1fr;
+    grid-template-rows: max-content 1fr;
+    row-gap: 3rem;
+  }
+
+  background-color: $color-secondary;
+  &_password-form-wrappper {
+    & h2 {
+      margin-bottom: 1rem;
+    }
+    &_form {
+      padding: 2rem;
+      width: 40rem;
+      max-width: 40rem;
+      border: 0.2rem solid $color-primary;
+      border-radius: 1.5rem;
+      @include respond(laptop-md) {
+        width: 100%;
+      }
+
+      & .form-control {
+        border-color: white;
+        border-radius: 1.5rem;
+        color: white;
+        padding: 1rem 1.5rem;
+        height: 5rem;
+        &::-webkit-input-placeholder {
+          color: $color-white;
+        }
+        &::-moz-placeholder {
+          color: $color-white;
+        }
+        &:-ms-input-placeholder {
+          color: $color-white;
+        }
+        &::placeholder {
+          color: $color-white;
+        }
+      }
+      & .btn {
+        border-radius: 1.5rem;
+        height: 5rem;
+      }
+      & > * {
+        width: 100%;
+      }
+      & > :not(:last-child) {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  &_notification-div-wrappper {
+    &_top {
+    }
+    &_bottom {
+    }
+    & > h2 {
+      margin-bottom: 1rem;
+    }
+    &_notification-div {
+      padding: 2rem;
+      width: 100%;
+      max-width: 40rem;
+      border: 0.2rem solid $color-primary;
+      border-radius: 1.5rem;
+      & > :not(:last-child) {
+        margin-bottom: 1rem;
+      }
+      &_inner-wrapper {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        & h2 {
+          width: -webkit-fit-content;
+          width: -moz-fit-content;
+          width: fit-content;
+        }
+        &_check-box-wrapper {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          & > :not(:last-child) {
+            margin-right: 1rem;
+          }
+          &.form-check-input:checked {
+            background-color: $color-primary;
+          }
+          & .form-check-input {
+            height: 3rem;
+            width: 5rem;
+          }
+          & .form-check-label {
+            color: $color-grey-light;
+            &_active {
+              color: $color-white;
+            }
+          }
+        }
+      }
+    }
+  }
+}

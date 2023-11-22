@@ -1,0 +1,142 @@
+.soi-btn {
+  width: 30%;
+}
+.soi-top {
+  margin-bottom: 4rem;
+}
+.soi-main {
+  //   background-color: darkgoldenrod;
+}
+.soi-orderNo {
+  color:$color-primary;
+}
+
+.soi-main {
+  border: 1px solid $color-text-2;
+  // border-right: 1px solid $color-text-2;
+
+  padding: 1rem 3rem;
+
+  .soi-main-sd {
+    p {
+      color: $color-primary;
+      letter-spacing: 1px;
+      font-size: 1.6rem;
+      text-align: right;
+    }
+  }
+  .active-color{
+    color:$color-primary;
+  }
+  
+  .soi-main-services {
+    h3 {
+      color: $color-primary;
+      font-size: 2rem;
+      text-align: left;
+      letter-spacing: 1px;
+    }
+    p {
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+.soi-row {
+  p {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+}
+.border-rounded{
+  border-radius: 15px;
+}
+.soi-update-status {
+  padding: 4rem 3rem;
+  display: flex;
+  flex-direction: column;
+  // background-color: darkcyan;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    text-align: center;
+  }
+  //   justify-content: center;
+  //   align-items: center;
+}
+.soi-checkbox {
+  // margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  // background-color: salmon;
+  label {
+    font-size: 1.3rem;
+    margin-left: 1.5rem;
+  }
+  input[type="radio"] {
+    appearance: none;
+    // background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: $color-text-light;
+    width: 1rem;
+    height: 1rem;
+    border: 0.15em solid $color-text-light;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+  }
+  input[type="radio"]::before {
+    content: "";
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    // box-shadow: inset 1em 1em $color-primary;
+    background-color: $color-primary;
+  }
+
+  input[type="radio"]:checked::before {
+    transform: scale(1);
+  }
+}
+
+.soi-popup-btns {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  // background-color: darkgoldenrod;
+  margin-top: 2rem;
+  .soi-popup-btn {
+    margin-right: 2rem;
+    width: 25%;
+  }
+}
+
+.successful-popup {
+  padding: 5rem 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .sp-icon {
+    padding: 0.5rem;
+    background-color: $color-primary;
+    border-radius: 50%;
+  }
+
+  h3 {
+    text-align: center;
+    margin: 1.5rem 0 2rem 0;
+    line-height: 1.7;
+  }
+  .soi-success-btn {
+    width: 25%;
+  }
+}

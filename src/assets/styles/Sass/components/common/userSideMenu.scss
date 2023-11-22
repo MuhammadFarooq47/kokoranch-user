@@ -1,0 +1,69 @@
+.user-side-menu-wrapper {
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: max-content 1fr;
+  grid-template-columns: max-content 1fr;
+  -ms-grid-rows: 1fr;
+  grid-template-rows: 1fr;
+  -webkit-column-gap: 4rem;
+  -moz-column-gap: 4rem;
+  column-gap: 4rem;
+  @include respond(laptop-md) {
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+  }
+  &_side-bar {
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    & > svg {
+      display: none;
+      @include respond(laptop-md) {
+        display: block;
+      }
+    }
+
+    @include respond(laptop-md) {
+      padding: 1rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      background-color: $color-grey-dark;
+      height: 100%;
+      z-index: 5;
+      margin-left: -160rem;
+      width: 0;
+      -webkit-transition: 0.5s;
+      transition: 0.5s;
+    }
+
+    & > :not(:last-child) {
+      margin-bottom: 2rem;
+    }
+
+    & > * :not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+    &_active {
+      display: block;
+      position: static;
+    }
+  }
+  & .bars-icon {
+    display: none;
+    @include respond(laptop-md) {
+      margin-bottom: 2rem;
+      display: block;
+    }
+  }
+}
+
+.user-link.active {
+  border-bottom: 1px solid white;
+}
+
+.side-bar-show {
+  margin-left: 0;
+  width: 30rem;
+}

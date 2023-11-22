@@ -1,0 +1,195 @@
+.trader-profile-navbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 100%;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  box-shadow: 0rem 0rem 0px 0.1rem $color-grey;
+  border-radius: 1rem;
+  border: none;
+  background-color: $color-secondary;
+  padding: 0 2rem;
+  &_left {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    & #menu-btn {
+      background-color: $color-primary;
+      color: #fff;
+      margin-right: 1rem;
+      border-radius: 0.5rem;
+      padding: 0.3rem 0.5rem;
+    width: -moz-fit-content;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+  &_right {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    & > :not(:last-child) {
+      margin-right: 2rem;
+    }
+    &_notification-wrapper {
+      position: relative;
+      &_icon {
+        font-size: 2.6rem;
+      }
+      &_count {
+        position: absolute;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        top: 0;
+        right: 0rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 1.2rem;
+        border-radius: 50%;
+        background-color: $color-primary;
+      }
+    }
+
+    &_user-wrapper {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      & > :not(:last-child) {
+        margin-right: 1rem;
+      }
+      &_image {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        background-color: $color-primary;
+      }
+      &_user-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.trader-profile-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  padding: 4rem;
+  box-shadow: 0rem 0rem 0px 0.1rem $color-grey;
+  border-radius: 1rem;
+  border: none;
+  background-color: $color-secondary;
+  @include respond(laptop-sm) {
+    padding: 4rem 1rem;
+  }
+  &_form {
+    width: 80%;
+    @include respond(laptop-sm) {
+      width: 100%;
+    }
+    & form {
+      & > :not(:last-child) {
+        margin-bottom: 2rem;
+        @include respond(laptop-sm) {
+          margin-bottom: 0;
+        }
+      }
+      & .row > * {
+        @include respond(laptop-sm) {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    &_image-input-wrapper {
+      position: relative;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      &_preview {
+        width: 100%;
+        max-width: 10rem;
+        // height: 8rem;
+        border-radius: 50%;
+        background-color: $color-primary;
+      }
+      &_input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        opacity: 0;
+        cursor: pointer;
+      }
+      &_icon-wrapper {
+        position: absolute;
+        bottom: 0.2rem;
+        right: 0;
+        width: 2.3rem;
+        height: 2.3rem;
+        border-radius: 50%;
+        background: transparent -webkit-linear-gradient(
+            top,
+            $color-primary-light 0%,
+            $color-primary 100%
+          ) 0% 0% padding-box;
+        background: transparent
+          linear-gradient(180deg, $color-primary-light 0%, $color-primary 100%)
+          0% 0% padding-box;
+        &_icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-40%, -50%);
+          transform: translate(-40%, -50%);
+          color: $color-white;
+          font-size: 1.2rem;
+        }
+      }
+    }
+    & .form-label {
+      color: $color-text-2;
+    }
+    & p.preview {
+      color: $color-text-2;
+    }
+  }
+}

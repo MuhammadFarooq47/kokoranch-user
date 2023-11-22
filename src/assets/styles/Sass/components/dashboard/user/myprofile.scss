@@ -1,0 +1,66 @@
+.my-profile-wrapper {
+  &_inner-wrapper {
+    padding: 2rem;
+    background-color: $color-grey;
+
+    & > * {
+      margin-bottom: 4rem;
+    }
+    & > :last-child {
+      @include respond(laptop-md) {
+        & > :not(:last-child) {
+          margin-bottom: 1rem;
+        }
+      }
+      & button {
+        @include respond(laptop-md) {
+          display: block;
+          margin: 0 auto;
+        }
+        max-width: 20rem;
+      }
+    }
+    & .info-change-form {
+      & .react-tel-input .form-control,
+      & .react-tel-input .flag-dropdown,
+      & .react-tel-input .country-list,
+      & .react-tel-input .selected-flag:hover {
+        background-color: $color-white;
+        color: #2b2b2b;
+      }
+      & .react-tel-input .flag-dropdown:focus,
+      & .react-tel-input .form-control:focus,
+      & .react-tel-input .form-control:focus & .react-tel-input .flag-dropdown,
+      & .react-tel-input .form-control:focus & .react-tel-input .selected-flag {
+        background-color: #2b2b2b !important;
+        border-color: $color-grey-light-2 !important;
+      }
+
+      &_button-wrapper {
+        padding-top: 6rem;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+        & > :not(:last-child) {
+          margin-right: 1rem;
+          @include respond(laptop-sm) {
+            margin-right: 0;
+            margin-bottom: 1rem;
+          }
+        }
+
+        & button {
+          width: 10rem;
+        }
+      }
+    }
+    .password-change-form {
+      & > :first-child > :not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

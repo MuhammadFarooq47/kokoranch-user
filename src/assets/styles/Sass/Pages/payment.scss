@@ -1,0 +1,14 @@
+.payment-wrapper {
+  &_tabs {
+    & > ul .nav-item {
+      margin-right: 1rem;
+    }
+    & .nav-link.active {
+      background-color: transparent;
+    }
+    & .visa-card-wrapper {
+      border: 0.1rem solid $color-grey-light;
+      padding: 2rem;
+    }
+  }
+}

@@ -1,0 +1,140 @@
+  {featuredProducts.map((data, index)=>{
+                    console.log(data.price, "Price??????????")
+                    return(
+                      <div className="product-wrapper_image-desc-wrapper_product-description">
+                      <div className="product-wrapper_image-desc-wrapper_product-description_top">
+                        <h2 className="fs-2">{data?.productName}</h2>
+                     
+                        <h2 className="fs-2">USD.${data?.price}</h2>
+                      </div>
+                      <div className="product-wrapper_image-desc-wrapper_product-description_middle">
+                        <ul>
+                          <li>{data?.description}</li>
+                        </ul>
+                        <div className="product-wrapper_image-desc-wrapper_product-description_middle_last-wrapper">
+                          <h5 className="fs-5 quantity-label">Quantity:</h5>
+                          <div>
+                            <div className="product-wrapper_image-desc-wrapper_product-description_middle_last-wrapper_qty-wrapper">
+                              <button
+                                onClick={() => {
+                                  if (itemQuantity > 0) {
+                                    setitemQuantity(itemQuantity - 1);
+                                  }
+                                }}
+                                className="icon-btn btn-solid btn-solid-primary-rounded  product-wrapper_image-desc-wrapper_product-description_middle_last-wrapper_qty-wrapper_button"
+                              >
+                                -
+                              </button>
+                              <span className="product-wrapper_image-desc-wrapper_product-description_middle_last-wrapper_qty-wrapper_quantity-value">
+                                {itemQuantity}
+                              </span>
+                              <button
+                                onClick={() => {
+                                  setitemQuantity(itemQuantity + 1);
+                                }}
+                                className="icon-btn btn-solid btn-solid-primary-rounded product-wrapper_image-desc-wrapper_product-description_middle_last-wrapper_qty-wrapper_button"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                          <div className="product-wrapper_image-desc-wrapper_product-description_middle_last-wrapper_wishlist">
+                            <div className="icon-btn btn-solid-dark-rounded  btn-circle product-wrapper_image-desc-wrapper_product-description_middle_last-wrapper_wishlist_button">
+                              {isFavorite ? (
+                                <FaRegHeart
+                                  onClick={() => {
+                                    handleAddToWishlist();
+                                  }}
+                                  size="1.6rem"
+                                />
+                              ) : (
+                                <FaHeart
+                                  onClick={() => {
+                                    handleAddToWishlist();
+                                  }}
+                                  size="1.6rem"
+                                />
+                              )}
+                            </div>
+                            <h5 className="fs-5">
+                              {isFavorite ? "Remove From Wishlist" : "Add to Wishlist"}
+                            </h5>
+                          </div>
+                          <div className="instock fs-5">
+                            <label>In Stock:</label>
+                            <span>&nbsp;{data?.inStock}</span>
+                          </div>
+                          <button
+                            disabled={alreadyPresentCart}
+                            className="btn btn-solid btn-solid-primary-rounded py-3 px-5 "
+                            style={{ width: "15rem" }}
+                            onClick={() => {
+                              let cart_item = product;
+                              product.quantity = itemQuantity;
+                              product.type = "Product";
+                              dispatch(addtoCart(cart_item));
+                            }}
+                          >
+                            {alreadyPresentCart ? "Added" : "Add to Cart"}
+                          </button>
+                        </div>
+                      </div>
+                      <div className="product-wrapper_image-desc-wrapper_product-description_bottom">
+                        <div className="product-wrapper_image-desc-wrapper_product-description_bottom_rating-wrapper">
+                          <h4 className="fs-4product-wrapper_image-desc-wrapper_product-description_bottom_rating-wrapper_heading">
+                            Ratings: {totalAvgRating ? Math.round(totalAvgRating) : 0}
+                          </h4>
+                          <div className="product-wrapper_image-desc-wrapper_product-description_bottom_rating-wrapper_rating-inner-wrapper">
+                            {" "}
+                            {/* {Array.apply(null, Array(totalAvgRating)).map(
+                            (rnum, index) => {
+                              return (
+                                <img
+                                  key={index}
+                                  className="product-wrapper_image-desc-wrapper_product-description_bottom_rating-wrapper_rating-inner-wrapper_rating"
+                                  src={Images.Pictures.plant}
+                                  alt="ratings"
+                                ></img>
+                              )
+                            },
+                          )} */}
+                          </div>
+                        </div>
+                        <div className="product-wrapper_image-desc-wrapper_product-description_bottom_seller-details-wrapper">
+                          <span className="product-wrapper_image-desc-wrapper_product-description_bottom_seller-details-wrapper_title">
+                            Seller:
+                          </span>
+                          <h6 className="fs-6">
+                            {product?.seller?.firstName +
+                              "" +
+                              product?.seller?.lastName}
+                            &nbsp;
+                            <img
+                              src={product?.seller?.image?.url}
+                              width="20"
+                              height="10"
+                              alt="flag"
+                            ></img>
+                          </h6>
+                          <button
+                            onClick={() => setPopupOpen(true)}
+                            className="product-wrapper_image-desc-wrapper_product-description_bottom_seller-details-wrapper_vendor-btn"
+                          >
+                            Contact Vendor
+                            <FaAngleRight />
+                          </button>
+                          <div>
+                            <Link
+                              to="/seller-products"
+                              className="product-wrapper_image-desc-wrapper_product-description_bottom_seller-details-wrapper_vendor-btn"
+                            >
+                              View all items of vendor
+                              <FaAngleRight />
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    )
+                })}
+        
