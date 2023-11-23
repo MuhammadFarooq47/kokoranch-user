@@ -87,7 +87,7 @@ const ProductDetails = ({ setSidebar, sidebar }) => {
 
   const updateStatusHandler = async () => {
 try {
-  const response = await axios.patch(`http://192.168.100.61:3030/api/v1/products/${data?._id}`, {
+  const response = await axios.patch(`https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/products/${data?._id}`, {
     isActive: orderStatus
   },
   { headers : {

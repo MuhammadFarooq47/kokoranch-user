@@ -12,7 +12,7 @@ import Popup from '../../components/popUp/popUp';
 import ProductImg from "../../assets/images/product.png";
 
 export default function ProductCard({ product }) {
-  // console.log("Prop product", product[0]?.category?.categoryName)
+  // console.log("Prop product", product)
 
   const [productName, setProductName] = useState([product]);
   // console.log("ProductName State", productName)
@@ -146,7 +146,7 @@ export default function ProductCard({ product }) {
             />
           )}
         </div>
-        <Link to={"/product/" + product?._id}>
+        <Link to={"/product/" + product?._id} state={product}>
           <div className="text-box">
           <div className="image-box">
       {product?.images && product.images.length > 0 ? (

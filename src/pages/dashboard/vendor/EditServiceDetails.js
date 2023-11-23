@@ -150,7 +150,10 @@ function EditServiceDetails({ sidebar, setSidebar }) {
 
       console.log("eeeeeeeeeeeeeeeeeeeeee", response?.data);
       toast.success("Service added successfully");
-      navigate("/vendor-agricultural-services");
+      setTimeout(() => {
+        navigate("/vendor-agricultural-services");
+      }, 3000);
+        
     } catch (error) {
       console.log("Error to add products", error?.message);
     }

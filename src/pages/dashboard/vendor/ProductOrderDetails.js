@@ -28,7 +28,7 @@ const ProductOrderDetails = ({ setSidebar, sidebar }) => {
     console.log("Form Data?????????", formData)
     try {
       const res = await axios.patch(
-        `http://192.168.100.61:3030/api/v1/product-orders/${location?.state?.data?._id}`,
+        `https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/product-orders/${location?.state?.data?._id}`,
         {
          status: orderStatus
         },

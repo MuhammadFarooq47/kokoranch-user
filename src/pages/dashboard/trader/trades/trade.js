@@ -90,7 +90,7 @@ const dispatch = useDispatch();
         });
         console.log('formdata>>>>>>>>>>>>>>>>>>>>>>>>>>', formData);
         // dispatch(CREATE_TRADE_ACTION(formData))
-        const response = await axios.post('http://192.168.100.44:3030/api/v1/trades', formData, {
+        const response = await axios.post('https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/api/v1/trades', formData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${storageToken}`,

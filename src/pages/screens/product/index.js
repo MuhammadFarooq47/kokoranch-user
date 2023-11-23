@@ -40,16 +40,30 @@ export default function Product({ isFavorite }) {
   const location = useLocation();
   const pathID =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
-  // console.log("pathID", pathID);
+  // console.log("location = useLocation();", location?.state);
+
   const dispatch = useDispatch();
 
   const { featuredProducts } = useSelector((state) => state.ProductsReducers);
+  const currentProduct = location?.state;
+  console.log("currentProduct", currentProduct?.images)
+  const [selectedImage, setSelectedImage] = useState(currentProduct?.images[0]);
   // const { checkout } = useSelector((state) => state.CheckoutReducer);
-
+  const handleImageChange = (e, image) => {
+    setSelectedImage(image);
+    const elems = document.querySelectorAll(
+          ".product-wrapper_image-desc-wrapper_product-image-wrapper_product-thumbs_product-thumb-image"
+        );
+    
+        elems.forEach((elem) => {
+          elem.classList.remove("image-thumb-active");
+        });
+        e.target.classList.add("image-thumb-active");
+  };
   // console.log("checkout??????????", checkout);
   // console.log(featuredProducts?.images);
 
-  const previewImage = featuredProducts[0]?.images[0];
+  const previewImage = currentProduct?.images[0];
 
   const { user, isAuthenticated } = useSelector((state) => state.authReducer);
   console.log("const { user, isAuthenticated } = useSelector((state) => state.authReducer);", user?._id)
@@ -145,17 +159,17 @@ export default function Product({ isFavorite }) {
     console.log(reviewsProduct, "AAAAAAAAAA")
 
   // handle image change
-  const handleImageChange = (e, image) => {
-    // setPeviewImage(image);
-    const elems = document.querySelectorAll(
-      ".product-wrapper_image-desc-wrapper_product-image-wrapper_product-thumbs_product-thumb-image"
-    );
+  // const handleImageChange = (e, image) => {
+  //   setSelectedImage(image);
+  //   const elems = document.querySelectorAll(
+  //     ".product-wrapper_image-desc-wrapper_product-image-wrapper_product-thumbs_product-thumb-image"
+  //   );
 
-    elems.forEach((elem) => {
-      elem.classList.remove("image-thumb-active");
-    });
-    e.target.classList.add("image-thumb-active");
-  };
+  //   elems.forEach((elem) => {
+  //     elem.classList.remove("image-thumb-active");
+  //   });
+  //   e.target.classList.add("image-thumb-active");
+  // };
 
   // handle add to wishlist
   const handleAddToWishlist = () => {
@@ -317,21 +331,19 @@ export default function Product({ isFavorite }) {
             <div className="product-wrapper_image-desc-wrapper_product-image-wrapper">
               <div className="product-wrapper_image-desc-wrapper_product-image-wrapper_product-image">
                 <img
-                  src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${previewImage}`}
+                 src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${selectedImage}`}
                   alt="product"
                 ></img>
               </div>
               <div className="product-wrapper_image-desc-wrapper_product-image-wrapper_product-thumbs">
-                {featuredProducts?.map((image, index) => {
+                {currentProduct?.images?.map((image, index) => {
                   // console.log("featuredProducts,,,,,,,,,", image);
                   return (
                     <img
                       key={index}
                       className="product-wrapper_image-desc-wrapper_product-image-wrapper_product-thumbs_product-thumb-image"
-                      src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${image?.images[1]}`}
-                      onClick={(e) => {
-                        handleImageChange(e, image);
-                      }}
+                      src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${image}`}
+              onClick={(e) => handleImageChange(e, image)}
                       alt="product"
                     />
                   );
@@ -339,7 +351,7 @@ export default function Product({ isFavorite }) {
               </div>
             </div>
             {featuredProducts.map((data, index) => {
-              console.log(data, "Price??????????");
+              // console.log(data, "Price??????????");
               if (data?._id === id) {
                 return (
                   <div

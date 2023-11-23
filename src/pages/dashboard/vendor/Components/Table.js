@@ -153,7 +153,7 @@ const TableComponent = ({
                       } else if (column.id == "updateDate") {
                         value = moment(row?.updatedAt).format("YYYY/MM/DD");
                       } else if (column.id == "mainCategory") {
-                        value = row?.category?.categoryName 
+                        value = row?.category?.categoryName || row?.category?.title
                       } 
                       else if (column.id == "status") {
                         value = row?.isActive ? "active":"inActive";

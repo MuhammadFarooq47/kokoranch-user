@@ -19,9 +19,10 @@ import DataNotFound from '../../../components/datanotfound';
 export default function Products() {
   const dispatch = useDispatch()
 
-  const { categories, subCategories, subSubCategories } = useSelector(
+  const { categories, subCategories, subSubCategories, allCategories } = useSelector(
     (state) => state.CategoriesReducers,
   )
+  console.log("categories", allCategories.length)
   const [loading, setloading] = useState(false)
   const { featuredProducts } = useSelector((state) => state.ProductsReducers)
   // SLIDER CODE
@@ -262,7 +263,8 @@ dispatch(GET_FEATURED_PRODUCTS())
                       <span className="border-title">Categories:</span>
                     </h4>
                     <ul className="category-list">
-                      {categories?.map((cat, index) => {
+                      {allCategories?.map((cat, index) => {
+                        // console.log("categories from products", cat)
                         return (
                           <li
                             className="mt-3"
@@ -293,7 +295,7 @@ dispatch(GET_FEATURED_PRODUCTS())
                                     e,
                                     {
                                       categoryId: cat._id,
-                                      categoryName: cat.category,
+                                      categoryName: cat.categoryName,
                                     },
                                     'categoryId',
                                   )
@@ -309,14 +311,14 @@ dispatch(GET_FEATURED_PRODUCTS())
                                   alignItems: 'center',
                                 }}
                               >
-                                {cat.category}
+                                {cat.categoryName}
 
-                                <FaAngleDown
+                                {/* <FaAngleDown
                                   style={{
                                     float: 'right',
                                     marginLeft: '.5rem',
                                   }}
-                                />
+                                /> */}
                               </Link>
                             </div>
 
@@ -387,104 +389,6 @@ dispatch(GET_FEATURED_PRODUCTS())
                                           </Link>
                                         </div>
 
-                                        {/* sub sub category start */}
-                                        <div
-                                          className="collapse mx-4 mt-3"
-                                          id={`sub-sub-cat-${sub_cat?._id}${index}`}
-                                        >
-                                          <ul>
-                                            {subSubCategories.map(
-                                              (sub_sub_cat, index) => {
-                                                if (
-                                                  sub_cat._id ===
-                                                  sub_sub_cat.subCategory?._id
-                                                ) {
-                                                  return (
-                                                    <>
-                                                      <li
-                                                        className="mt-3"
-                                                        key={index}
-                                                        style={{
-                                                          display: 'block',
-                                                        }}
-                                                      >
-                                                        <div
-                                                          className="form-check custome-form-check"
-                                                          style={{
-                                                            display: 'flex',
-                                                            justifyContent:
-                                                              'flex-start',
-                                                            alignItems:
-                                                              'center',
-                                                          }}
-                                                        >
-                                                          <input
-                                                            className="checkbox_animated check-it"
-                                                            type="checkbox"
-                                                            checked={
-                                                              sub_sub_cat?._id ===
-                                                              selectCategoryInfo.sub_sub_categoryId
-                                                            }
-                                                            name={
-                                                              'sub_sub_categoryId'
-                                                            }
-                                                            onChange={(e) => {
-                                                              handleSelected(
-                                                                e,
-                                                                {
-                                                                  sub_categoryId:
-                                                                    sub_cat?._id,
-                                                                  categoryId:
-                                                                    cat._id,
-                                                                  sub_sub_categoryId:
-                                                                    sub_sub_cat?._id,
-
-                                                                  sub_categoryName:
-                                                                    sub_cat.subCategory,
-                                                                  categoryName:
-                                                                    cat.category,
-                                                                  sub_sub_categoryName:
-                                                                    sub_sub_cat.subSubCategory,
-                                                                },
-                                                                'sub_sub_categoryId',
-                                                              )
-                                                            }}
-                                                            // id={`${sub_sub_cat.sub_cat}${index}`}
-                                                          />
-                                                          <Link
-                                                            to={`#sub-sub-cat-${sub_sub_cat._id}${index}`}
-                                                            className="mx-2"
-                                                            data-bs-toggle="collapse"
-                                                            style={{
-                                                              display: 'flex',
-                                                              justifyContent:
-                                                                'flex-start',
-                                                              alignItems:
-                                                                'center',
-                                                            }}
-                                                          >
-                                                            {
-                                                              sub_sub_cat.subSubCategory
-                                                            }
-
-                                                            <FaAngleDown
-                                                              style={{
-                                                                float: 'right',
-                                                                marginLeft:
-                                                                  '.5rem',
-                                                              }}
-                                                            />
-                                                          </Link>
-                                                        </div>
-                                                      </li>
-                                                    </>
-                                                  )
-                                                }
-                                              },
-                                            )}
-                                          </ul>
-                                        </div>
-                                        {/* sub sub category end */}
                                       </li>
                                     )
                                 })}
@@ -525,15 +429,15 @@ dispatch(GET_FEATURED_PRODUCTS())
                     {selectCategoryInfoName.sub_categoryName}
                   </span>
                 </h4>
-                <p
+                <h3
                   className="mt-2"
-                  style={{ display: loading ? 'block' : 'none' }}
+                  // style={{ display: loading ? 'block' : 'none' }}
                 >
-                  {featuredProducts?.length} items found in{' '}
-                  {selectCategoryInfoName.categoryName +
+                  {featuredProducts?.length} items found in All featured Products {' '}
+                  {/* {selectCategoryInfoName.categoryName +
                     '>' +
-                    selectCategoryInfoName.sub_categoryName}
-                </p>
+                    selectCategoryInfoName.sub_categoryName} */}
+                </h3>
               </div>
               <div className="col-12 col-lg-6 col-md-6 col-sm-6 d-flex justify-content-start justify-content-md-end justify-content-sm-end my-4 my-sm-0 my-md-0 my-lg-0">
                 <div className="dropdown custom-dropdown">

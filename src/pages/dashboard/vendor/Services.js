@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ReactComponent as PlusIcon } from "../../../assets/images/icons/icons8-plus.svg";
 import NavBar from "./NavBar";
 import InfoCards from "./Components/InfoCards";
@@ -8,43 +8,39 @@ import Popup from "../../../components/popUp/popUp";
 import { TiTick } from "react-icons/ti";
 import { FaExclamation } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  GET_USER_SERVICES,
-  DELETE_SERVICE_BY_ID,
-  GET_SERVICE_CATEGORIES,
-} from "../../../redux/actions/services";
+import { DELETE, GET } from "../../../apis/requests";
+import { CircularProgress } from "@mui/material";
 
 function VendorServices({ setSidebar, sidebar }) {
+  const user = localStorage.getItem("userData");
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user, token } = useSelector((state) => state.authReducer);
-  const { services, serviceCategories } = useSelector(
-    (state) => state.ServicesReducers
-  );
+  const [loader, setLoader] = useState(false);
   const [tableHeadData, seTableHeadData] = useState([
     { id: "code", label: "code" },
-    { id: "createdAt", label: "Update Date" },
-    { id: "serviceName", label: "Service Name" },
-    { id: "serviceCategory", label: "Category" },
+    { id: "updateDate", label: "Update Date" },
+    { id: "productName", label: "Product Name" },
+    { id: "mainCategory", label: "Main Category" },
     { id: "price", label: "Price" },
     { id: "status", label: "Status" },
     { id: "action", label: "Action" },
+    { id: "reviews", label: "Reviews" },
   ]);
 
   const [tableRowData, setTableRowData] = useState([]);
 
   const [filterCard, setFilterCard] = useState([]);
 
-  const [activeCard, setActiveCard] = useState("All Services");
+  const [activeCard, setActiveCard] = useState("all");
+  console.log("activeCard", activeCard)
   const [deletePopup, setDeletePopup] = useState(false);
   const [deleteSuccessfulPopup, setDeleteSuccessfulPopup] = useState(false);
-  const [rowData, setRowData] = useState(tableRowData);
+  const [subCategory, setSubCategory] = useState("");
+  const [subSubcategory, setSubSubCategory] = useState("");
+  const [rowData, setRowData] = useState([]);
+  const [sortData, setSortData] = useState("");
   const [category, setCategory] = useState("");
-  const [serviceId, setServiceid] = useState("");
-  const [loader, setLoader] = useState(false);
+  const [deleteProduct, setDeleteProduct] = useState("");
   const [options, setOptions] = useState([
     "All",
     "Landscaping",
@@ -53,55 +49,33 @@ function VendorServices({ setSidebar, sidebar }) {
     "tractor Repair",
   ]);
 
-  const [sortData, setSortData] = useState("");
+
+  
+
   useEffect(() => {
-    if (token) {
-      dispatch(GET_USER_SERVICES(user._id, token, setTableRowData, setLoader));
-      dispatch(GET_SERVICE_CATEGORIES(token, setLoader));
+    if (filterCard.length > 0 && tableRowData.length > 0) {
+      let temp = [];
+      console.log("active cardss>>>>>>>>>>>>", activeCard);
+      if (activeCard == "all") {
+        temp = tableRowData;
+        console.log("all", temp);
+      }
+      else if (activeCard == "active") {
+        console.log("active");
+        temp = tableRowData.filter((item) => [true,"true"].includes(item?.isActive));
+      }
+      else if (activeCard == "inActive") {
+        console.log("inActive");
+        temp = tableRowData.filter((item) =>  [false,"false"].includes(item?.isActive));
+      }
+      console.log("data>>>>>>>>>>>", temp);
+      setRowData(temp);
+      // setTableRowData(temp)
     }
-  }, [token, deleteSuccessfulPopup]);
+  }, [activeCard, filterCard, tableRowData]);
+  
   useEffect(() => {
-    const arr = ["All"];
-    if (Array.isArray(serviceCategories) && serviceCategories.length > 0) {
-      serviceCategories.map((item) => {
-        arr.push(item.category);
-      });
-      setOptions(arr);
-    }
-    // setOptions
-  }, [serviceCategories]);
-  useEffect(() => {
-    // console.log("table data", tableRowData);
-    setRowData(tableRowData);
-    setFilterCard([
-      { topText: "All Services", bottomText: tableRowData.length },
-      {
-        topText: "Active Services",
-        bottomText: tableRowData.filter((item) => item.status == "Active")
-          .length,
-      },
-      {
-        topText: "Inactive Services",
-        bottomText: tableRowData.filter((item) => item.status == "Inactive")
-          .length,
-      },
-    ]);
-  }, [tableRowData]);
-  useEffect(() => {
-    let temp = [];
-    if (activeCard == "All Services") {
-      temp = tableRowData;
-      // console.log("all");
-    } else if (activeCard == "Active Services") {
-      console.log("active");
-      temp = tableRowData.filter((item) => item.status == "Active");
-    } else if (activeCard == "Inactive Services") {
-      console.log("inactive");
-      temp = tableRowData.filter((item) => item.status == "Inactive");
-    }
-    setRowData(temp);
-  }, [activeCard]);
-  useEffect(() => {
+    // console.log("sortdata>>>>>>>>>>>>>>>>>>>>>>>>>>>>", sortData);
     if (sortData) {
       let temp = [];
       if (sortData == "asc") {
@@ -128,20 +102,92 @@ function VendorServices({ setSidebar, sidebar }) {
 
       setRowData(temp);
     }
-  }, [sortData]);
-  useEffect(() => {
-    if (category == "All") {
-      setRowData([...tableRowData]);
-    } else if (category) {
-      const temp = tableRowData.filter(
-        (item) =>
-          item?.serviceCategory?.category.toLowerCase() ==
-          category.toLowerCase()
-      );
+  }, [sortData, rowData]);
 
-      setRowData(temp);
+
+ 
+
+  const getAllVendorProducts = async () => {
+    try {
+    setLoader(true);
+    const res = await GET(`/agricultural-services/my-agricultural-services?status=${activeCard}`);
+    console.log("jhfjhjhvhjch", res);
+   
+      // setVendorProducts(res.products);
+
+      let arr = [...res?.data];
+      // res.products.map((item,i)=>
+      // {
+      //   arr.push({
+      //     code:i +1,
+      //     updateDate:moment(item.updatedAt).format("YYYY/MM/DD"),
+      //     productName:item.name,
+      //     mainCategory:item.category.category,
+      //     price:item.price,
+      //     status:item.status,
+      //     action:"Action"
+      //   })
+      // }
+      // )
+      console.log('responsee',arr)
+      setTableRowData(arr);
+      
+      let filterArray = [
+        { topText: "all", bottomText: arr.length },
+        {
+          topText: "active",
+          bottomText: arr.filter((item) => item?.isActive==true).length,
+        },
+        {
+          topText: "inActive",
+          bottomText: arr.filter((item) => item?.isActive == false)
+            .length,
+        },
+      ];
+      setFilterCard(filterArray);
+      setRowData(arr);
+      setLoader(false);
+    
+    } catch (error) {
+      console.log("Error to get vendor Products")
     }
-  }, [category]);
+    
+
+  };
+  useEffect(() => {
+    getAllVendorProducts();
+  }, []);
+
+ const hanldeDeleteProduct = async () => {
+  console.log("click")
+  let idToSave = ''; // Initialize a variable to store the ID
+
+  rowData.map((v, i) => {
+    idToSave = v._id; // Save the ID in the variable
+  });
+  
+  console.log('Saved ID:', idToSave);
+  const token = localStorage.getItem("token")
+  try {
+    const res = await DELETE(`/products/${idToSave}`, token );
+    console.log("resssssssssssssssssssssssssssss", res);
+
+    // After successful deletion, filter out the deleted item from rowData and tableRowData
+    const updatedRowData = rowData.filter(item => item._id !== idToSave);
+    const updatedTableRowData = tableRowData.filter(item => item._id !== idToSave);
+
+    // Update the state
+    setRowData(updatedRowData);
+    setTableRowData(updatedTableRowData);
+
+    setDeleteProduct("");
+  } catch (err) {
+    console.log("errrrrrr", err);
+  }
+};
+
+
+
 
   return (
     <>
@@ -154,7 +200,7 @@ function VendorServices({ setSidebar, sidebar }) {
             <h3>
               Are You Sure You Want To
               <br />
-              Delete This Service?
+              Delete This Product?
             </h3>
           </div>
           <div className="soi-popup-btns d-flex">
@@ -170,14 +216,8 @@ function VendorServices({ setSidebar, sidebar }) {
               className="btn btn-solid btn-solid-primary  soi-popup-btn"
               onClick={() => {
                 setDeletePopup(false);
-                // setDeleteSuccessfulPopup(true);
-                dispatch(
-                  DELETE_SERVICE_BY_ID(
-                    serviceId,
-                    token,
-                    setDeleteSuccessfulPopup
-                  )
-                );
+                setDeleteSuccessfulPopup(true);
+                hanldeDeleteProduct();
               }}
             >
               Confirm
@@ -192,7 +232,7 @@ function VendorServices({ setSidebar, sidebar }) {
           </div>
 
           <h3>
-            Service Deleted <br />
+            Product Deleted <br />
             Successfully
           </h3>
 
@@ -200,34 +240,28 @@ function VendorServices({ setSidebar, sidebar }) {
             className="btn btn-solid btn-solid-primary soi-success-btn"
             onClick={() => {
               setDeleteSuccessfulPopup(false);
-              navigate("/vendor-agricultural-services");
+              navigate("/vendor-my-products");
             }}
           >
             Continue
           </button>
         </div>
       </Popup>
-      <NavBar
-        setSidebar={setSidebar}
-        sidebar={sidebar}
-        title="My Agricultural Service"
-      />
-      {/* {loader ? (
+      <NavBar setSidebar={setSidebar} sidebar={sidebar} title="My Products" />
+      {loader ? (
         <div className="d-flex justify-content-center align-items-center">
           <CircularProgress size="15vh" />
         </div>
-      ) : ( */}
+      ) : (
         <article className="vendor-profile-main">
           <div className="vendor-profile-main_form">
-            {rowData.length > 0 && (
-              <InfoCards
-                data={filterCard}
-                activeCard={activeCard}
-                setActiveCard={setActiveCard}
-                sortData={sortData}
-                setSortData={setSortData}
-              />
-            )}
+            <InfoCards
+              data={filterCard}
+              activeCard={activeCard}
+              setActiveCard={setActiveCard}
+              sortData={sortData}
+              setSortData={setSortData}
+            />
           </div>
           <div
             className="row"
@@ -244,17 +278,26 @@ function VendorServices({ setSidebar, sidebar }) {
               <div style={{ marginTop: "20px", color: "white" }}>
                 <div style={{ marginLeft: "20px" }}>
                   <h4>Filter By Your Categories</h4>
-                  <FormControlAuth
-                    options={options}
-                    setCategory={setCategory}
-                  />
+                  <FormControlAuth setCategory={setCategory} />
+                  {category && (
+                    <FormControlAuth
+                      setSubCategory={setSubCategory}
+                      isSubCategory
+                    />
+                  )}
+                  {subCategory && (
+                    <FormControlAuth
+                      setSubSubCategory={setSubSubCategory}
+                      isSubCategory
+                    />
+                  )}
                 </div>
                 <div className="row">
                   <div className="col-5">
-                    <h4 style={{ marginLeft: "20px" }}>Service List:</h4>
+                    <h4 style={{ marginLeft: "20px" }}>Product List: </h4>
                   </div>
                   <div className="col-7 d-flex justify-content-end">
-                    <button
+                  <button
                       onClick={() => {
                         navigate("/vendor-agricultural-services/add-service", {
                           state: { addProduct: true },
@@ -282,26 +325,20 @@ function VendorServices({ setSidebar, sidebar }) {
                     </button>
                   </div>
                 </div>
-
                 <TableComponent
                   tHeadData={tableHeadData}
                   tRowData={rowData}
-                  edit={"services"}
+                  edit={"products"}
                   activeCard={"total"}
                   open={deletePopup}
                   setOpen={setDeletePopup}
-                  onDelete={(serviceId) => {
-                    // console.log("id", serviceId);
-                    setDeletePopup(true);
-                    setServiceid(serviceId);
-                    // dispatch(DELETE_SERVICE_BY_ID(serviceId, token, popup));
-                  }}
+                  setDeleteProduct={setDeleteProduct}
                 />
               </div>
             </div>
           </div>
         </article>
-      {/* )} */}
+      )}
     </>
   );
 }

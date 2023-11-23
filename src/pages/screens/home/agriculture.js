@@ -91,7 +91,7 @@ console.log("agricultural Services", agricultural)
                   <div className="dark-card mt-4" style={{height: "350px"}}>
                     <img
                       src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${element.image}`}
-                      style={{ width: "10.7rem", height: "11.4rem" }}
+                      style={{ width: "10.7rem", height: "11.4rem", borderRadius: "100%" }}
                       alt=""
                     />
                     <h2
@@ -111,8 +111,8 @@ console.log("agricultural Services", agricultural)
                         lineHeight: 1.5,
                       }}
                     >
-                     {element?.description}
-                    </p>
+                    {element?.description?.split(' ').slice(0, 32).join(' ')}{element?.description?.split(' ').length > 36 ? '...' : ''}
+</p>
                   </div>
 
                 
@@ -125,12 +125,12 @@ console.log("agricultural Services", agricultural)
                   className="col-lg-4 col-md-6 col-sm-12 delivery-card"
                   // key={index}
                 >
-                  <div className="dark-card mt-4" style={{height: "350px", background: 'linear-gradient(to right, #BEDC7C, #14A384)',padding: '1rem', justifyContent: "center", alignSelf: "center", display: "flex", flexDirection: "column" }}>
+                  <Link to='/agricultural-services' className="dark-card mt-4" style={{height: "350px", background: 'linear-gradient(to right, #BEDC7C, #14A384)',padding: '1rem', justifyContent: "center", alignSelf: "center", display: "flex", flexDirection: "column" }}>
                    <h2>
                      All Services
                     </h2>
                     <HiOutlineArrowNarrowRight style={{ fontSize: "4.9rem", color: "#fff" }} />
-                  </div>
+                  </Link>
 
                 
                 </div>

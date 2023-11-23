@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Images from "../../constants/images";
 import { GET_All_CATEGORIES } from "../../redux/actions/categories";
-import {  btn_List, btn_sub_List } from "../../helpers/headerData";
+import { btn_List, btn_sub_List } from "../../helpers/headerData";
 // btn_List,
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 // import {
@@ -23,8 +23,6 @@ import Popup from "../../components/popUp/popUp";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCartItems } from "../../redux/actions/cart";
- 
-    
 
 export default function Header() {
   const Navigate = useNavigate();
@@ -38,22 +36,24 @@ export default function Header() {
     (state) => state.authReducer
   );
 
-  console.log("User reducer", user)
+  console.log("User reducer", user);
 
-  const { categories, subCategories, subSubCategories, allCategories } = useSelector(
-    (state) => state.CategoriesReducers
-  );
+  const { categories, subCategories, subSubCategories, allCategories } =
+    useSelector((state) => state.CategoriesReducers);
   const { cartItems } = useSelector((state) => state.CartReducers);
   const { Allproducts } = useSelector((state) => state.ProductsReducers);
   const { wishlist } = useSelector((state) => state.WishlistReducers);
-  
-  const filteredCartItems = cartItems.filter(item => item?.buyerId === user?._id);
-  const wishlistItems = wishlist.filter((item) => item?.user?._id === user?._id)
 
-  if(wishlistItems){
-    console.log("Yes both ids are same")
+  const filteredCartItems = cartItems.filter(
+    (item) => item?.buyerId === user?._id
+  );
+  const wishlistItems = wishlist.filter(
+    (item) => item?.user?._id === user?._id
+  );
+
+  if (wishlistItems) {
+    console.log("Yes both ids are same");
   }
-
 
   const dispatch = useDispatch();
   const closeSideBar = (e) => {
@@ -68,7 +68,7 @@ export default function Header() {
       category: searchType,
     };
     if (searchText && searchType) {
-      console.log("Search Text")
+      console.log("Search Text");
       // dispatch(GET_SEARCH_PRODUCTS_ACTION(condition, token));
     }
   };
@@ -137,20 +137,20 @@ export default function Header() {
         mybutton.style.display = "none";
       }
     };
-  
+
     if (location.pathname === "/") {
       window.addEventListener("scroll", scrollFunction);
     }
-  
+
     return () => {
       if (location.pathname === "/") {
         window.removeEventListener("scroll", scrollFunction);
       }
     };
-  }, [location.pathname]);   // eslint-disable-line react-hooks/exhaustive-deps
+  }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
-      <header id="home" className="main-header" style={{ paddingInline: 35 }}>
+      <header id="home" className="main-header" style={{ paddingInline: 20 }}>
         {/* Cheching path for diffrent HEADER  */}
         {location.pathname !== "/vendor-register" &&
         location.pathname !== "/vendor-signup-success" ? (
@@ -162,7 +162,6 @@ export default function Header() {
                   <div className="col-auto">
                     {/* d-xl-block d-none */}
                     <ul className="top-header_border-list">
-                     
                       <li>
                         <Link to="/contact">Contact Us</Link>
                       </li>
@@ -176,7 +175,9 @@ export default function Header() {
                     </ul>
                   </div>
                   <div className="col-auto">
-                    <h5 className="h5">Welcome! We Only Sale Natural Herbs Product.</h5>
+                    <h5 className="h5">
+                      Welcome! We Only Sale Natural Herbs Product.
+                    </h5>
                   </div>
                   <div className="col-auto">
                     <ul className="top-header_border-list">
@@ -347,7 +348,7 @@ export default function Header() {
                                 <FaBars className="light-icon" />
                               </Link>
                             </div>
-                          </li> 
+                          </li>
                           <li className="onhover-dropdown wislist-dropdown">
                             <div
                               className="cart-media"
@@ -362,7 +363,9 @@ export default function Header() {
                               <div className="cart-icon">
                                 <FaRegHeart className="light-icon" />
                                 <span className="label label-theme rounded-pill">
-                                  {wishlistItems?.length !==0 ? wishlist?.length : 0}
+                                  {wishlistItems?.length !== 0
+                                    ? wishlist?.length
+                                    : 0}
                                 </span>
                               </div>
                             </div>
@@ -382,7 +385,9 @@ export default function Header() {
                               <div className="cart-icon">
                                 <FaOpencart className="light-icon" />
                                 <span className="label label-theme rounded-pill">
-                                  {filteredCartItems?.length != 0 ? filteredCartItems?.length : 0}
+                                  {filteredCartItems?.length != 0
+                                    ? filteredCartItems?.length
+                                    : 0}
                                 </span>
                               </div>
                             </div>
@@ -481,44 +486,51 @@ export default function Header() {
 
             {/* Farooq code start*/}
             <div className="row my-4">
-            <div className="col-12" style={{ display: "flex", flexDirection: "row" }}>
-    {allCategories.map((cat, index) => (
-      // console.log(cat.categoryName)
-      <li
-        className="btn btn-solid-dark-rounded f-bold header-bottom-dropdown-button"
-        type="button"
-        id="dropdownMenuButton2"
-        data-toggle="dropdown"
-        key={cat._id}
-      >
-        {cat.categoryName}
-        <FaAngleDown />
-        {cat.subCategories && (
-          <ul className="sub-menu sub-menu-left">
-            {cat.subCategories.map((subCat, subCatIndex) => (
-              <li key={subCat?.category?._id}>
-                {subCat.subCategoryName}
-                {subCat.subCategories && <FaAngleRight />}
-                {subCat.subCategories && (
+              <div
+                className="col-12  justify-content-center"
+                style={{ display: "flex", flexDirection: "row" }}
+              >
+                {allCategories?.slice(0, 10).map((cat, index) => (
+                  // console.log(cat.categoryName)
+                  <li
+                    className="btn btn-solid-dark-rounded f-bold header-bottom-dropdown-button"
+                    type="button"
+                    id="dropdownMenuButton2"
+                    data-toggle="dropdown"
+                    key={cat._id}
+                  >
+                    {cat.categoryName}
+                    <FaAngleDown />
+                    {cat.subCategories && (
+                      <ul className="sub-menu sub-menu-left">
+                        {cat.subCategories.map((subCat, subCatIndex) => (
+                          <li key={subCat?.category?._id}>
+                            {subCat.subCategoryName}
+                            {subCat.subCategories && <FaAngleRight />}
+                            {/* {subCat.subCategories && (
                   <ul className="sub-menu sub-menu-left">
                     {subCat.subSubCategories.map((subSubCat, subSubCatIndex) => (
                       <li key={subSubCat._id}>
                         {subSubCat.subSubCategoryName}
-                        {/* Check for sub-sub-categories here and add FaAngleRight accordingly */}
                       </li>
                     ))}
                   </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </li>
-    ))}
-  </div>
-</div>
- {/* Farooq code end*/}
- <div className="row my-4">
+                )} */}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+                <Link to="/categories" style={{ marginLeft: "20px" }} className="d-none d-sm-block">
+                  <h6>
+                    <span className="border-title mt-3 ">View All</span>
+                  </h6>
+                </Link>
+              </div>
+            </div>
+            {/* Farooq code end*/}
+            {/* <div className="row my-4">
               <div className="col-12">
                 <li
                   className="btn btn-solid-light-rounded mx-auto f-bold header-bottom-dropdown-button"
@@ -562,9 +574,9 @@ export default function Header() {
                   </ul>
                 </li>
               </div>
-            </div>
+            </div> */}
 
-    {/* Dropdown header end here */}
+            {/* Dropdown header end here */}
             {/* <div className="row my-4">
               <div className="col-12">
                 <li
@@ -654,11 +666,11 @@ export default function Header() {
               <FaRegWindowClose onClick={closeSideBar} />
             </div>
             <div className="d-flex flex-column">
-              <h4 className="fs-4">
+              <h2 className="m-3">
                 Cate<span className="border-title">gory:</span>
-              </h4>
+              </h2>
               <ul className="category-list">
-                {categories.map((cat, index) => {
+                {allCategories?.slice(0, 12)?.map((cat, index) => {
                   return (
                     <li
                       className="mt-3"
@@ -678,9 +690,9 @@ export default function Header() {
                           className="form-check-label"
                           htmlFor={`${cat.category}_box${index}`}
                         >
-                          <Link to={"/"}>{cat.category}</Link>
+                          <Link to={"/"}>{cat.categoryName}</Link>
                         </label>
-                        {subCategories.filter(
+                        {cat.subCategories.filter(
                           (subcat) => subcat.category._id === cat._id
                         ).length > 0 && (
                           <Link
@@ -698,7 +710,7 @@ export default function Header() {
                         id={`sub-cat-${cat._id}${index}`}
                       >
                         <ul>
-                          {subCategories.map((sub_cat, index) => {
+                          {cat.subCategories.map((sub_cat, index) => {
                             return (
                               cat._id === sub_cat.category._id && (
                                 <li
@@ -717,10 +729,10 @@ export default function Header() {
                                     <label
                                       onClick={closeSideBar}
                                       className="form-check-label"
-                                      htmlFor={`${sub_cat.subCategory}_box${index}`}
+                                      htmlFor={`${sub_cat.subCategoryName}_box${index}`}
                                     >
                                       <Link to={"/"}>
-                                        {sub_cat.subCategory}
+                                        {sub_cat.subCategoryName}
                                       </Link>
                                     </label>
                                     {subSubCategories.filter(
@@ -739,64 +751,6 @@ export default function Header() {
                                       </Link>
                                     )}
                                   </div>
-                                  {/* sub sub category start */}
-                                  <div
-                                    className="collapse mx-4 mt-3"
-                                    id={`sub-sub-cat-${sub_cat._id}${index}`}
-                                  >
-                                    <ul>
-                                      {subSubCategories.map(
-                                        (sub_sub_cat, index) => {
-                                          return (
-                                            sub_cat._id ===
-                                              sub_sub_cat.subCategory._id && (
-                                              <li
-                                                className="mt-3"
-                                                key={`mobile-sub-sub-cat${sub_sub_cat._id}`}
-                                                style={{ display: "block" }}
-                                              >
-                                                <div
-                                                  className="form-check custome-form-check justify-content-between"
-                                                  style={{
-                                                    display: "grid",
-                                                    gridTemplateColumns:
-                                                      "max-content 1fr",
-                                                    gridTemplateRows: "1fr",
-                                                  }}
-                                                >
-                                                  <label
-                                                    onClick={closeSideBar}
-                                                    className="form-check-label"
-                                                    htmlFor={`${sub_sub_cat.subSubCategory}_box${index}`}
-                                                  >
-                                                    <Link to={"/"}>
-                                                      {
-                                                        sub_sub_cat.subSubCategory
-                                                      }
-                                                    </Link>
-                                                  </label>
-                                                  {sub_sub_cat.children && (
-                                                    <Link
-                                                      to={`#${sub_sub_cat.Category_ID}${index}`}
-                                                      className="mx-2"
-                                                      data-bs-toggle="collapse"
-                                                    >
-                                                      <FaAngleDown
-                                                        style={{
-                                                          float: "right",
-                                                        }}
-                                                      />
-                                                    </Link>
-                                                  )}
-                                                </div>
-                                              </li>
-                                            )
-                                          );
-                                        }
-                                      )}
-                                    </ul>
-                                  </div>
-                                  {/* sub sub category end */}
                                 </li>
                               )
                             );
@@ -807,6 +761,11 @@ export default function Header() {
                     </li>
                   );
                 })}
+                  <Link to="/categories">
+                  <h6>
+                    <span class="border-title mt-3" style={{ marginLeft: "15px" }}>View All</span>
+                  </h6>
+                </Link>
               </ul>
             </div>
           </div>
@@ -818,11 +777,9 @@ export default function Header() {
             src={Images.Pictures.userIcon}
             className="model-wrapper_image"
             alt="user-icon"
-            style={{width: 100}}
+            style={{ width: 100 }}
           />
-          <p className="model-wrapper_text">
-            Please Login First
-          </p>
+          <p className="model-wrapper_text">Please Login First</p>
           <Link
             to="/login"
             onClick={() => setPopupOpen(false)}
@@ -833,11 +790,10 @@ export default function Header() {
         </div>
       </Popup>
       {location.pathname === "/" && (
-  <div id="Arrow-up-btn" onClick={scrollToTopFunction}>
-    <FaAngleUp />
-  </div>
-)}
-
+        <div id="Arrow-up-btn" onClick={scrollToTopFunction}>
+          <FaAngleUp />
+        </div>
+      )}
     </>
   );
 }

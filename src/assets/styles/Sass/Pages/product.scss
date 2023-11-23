@@ -59,12 +59,15 @@
           width: 5rem;
           height: 5rem;
           border-radius: 5rem;
+          cursor: pointer;
         }
         & .image-thumb-active {
-          border: 0.2rem solid $color-primary;
+          border: 0.4rem solid $color-primary;
+          padding: 4px;
         }
         & > :not(:last-child) {
           margin-right: 1rem;
+          cursor: pointer;
         }
       }
     }

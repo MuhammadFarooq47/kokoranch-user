@@ -74,11 +74,11 @@ export default function Footer() {
                         Agricultural Services
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link to="/medical-mariguana" className="font-dark">
                         Medical Marijuana
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link to="/about" className="font-dark">
                         About Us
