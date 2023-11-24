@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 // import { GET_All_TRADES } from "../../../redux/actions/trades";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { GET } from "../../../apis/requests";
 
 export default function Trade() {
   const dispatch = useDispatch();
@@ -16,15 +17,10 @@ console.log("Trader Trades", traderTrades)
 
 useEffect( async () => {
   try {
-    const response = await axios.get("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/trades/my-trades", {
-      headers:{
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      }
-    })
+    const response = await GET("/trades")
     setTraderTrades(response?.data);
     // navigate(-1)
-    // console.log("Response from trade get request", response?.data)
+    console.log("Response from trade get request", response?.data)
   } catch (error) {
     console.log("Error from trade get request", error)
   }
@@ -64,7 +60,8 @@ useEffect( async () => {
             </div>
           </div>
           <div className="row mt-5">
-            {traderTrades?.data?.slice(0, 4).map((element, index) => {
+            {traderTrades?.slice(0, 4).map((element, index) => {
+              console.log(element.images)
               return (
                 <div className="col-lg-6 col-md-6  col-sm-12" key={index}>
                   <TradeCard props={element} image={element?.images[0]} />

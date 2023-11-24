@@ -1,4 +1,5 @@
 const LIVE_URL = "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1";
+// const LIVE_URL = "https://52.66.63.79/api/v1";
 const LOCAL_URL = "http://192.168.100.75:3030/api/v1";
 // const LIVE_URL = "https://54.89.147.184:3030/api/v1";
 
