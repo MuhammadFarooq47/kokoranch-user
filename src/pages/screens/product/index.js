@@ -49,19 +49,18 @@ export default function Product({ isFavorite }) {
   console.log("currentProduct", currentProduct?.images)
   const [selectedImage, setSelectedImage] = useState(currentProduct?.images[0]);
   // const { checkout } = useSelector((state) => state.CheckoutReducer);
+  
   const handleImageChange = (e, image) => {
     setSelectedImage(image);
     const elems = document.querySelectorAll(
-          ".product-wrapper_image-desc-wrapper_product-image-wrapper_product-thumbs_product-thumb-image"
-        );
-    
-        elems.forEach((elem) => {
-          elem.classList.remove("image-thumb-active");
-        });
-        e.target.classList.add("image-thumb-active");
+      ".trade-wrapper_image-desc-wrapper_trade-image-wrapper_trade-thumbs_trade-thumb-image"
+    );
+    elems.forEach((elem) => {
+      elem.classList.remove("image-thumb-active");
+    });
+    e.target.classList.add("image-thumb-active");
   };
-  // console.log("checkout??????????", checkout);
-  // console.log(featuredProducts?.images);
+
 
   const previewImage = currentProduct?.images[0];
 
@@ -315,19 +314,7 @@ export default function Product({ isFavorite }) {
               position: "relative",
             }}
           >
-            <img
-              src={Images.Pictures.brownRightLeaf}
-              style={{
-                position: "absolute",
-                top: "-5rem",
-                right: "1rem",
-                zIndex: "-1",
-                transform: "rotate(265deg)",
-                width: "55rem",
-                opacity: "0.4",
-              }}
-              alt="right-leaf"
-            ></img>
+    
             <div className="product-wrapper_image-desc-wrapper_product-image-wrapper">
               <div className="product-wrapper_image-desc-wrapper_product-image-wrapper_product-image">
                 <img

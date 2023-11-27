@@ -62,8 +62,8 @@
           cursor: pointer;
         }
         & .image-thumb-active {
-          border: 0.4rem solid $color-primary;
-          padding: 4px;
+          // border: 0.4rem solid $color-primary;
+          // padding: 4px;
         }
         & > :not(:last-child) {
           margin-right: 1rem;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaAngleRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 // import { GET_TRADE } from "../../../redux/actions/trades";
 import Images from "../../../constants/images";
@@ -13,6 +13,9 @@ import { CREATE_TRADE_REQUEST_ACTION } from "../../../redux/actions/trades";
 import TradeCarosual from "../../../components/TradeCarosual";
 export default function Product() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  console.log("Location data", location?.state)
+  const [tradeDetails, setTradeDetails] = useState(location?.state);
   const { trade, createTradeRequest } = useSelector(
     (state) => state.TradesReducers
   );
@@ -25,12 +28,12 @@ export default function Product() {
     tradeRequestMessage: "",
     traderId: "",
   });
-  const [previewImage, setPeviewImage] = useState(trade?.images[0]);
+  const [selectedImage, setSelectedImage] = useState(tradeDetails?.images[0]);
   const [popupOpen, setPopupOpen] = useState(false);
   const [successPopupOpen, setSuccessPopupOpen] = useState(false);
   // handle image change
   const handleImageChange = (e, image) => {
-    setPeviewImage(image);
+    setSelectedImage(image);
     const elems = document.querySelectorAll(
       ".trade-wrapper_image-desc-wrapper_trade-image-wrapper_trade-thumbs_trade-thumb-image"
     );
@@ -84,19 +87,19 @@ export default function Product() {
         <Popup title="dasdasd" image="dasd" />
         <div className="trade-wrapper_image-desc-wrapper">
           <div className="trade-wrapper_image-desc-wrapper_trade-image-wrapper">
-            <div className="trade-wrapper_image-desc-wrapper_trade-image-wrapper_trade-image">
-              <img
-                src={previewImage ? previewImage : trade?.images[0]}
-                alt="trade"
-              ></img>
-            </div>
+          <div className="product-wrapper_image-desc-wrapper_product-image-wrapper_product-image">
+                <img
+                 src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${selectedImage}`}
+                  alt="product"
+                ></img>
+              </div>
             <div className="trade-wrapper_image-desc-wrapper_trade-image-wrapper_trade-thumbs">
-              {trade?.images.map((image, index) => {
+              {tradeDetails?.images.map((image, index) => {
                 return (
                   <img
                     key={index}
                     className="trade-wrapper_image-desc-wrapper_trade-image-wrapper_trade-thumbs_trade-thumb-image"
-                    src={image}
+                    src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${image}`}
                     onClick={(e) => {
                       handleImageChange(e, image);
                     }}
@@ -110,16 +113,16 @@ export default function Product() {
             <div className="trade-wrapper_image-desc-wrapper_trade-description_top">
               <div className="trade-wrapper_image-desc-wrapper_trade-description_top_left">
                 <h3 className="fs-3 "> IN SEARCH OF:</h3>
-                <p>{trade?.inSearchOf}</p>
+                <p>{tradeDetails?.isSearchOf}</p>
               </div>
 
               <div className="trade-wrapper_image-desc-wrapper_trade-description_top_right">
                 <div className="trade-wrapper_image-desc-wrapper_trade-description_top_right_seller-details-wrapper">
                   <h6 className="fs-6">
-                    {moment(trade?.createdAt).format("MMM DD YYYY h:mm A")}
+                    {moment(tradeDetails?.createdAt).format("MMM DD YYYY h:mm A")}
                   </h6>
                   <span className="trade-wrapper_image-desc-wrapper_trade-description_top_right_seller-details-wrapper_title">
-                    Seller:
+                    Trader:
                   </span>
 
                   <h5
@@ -162,13 +165,13 @@ export default function Product() {
             <div className="trade-wrapper_image-desc-wrapper_trade-description_bottom">
               <div className="trade-wrapper_image-desc-wrapper_trade-description_bottom_inner-top">
                 <h3 className="fs-3 "> TO EXCHANGE WITH:</h3>
-                <p>{trade?.toExchangeWith}</p>
+                <p>{tradeDetails?.toExchangeWith}</p>
               </div>
               <div className="trade-wrapper_image-desc-wrapper_trade-description_bottom_inner-bottom">
                 <label htmlFor="firstName" className="form-label fs-4">
                   Details
                 </label>
-                <div className="form-control"> {trade?.details}</div>
+                <div className="form-control"> {tradeDetails?.description}</div>
               </div>
             </div>
           </div>

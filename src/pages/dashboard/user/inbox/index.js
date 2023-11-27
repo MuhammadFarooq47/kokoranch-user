@@ -33,26 +33,26 @@ export default function MyProfile() {
         );
   };
 
-  const get_messages = async () => {
-    await GET("/users/get", token, "")
-      .then((res) => {
-        if (res.success) {
-          let filtered_users = res.users.filter(
-            (data) => data._id !== user._id
-          );
-          setUsers(filtered_users);
-          setRecipient(filtered_users[0]);
-        } else {
-          toast.error(res.message);
-        }
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  };
-  useEffect(() => {
-    get_messages();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // const get_messages = async () => {
+  //   await GET("/users/get", token, "")
+  //     .then((res) => {
+  //       if (res.success) {
+  //         let filtered_users = res.users.filter(
+  //           (data) => data._id !== user._id
+  //         );
+  //         setUsers(filtered_users);
+  //         setRecipient(filtered_users[0]);
+  //       } else {
+  //         toast.error(res.message);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       toast.error(err.message);
+  //     });
+  // };
+  // useEffect(() => {
+  //   get_messages();
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <UserSideMenu>
       <div className="my-profile-wrapper">

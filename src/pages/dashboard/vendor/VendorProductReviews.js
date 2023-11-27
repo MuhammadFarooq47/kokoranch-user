@@ -15,8 +15,8 @@ console.log("VendorProductReviews", reviewsData?.reviews?.length)
   return (
 <>
   {reviewsData?.reviews?.length > 0 ? (
-    <>
-      <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', marginBottom: '10px' }}>
         <h2 style={{ fontWeight: 'normal' }}>Total Reviews {reviewsData?.reviews?.length}</h2>
         <h3 className="mx-3" style={{ cursor: "pointer" }} onClick={() => { navigate(-1); }}>
           <span className="vtext-primary mx-2">&#10229;</span>Back
@@ -30,7 +30,7 @@ console.log("VendorProductReviews", reviewsData?.reviews?.length)
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px', height: '90%', padding: 0 }}>
               <>
                 <div style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }} className="ratingPopup">
-                  <div style={{ height: '40vh', width: '100%', display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
+                  <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
                     <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <h3>{`${data?.user?.firstName} ${data?.user?.lastName}`}</h3>
@@ -53,9 +53,9 @@ console.log("VendorProductReviews", reviewsData?.reviews?.length)
           </div>
         );
       })}
-    </>
+    </div>
   ) : (
-    <>
+    <div>
     <h3 className="mx-3" style={{ cursor: "pointer", display: "flex", justifyContent: "flex-end" }} onClick={() => { navigate(-1); }}>
     <span className="vtext-primary mx-2">&#10229;</span>Back
   </h3>
@@ -63,7 +63,7 @@ console.log("VendorProductReviews", reviewsData?.reviews?.length)
     <RiDeleteBin5Fill size={50} className='mb-4' color='#fff' />
     <h2 style={{textAlign: "center", color:'#757575'}}>Data not Found</h2>
     </div>
-     </>
+     </div>
   )}
 </>
 
