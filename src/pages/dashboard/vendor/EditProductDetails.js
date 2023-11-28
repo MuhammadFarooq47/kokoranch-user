@@ -23,27 +23,28 @@ function EditProductDetails({ sidebar, setSidebar }) {
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("userData");
   const location = useLocation();
+  console.log("Location State", location?.state)
   const [popupOpen, setPopupOpen] = useState(false);
   const [successfulPopup, setSuccessfulPopup] = useState(false);
   const [mainCategories, setMainCategoires] = useState([]);
   const [subCategories, setSubCategoires] = useState([]);
   const [subSubCategories, setSubSubCategoires] = useState([]);
   const [productDetails, setProductDetails] = useState({
-    productName: location?.state?.name,
+    productName: location?.state?.productName,
     mainCategory: "",
     subCategory: "",
     subSubCategory: "",
     price: location?.state?.price,
     description: location?.state?.description,
-    inStock: location?.state?.quantity,
+    inStock: location?.state?.inStock,
     images: location?.state?.images,
     useSavedShippingDetails: false,
     shippingDetails: {
-      location: location?.state?.shippingDetails.location,
-      shippingTo: location?.state?.shippingDetails.shippingTo,
-      delivery: location?.state?.shippingDetails.delivery,
-      returnPolicy: location?.state?.shippingDetails.returnPolicy,
-      shippingHandling: location?.state?.shippingDetails.shippingHandling,
+      location: location?.state?.shippingDetails?.itemLocation,
+      shippingTo: location?.state?.shippingDetails?.shippingTo,
+      delivery: location?.state?.shippingDetails?.delivery,
+      returnPolicy: location?.state?.shippingDetails?.return,
+      shippingHandling: location?.state?.shippingDetails?.shippingAndHandling,
     },
   });
   const [categories, setCategories] = useState({
@@ -322,50 +323,6 @@ function EditProductDetails({ sidebar, setSidebar }) {
               />
             </div>
           </div>
-          {/* <div className="row">
-            <div className="col-3 col-md-3 col-lg-3 mb-5 col-sm-12 col-xs-12">
-              <label htmlFor="firstName" className="form-label">
-                Main Category
-              </label>
-
-              <input
-                type="text"
-                className="form-control"
-                id="firstName"
-                name="firstName"
-                placeholder={data?.category?.category}
-                required
-              />
-            </div>
-            {data?.subCategory && (<div className="col-3 col-md-3 col-lg-3 mb-5 col-sm-12 col-xs-12">
-              <label htmlFor="firstName" className="form-label">
-                Sub Category
-              </label>
-
-              <input
-                type="text"
-                className="form-control"
-                id="firstName"
-                name="firstName"
-                placeholder={data?.subCategory?.subCategory}
-                required
-              />
-            </div>)}
-           {data?.subSubCategory && ( <div className="col-3 col-md-3 col-lg-3 mb-5 col-sm-12 col-xs-12">
-              <label htmlFor="firstName" className="form-label">
-                Sub-Sub Category
-              </label>
-
-              <input
-                type="text"
-                className="form-control"
-                id="firstName"
-                name="firstName"
-                placeholder={data?.subSubCategory?.subSubCategory}
-                required
-              />
-            </div>)}
-          </div> */}
           <div className="row">
             <div className="col-3 col-md-3 col-lg-3 mb-5 col-sm-12 col-xs-12">
               <label htmlFor="firstName" className="form-label">
@@ -471,62 +428,6 @@ function EditProductDetails({ sidebar, setSidebar }) {
                 </FormControl>
               </div>
             )}
-            {subSubCategories.length > 0 && (
-              <div className="col-3 col-md-3 col-lg-3 mb-5 col-sm-12 col-xs-12">
-                <label htmlFor="firstName" className="form-label">
-                  Sub-Sub Category
-                </label>
-                <FormControl
-                  fullWidth
-                  style={{
-                    borderRadius: "5px",
-                    border: "1px solid #FFFFFF",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-                  <InputLabel
-                    id="demo-simple-select-helper-label"
-                    sx={{
-                      color: "rgba(228,219,233,0.25)",
-                      "&.Mui-focused": {
-                        color: "rgba(228,219,233,0.25)",
-                      },
-                    }}
-                  >
-                    {categoriesName.subSubCategory}
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={categories.subSubCategory?.subSubCategory}
-                    label={categories.subSubCategory?.subSubCategory}
-                    onChange={handleChangeSubSubCategory}
-                    sx={{
-                      color: "white",
-                      ".MuiOutlinedInput-notchedOutline": {
-                        borderColor: "rgba(228, 219, 233, 0.25)",
-                      },
-                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "rgba(228, 219, 233, 0.25)",
-                      },
-                      "&:hover .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "rgba(228, 219, 233, 0.25)",
-                      },
-                      ".MuiSvgIcon-root ": {
-                        fill: "white !important",
-                      },
-                    }}
-                  >
-                    {subSubCategories.map((item) => (
-                      <MenuItem value={item._id}>
-                        {item.subSubCategory}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-            )}
           </div>
           <div className="row">
             <div className="col-12 col-md-6 col-lg-5 mb-5 col-sm-12 col-xs-12">
@@ -562,23 +463,23 @@ function EditProductDetails({ sidebar, setSidebar }) {
                 }}
               >
                 <label htmlFor="firstName" className="form-label">
-                  Description 1
+                  Description
                 </label>
-                <button
+                {/* <button
                   className="btn btn-solid btn-solid-primary soi-success-btn"
                   onClick={() => addDescriptionInput()}
                 >
                   Add Another Description
-                </button>
+                </button> */}
               </div>
               <textarea
                 rows={4}
                 id="firstName"
                 name="firstName"
-                placeholder={data?.description[0]}
+                placeholder={data?.description}
                 required
                 className="form-control"
-                value={productDetails?.description[0]}
+                value={productDetails?.description}
                 onChange={(e) => {
                   let arr = [...productDetails.description];
                   arr[0] = e.target.value;
@@ -588,44 +489,6 @@ function EditProductDetails({ sidebar, setSidebar }) {
               ></textarea>
             </div>
           </div>
-          {detailInputs.map(
-            (item, i) =>
-              i > 0 && (
-                <div className="row">
-                  <div className="col-12 col-md-9 col-lg-9 mb-5 col-sm-12 col-xs-12">
-                    <label htmlFor="firstName" className="form-label">
-                      Description {i + 1}
-                    </label>
-                    <textarea
-                      rows={4}
-                      id="firstName"
-                      name="firstName"
-                      placeholder={
-                        item == ""
-                          ? `Please Fill The Description ${i + 1}`
-                          : item
-                      }
-                      required
-                      className="form-control"
-                      // value={productDetails.description[i]}
-                      onChange={(e) => {
-                        let arr = [...productDetails.description];
-                        // console.log('consoleeeeeeeeeeeeeeee>>>>>>>',arr[i+1])
-                        if (arr[i + 1] == undefined) {
-                          arr.push(e.target.value);
-                        } else {
-                          arr[i + 1] = e.target.value;
-                        }
-                        setProductDetails({
-                          ...productDetails,
-                          description: arr,
-                        });
-                      }}
-                    ></textarea>
-                  </div>
-                </div>
-              )
-          )}
           <div className="row">
             <div className="col-12 col-md-6 col-lg-5 mb-5 col-sm-12 col-xs-12">
               <label htmlFor="firstName" className="form-label">
@@ -702,7 +565,7 @@ function EditProductDetails({ sidebar, setSidebar }) {
                         }}
                       >
                         <img
-                          src={item?.url ? item.url : item}
+                          src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${item}`}
                           style={{
                             height: "100%",
                             width: "100%",

@@ -3,6 +3,8 @@ import { AiTwotoneStar } from "react-icons/ai";
 import { useNavigate, useLocation } from 'react-router-dom';
 import DataNotFound from '../../../components/datanotfound';
 import {RiDeleteBin5Fill} from "react-icons/ri";
+import Rating from 'react-rating';
+import Images from '../../../constants/images';
 
 
 function VendorProductReviews() {
@@ -35,11 +37,33 @@ console.log("VendorProductReviews", reviewsData?.reviews?.length)
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <h3>{`${data?.user?.firstName} ${data?.user?.lastName}`}</h3>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                  <AiTwotoneStar size={20} fill={'#14A384'} />
-                  <AiTwotoneStar size={20} fill={'#14A384'} />
-                  <AiTwotoneStar size={20} fill={'#14A384'} />
-                  <AiTwotoneStar size={20} />
-                  <AiTwotoneStar size={20} />
+                        <Rating
+                            start={0}
+                            stop={5}
+                            readonly
+                            placeholderRating={data?.rating}
+                            placeholderSymbol={[
+                              <img
+                                width="20"
+                                src={Images.Pictures.plant}
+                                alt="full"
+                              ></img>,
+                            ]}
+                            emptySymbol={[
+                              <img
+                                width="20"
+                                src={Images.Pictures.emptyPlant}
+                                alt="empty"
+                              ></img>,
+                            ]}
+                            // fullSymbol={[
+                            //   <img
+                            //     width="30"
+                            //     src={Images.Pictures.plant}
+                            //     alt="full"
+                            //   ></img>,
+                            // ]}
+                          />
                 </div>
                       </div>
                     </div>
