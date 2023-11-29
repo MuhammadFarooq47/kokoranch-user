@@ -62,7 +62,9 @@ const VendorSignupSuccess = React.lazy(() =>
 );
 const Trades = React.lazy(() => import("../pages/screens/trades"));
 const Trade = React.lazy(() => import("../pages/screens/trade"));
-const TradeDetails = React.lazy(() => import("../pages/dashboard/trader/trades/tradeDetails"));
+const TradeDetails = React.lazy(() =>
+  import("../pages/dashboard/trader/trades/tradeDetails")
+);
 const MyProfile = React.lazy(() => import("../pages/dashboard/user/MyProfile"));
 const AddressBook = React.lazy(() =>
   import("../pages/dashboard/user/AddressBook")
@@ -144,9 +146,9 @@ const VendorProductShippingDetailEdit = React.lazy(() =>
 const FeaturedProductsAndServices = React.lazy(() =>
   import("../pages/dashboard/vendor/Featured")
 );
-const FeaturedProducts = React.lazy(() => 
+const FeaturedProducts = React.lazy(() =>
   import("../pages/dashboard/vendor/FeaturedProducts")
-)
+);
 const ViewFeaturedProductsAndServices = React.lazy(() =>
   import("../pages/dashboard/vendor/ViewFeaturedDetails")
 );
@@ -171,22 +173,21 @@ const VendorMedicalMerijuana = React.lazy(() =>
 const VendorNotifications = React.lazy(() =>
   import("../pages/dashboard/vendor/Notifications")
 );
-const VendorProductReviews = React.lazy(() => import("../pages/dashboard/vendor/VendorProductReviews"));
+const VendorProductReviews = React.lazy(() =>
+  import("../pages/dashboard/vendor/VendorProductReviews")
+);
 const Home = React.lazy(() => import("../pages/screens/home"));
-
-
 
 export default function Navigation() {
   // INITIZING STORAGES
-  const { isAuthenticated, userType, token } = useSelector(
+  const { isAuthenticated, userType, token, user } = useSelector(
     (state) => state.authReducer
   );
+  console.log("🚀 ~ file: navigation.js:182 ~ Navigation ~ user:", user);
 
   console.log("user Type", userType);
   console.log("user Token", token);
   const tokenStorage = localStorage.getItem("token");
-
-  
 
   const dispatch = useDispatch();
   // CHECKING FOR AUTHENTICATION
@@ -214,7 +215,7 @@ export default function Navigation() {
           !isAuthenticated ? (
             <Suspense fallback={<FullScreenLoader />}>
               {/* <Layout> */}
-                <Login />
+              <Login />
               {/* </Layout> */}
             </Suspense>
           ) : userType == "user" ? (
@@ -261,8 +262,7 @@ export default function Navigation() {
         element={
           <Suspense fallback={<FullScreenLoader />}>
             {/* <Layout> */}
-              <Register />{" "}
-            {/* </Layout> */}
+            <Register /> {/* </Layout> */}
           </Suspense>
         }
       />
@@ -707,15 +707,15 @@ export default function Navigation() {
       <Route
         path="/vendor-profile"
         element={
-      <ProtectedRoute redirectTo={"/login"}>
-      <Suspense fallback={<FullScreenLoader />}>
-        <VendorSideBar>
-          <VendorProfile />
-        </VendorSideBar>
-      </Suspense>
-    </ProtectedRoute>
+          <ProtectedRoute redirectTo={"/login"}>
+            <Suspense fallback={<FullScreenLoader />}>
+              <VendorSideBar>
+                <VendorProfile />
+              </VendorSideBar>
+            </Suspense>
+          </ProtectedRoute>
         }
-     />
+      />
       <Route
         path="/vendor-my-products"
         element={

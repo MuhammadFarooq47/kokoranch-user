@@ -18,6 +18,7 @@ import { WISHLIST_ADD_ITEM } from "../../../redux/actions/wishlist";
 import { addtoCart, alreadyInCart } from "../../../redux/actions/cart";
 import {GET_USER_CHECKOUT_DATA} from "../../../redux/actions/checkout";
 import Picker from 'emoji-picker-react';
+import axios from "axios";
 
 export default function Product({ isFavorite }) {
 
@@ -40,13 +41,13 @@ export default function Product({ isFavorite }) {
   const location = useLocation();
   const pathID =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
-  // console.log("location = useLocation();", location?.state);
+  console.log("location = useLocation();", location?.state?.user?._id);
 
   const dispatch = useDispatch();
 
   const { featuredProducts } = useSelector((state) => state.ProductsReducers);
   const currentProduct = location?.state;
-  console.log("currentProduct", currentProduct?.images)
+  // console.log("currentProduct", currentProduct?.images)
   const [selectedImage, setSelectedImage] = useState(currentProduct?.images[0]);
   // const { checkout } = useSelector((state) => state.CheckoutReducer);
   
@@ -155,7 +156,7 @@ export default function Product({ isFavorite }) {
     setReviewsProduct(featuredProducts)
     }, [reviews, featuredProducts]);
 
-    console.log(reviewsProduct, "AAAAAAAAAA")
+    // console.log(reviewsProduct, "AAAAAAAAAA")
 
   // handle image change
   // const handleImageChange = (e, image) => {
@@ -183,7 +184,7 @@ export default function Product({ isFavorite }) {
   const [popupOpen, setPopupOpen] = useState(false);
   const [successPopupOpen, setSuccessPopupOpen] = useState(false);
   const [itemQuantity, setitemQuantity] = useState(1);
-  console.log("itemQuantity", itemQuantity);
+  // console.log("itemQuantity", itemQuantity);
 
   const [cart, setCart] = useState(false);
 
@@ -191,9 +192,9 @@ export default function Product({ isFavorite }) {
 
   featuredProducts.map((productData, index) => {
     if (productData?._id === id) {
-      console.log("Current product price", productData);
+      // console.log("Current product price", productData);
       const sumOfProduct = productData?.price * itemQuantity;
-      console.log("Test Total price", sumOfProduct);
+      // console.log("Test Total price", sumOfProduct);
 
       // Update dataToSend object within the loop
       productDataToSend = {
@@ -214,7 +215,7 @@ export default function Product({ isFavorite }) {
 
   useEffect(() => {
     featuredProducts?.reviews?.map((item, index) => {
-      console.log("useEffect featuredProducts?.reviews?.map", item);
+      // console.log("useEffect featuredProducts?.reviews?.map", item);
       if (item?.rating === 5) {
         setReviewsSummary((prevState) => ({
           ...prevState,
@@ -266,6 +267,44 @@ export default function Product({ isFavorite }) {
       setCart(alreadyPresentCart);
     }
   }, [id, cartItems, dispatch]);
+// message:
+//   {
+//     text:
+//     user:{
+//     _id:
+//     avatar
+//     name
+//     }
+//     }
+  // Send Message to vendor
+  const [message, setMessage] = useState('')
+  console.log("Message", message)
+  const sendMessage = async () => {
+    try {
+      const response = await axios.post('http://192.168.100.75:3030/api/v1/chats/send-message', {
+        to: currentProduct?.user?._id, 
+        from: user?._id, 
+        message: {
+        text: message,
+          user: {
+            _id: user?._id,
+            // avatar: user?.photo,
+            avatar: 'https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png',
+            name: `${user?.firstName} ${user?.lastName}`
+          }
+        }
+        // to: currentProduct?.user?._id, 
+        // from: user?._id, 
+        // message: message
+      }, {
+        headers : {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      })
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
 
   return (
     <>
@@ -893,7 +932,7 @@ export default function Product({ isFavorite }) {
                                   onSubmit={(e) => {
                                     e.preventDefault();
                                     setPopupOpen(false);
-                                    setSuccessPopupOpen(true);
+                                    // setSuccessPopupOpen(true);
                                   }}
                                 >
                                   <div className="model-contact-wrapper_popup-body_input-wrapper">
@@ -907,10 +946,10 @@ export default function Product({ isFavorite }) {
                                       type="text"
                                       className="form-control"
                                       id="firstName"
-                                      // value={user.firstName}
-                                      // onChange={onchange}
-                                      rows={8}
-                                      name="firstName"
+                                      value={message}
+                                      onChange={(e) => setMessage(e.target.value)}
+                                      // rows={8}
+                                      name="message"
                                       placeholder="Type Message Here.."
                                       // required
                                     ></textarea>
@@ -918,6 +957,7 @@ export default function Product({ isFavorite }) {
                                   <button
                                     className="btn btn-solid btn-solid-primary-rounded model-contact-wrapper_popup-body_button mx-auto"
                                     type="submit"
+                                    onClick={sendMessage}
                                   >
                                     Send
                                   </button>

@@ -2,22 +2,51 @@ import { useState } from "react";
 import { FaRegPaperPlane, FaBars } from "react-icons/fa";
 // import { useSelector } from "react-redux";
 import Images from "../../../../constants/images";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function Messages(props) {
+  // console.log("Prop......", props)
   const { recipient } = props; // recipient is the user who is currently chatting with
   // const { user, token } = useSelector((state) => state.authReducer); // CURRENT USER
+  console.log(recipient, "receipt.........")
 
   const [message, setMessage] = useState(""); // new message
-  const [messages, setMessages] = useState([
-    { message: "hello", sendBy: "niaz" },
-  ]); // all messages
+  // const [messages, setMessages] = useState([
+  //   { message: "hello", sendBy: "niaz" },
+  // ]); // all messages
 
-  const onsubmit = () => {
-    let arr = [...messages];
-    arr.push({ message: message, sendby: "niaz" });
-    setMessages(arr);
-    setMessage("");
-  };
+  // const onsubmit = () => {
+  //   // let arr = [...messages];
+  //   arr.push({ message: message, sendby: "niaz" });
+  //   // setMessages(arr);
+  //   // setMessage("");
+  // };
+
+  // const [id, setId] = useState();
+  // console.log("ID<<<<<<<<<<<<<<", id)
+
+const [messages, setMessages] = useState();
+console.log("messages", messages)
+
+// const id = recipient?.data[0]?._id;
+// const [roomId, setRoomId] = useState(recipient?.data[0]?._id)
+// console.log(recipient?.data[0]?._id)
+
+//   useEffect(async () => {
+// try {
+// const response = axios.get(`http://192.168.100.75:3030/api/v1/chats/single-chat?room=6566e0f517264e9165d8c850`, {
+//     headers : {
+//       Authorization: `Bearer ${localStorage.getItem("token")}`,
+//     }
+//   });
+//   setMessages(response?.data)
+// console.log(response, "kkkkkkk")
+// } catch (error) {
+//   console.log("Error from rooms", error)
+// }
+//   }, [roomId])
+
   return (
     <>
       <main style={{ height: "78vh" }}>
@@ -51,14 +80,14 @@ export default function Messages(props) {
           </nav>
         </header>
         <ul id="chat" className="bg-black-pad my-5 " style={{ height: "60vh" }}>
-          {messages.length > 0 ? (
-            messages.map((element, index) => {
+          {recipient?.data?.length > 0 ? (
+            recipient?.data?.map((element, index) => {
+              console.log(element)
               return (
                 <div>
                   <li className="you" key={index}>
                     <div className="message">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                      Aenean commodo ligula eget dolor.
+                     {element?.text}
                     </div>
                   </li>
                   <li className="me">

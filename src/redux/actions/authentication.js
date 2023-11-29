@@ -4,16 +4,17 @@ import { GET, POST, PUT, PATCH } from "../../apis/requests";
 // import CryptoJS from 'crypto-js';
 import axios from "axios";
 
+import { io } from "socket.io-client";
+import { SiSsrn } from "react-icons/si";
+
+const socket = io.connect("http://192.168.100.75:3030");
+
 const LOGIN = (credentials, setLoading, navigate) => {
   return async (dispatch) => {
     try {
       setLoading(true);
       const response = await POST("/users/login", null, credentials);
       console.log("Response Login", response);
-
-      if (response.status === "fail") {
-        throw new Error(response.message);
-      }
 
       // Successful login
       setLoading(false);
@@ -25,10 +26,12 @@ const LOGIN = (credentials, setLoading, navigate) => {
       localStorage.setItem("token", response.data.token);
       localStorage.removeItem("email")
       // localStorage.setItem("role", response?.data?.user?.role);
-
+      socket.emit("join", response?.data?.user?._id)
+      const updatedUserData = await GET('/users/me')
+      console.log("🚀 ~ file: authentication.js:31 ~ return ~ updatedUserData:", updatedUserData)
       dispatch({
         type: ActionTypes.LOGIN,
-        payload: response.data,
+        payload: updatedUserData,
       });
     } catch (error) {
       // Handle other errors

@@ -12,13 +12,15 @@ const initial_state = {
 const AuthReducer = (state = initial_state, action) => {
   
   switch (action.type) {
+    
    case ActionTypes.LOGIN:
+    console.log(action.payload.data, "sadsfdsf")
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.user,
+        user: action.payload.data,
         token: action.payload.token,
-        userType: action.payload.user.role,
+        userType: action.payload.data.role,
       };
 
       case ActionTypes.CHECK_TOKEN:

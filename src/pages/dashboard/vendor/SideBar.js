@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as WineBottle } from "../../../assets/images/icons/wine-bottle.svg";
 import { ReactComponent as AgriService } from "../../../assets/images/icons/agri-service.svg";
@@ -22,8 +22,12 @@ import {BsChatLeft} from "react-icons/bs";
 import {MdRateReview} from "react-icons/md";
 import {SiGumtree} from "react-icons/si";
 import {IoSettingsSharp} from "react-icons/io5";
+import { io } from "socket.io-client";
+
+const socket = io.connect("http://192.168.100.75:3030");
 
 export default function VendorSideBar({ children }) {
+  const {user} = useSelector((state) => state.authReducer)
   const [sidebar, setSidebar] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -197,7 +201,8 @@ const [popupOpen, setPopupOpen] = useState(false);
             </NavLink>
           </h4>
           <h4 className="fs-5">
-            <NavLink to="/vendor-inbox" className="vendor-link">
+            <NavLink to="/vendor-inbox" className="vendor-link" 
+>
               <div className="vendor-inbox-link">
                 {/* <img src={inbox} style={{ width: "8%", marginRight: "5px" }} /> */}
                 <BsChatLeft size={20} />

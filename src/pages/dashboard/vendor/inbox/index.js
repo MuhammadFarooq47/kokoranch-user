@@ -2,8 +2,17 @@ import { useState } from "react";
 import Messages from "./chat";
 import Navbar from "../NavBar";
 import { FaEllipsisV } from "react-icons/fa";
+import { useEffect } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import {io} from "socket.io-client";
+
+const socket = io.connect("http://192.168.100.75:3030");
+
 export default function MyProfile({ setSidebar, sidebar }) {
   const [innerSidebar, setInnerSidebar] = useState(true);
+  const { user } = useSelector((state) => state.authReducer);
+  console.log("user", user)
   const [recipient, setRecipient] = useState({});
   // handle classchange on active recipient
   const handleClassChange = (e) => {
@@ -50,6 +59,53 @@ export default function MyProfile({ setSidebar, sidebar }) {
           "chat-dropdown-delete-btn_active"
         );
   };
+
+  const [lastMessage, setLastMessage] = useState();
+  console.log("lastMessage??????", lastMessage?.data.at(-1));
+
+  useEffect(async () => {
+    try {
+    
+      const response = await axios.get(
+        "http://192.168.100.75:3030/api/v1/chats/rooms",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setLastMessage(response?.data);
+      console.log("Response chats rooms", response);
+    } catch (error) {
+      console.log(error, "error from chat room");
+    }
+  }, []);
+
+  const [roomId, setRoomId] = useState(lastMessage?.data[0]?._id);
+  const [messages, setMessages] = useState();
+  console.log("RoomID", messages);
+
+  const roomFunction = async () => {
+    try {
+      socket.emit("chatJoin", user?._id, '6566e0f517264e9165d8c850')
+      socket.emit("mark-as-read",'6566e0f517264e9165d8c850',user?.role)
+      const response = await axios.get(
+        `http://192.168.100.75:3030/api/v1/chats/single-chat?room=6566e0f517264e9165d8c850`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setMessages(response?.data);
+      console.log(response?.data, "kkkkkkk");
+    } catch (error) {
+      console.log("Error from rooms", error);
+    }
+  };
+
+  useEffect(() => {}, []);
+
   return (
     <>
       <Navbar setSidebar={setSidebar} sidebar={sidebar} title="Messages" />
@@ -64,82 +120,9 @@ export default function MyProfile({ setSidebar, sidebar }) {
               <div
                 className="edit-product-container"
                 style={{ height: "70vh", overflowY: "scroll" }}
+                onClick={roomFunction}
               >
-                {[
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-                  {
-                    firstName: "Muhammad",
-                    lastName: "Ali",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg",
-                  },
-                  {
-                    firstName: "Shayan",
-                    lastName: "Shayan",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_02.jpg",
-                  },
-                  {
-                    firstName: "Moiz",
-                    lastName: "Moiz",
-                    image:
-                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_03.jpg",
-                  },
-                ].map((element, index) => {
+                {lastMessage?.data?.map((element, index) => {
                   return (
                     <li
                       key={index}
@@ -151,15 +134,22 @@ export default function MyProfile({ setSidebar, sidebar }) {
                     >
                       <div className="recipient-item_left">
                         <div className="image-wrapper">
-                          <img src={element.image} alt="User" />
-                          <span className="unread-count">2</span>
+                          <img
+                            src={element?.lastMessage?.user?.avatar}
+                            alt="User"
+                          />
+                          <span className="unread-count">
+                            {user?.role == "user"
+                              ? element?.user2UnreadCount
+                              : element?.user1UnreadCount}
+                          </span>
                         </div>
                         <div>
                           <h2 className="name-div">
-                            {`${element.firstName} ${element.lastName}`}{" "}
+                            {element?.lastMessage?.user?.name}{" "}
                             <span>25 min</span>
                           </h2>
-                          <h3>Lorem ipsum dolor sit.</h3>
+                          <h3> {element?.lastMessage?.text} </h3>
                         </div>
                       </div>
                       <div className="recipient-item_right">
@@ -179,7 +169,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
             </ul>
           </aside>
           <Messages
-            recipient={recipient}
+            recipient={messages}
             innerSidebar={innerSidebar}
             setInnerSidebar={setInnerSidebar}
           />
