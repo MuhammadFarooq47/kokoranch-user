@@ -4,14 +4,25 @@ import { FaRegPaperPlane, FaBars } from "react-icons/fa";
 import Images from "../../../../constants/images";
 import { useEffect } from "react";
 import axios from "axios";
+import {io} from "socket.io-client";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+
+const socket = io.connect('http://192.168.100.75:3030');
 
 export default function Messages(props) {
   // console.log("Prop......", props)
-  const { recipient } = props; // recipient is the user who is currently chatting with
+  const { recipient, filteredRoom } = props; // recipient is the user who is currently chatting with
   // const { user, token } = useSelector((state) => state.authReducer); // CURRENT USER
-  console.log(recipient, "receipt.........")
+  console.log(filteredRoom, "receipt.........")
 
+  const location = useLocation();
+  console.log("location", location);
+  // console.log("lastMessage??????", location?.state?.user2?.email);
+  const {user} = useSelector((state) => state?.authReducer);
+// console.log("User", user)
   const [message, setMessage] = useState(""); // new message
+  console.log("🚀 ~ file: chat.js:25 ~ Messages ~ message:", message)
   // const [messages, setMessages] = useState([
   //   { message: "hello", sendBy: "niaz" },
   // ]); // all messages
@@ -26,26 +37,47 @@ export default function Messages(props) {
   // const [id, setId] = useState();
   // console.log("ID<<<<<<<<<<<<<<", id)
 
-const [messages, setMessages] = useState();
+const [messages, setMessages] = useState([]);
 console.log("messages", messages)
 
-// const id = recipient?.data[0]?._id;
-// const [roomId, setRoomId] = useState(recipient?.data[0]?._id)
-// console.log(recipient?.data[0]?._id)
+const sendMessage = () => {
+  let msg,msgTo,roomId,currentUser;
+socket.emit('msg',
+  msg={
+    text: message,
+    user:{
+      _id: user?._id,
+      // avatar: user?.photo,
+      avatar: user?.photo,
+      name: `${user?.firstName} ${user?.lastName}`
+    }
+  },
+  msgTo= filteredRoom?.user2?._id,
+  roomId=filteredRoom?._id,
+ currentUser=user?.role
+ )
+}
 
-//   useEffect(async () => {
-// try {
-// const response = axios.get(`http://192.168.100.75:3030/api/v1/chats/single-chat?room=6566e0f517264e9165d8c850`, {
-//     headers : {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//     }
-//   });
-//   setMessages(response?.data)
-// console.log(response, "kkkkkkk")
-// } catch (error) {
-//   console.log("Error from rooms", error)
-// }
-//   }, [roomId])
+useEffect(() => {
+  console.log("Vendor UseEfect")
+  // const socket = io.connect('http://192.168.100.75:3030');
+
+  // Listen for incoming messages
+  socket.on('msg', (msg, roomId) => {
+    // Handle the incoming message
+    console.log('User Incoming Message:', msg, roomId);
+
+    // Update the state with the new message
+    setMessages((prevMessages) => [...prevMessages, msg]);
+  });
+
+  // Cleanup by removing the event listener when the component unmounts
+  // return () => {
+  //   socket.off('msg');
+  // };
+}, [socket]);
+
+
 
   return (
     <>
@@ -129,7 +161,10 @@ console.log("messages", messages)
             <button
               className="btn"
               disabled={message.length === 0}
-              onClick={onsubmit}
+              onClick={() => {
+                sendMessage();
+                // socketOn();
+              }}
             >
               <FaRegPaperPlane />
             </button>

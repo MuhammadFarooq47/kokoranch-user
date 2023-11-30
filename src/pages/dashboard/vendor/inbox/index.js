@@ -5,14 +5,17 @@ import { FaEllipsisV } from "react-icons/fa";
 import { useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import {io} from "socket.io-client";
+import { io } from "socket.io-client";
+import { Link } from "react-router-dom";
 
 const socket = io.connect("http://192.168.100.75:3030");
 
 export default function MyProfile({ setSidebar, sidebar }) {
   const [innerSidebar, setInnerSidebar] = useState(true);
   const { user } = useSelector((state) => state.authReducer);
-  console.log("user", user)
+  const [filteredRoom,setFilteredRoom]=useState()
+  console.log("🚀 ~ file: index.js:17 ~ MyProfile ~ filteredRoom:", filteredRoom)
+
   const [recipient, setRecipient] = useState({});
   // handle classchange on active recipient
   const handleClassChange = (e) => {
@@ -21,15 +24,15 @@ export default function MyProfile({ setSidebar, sidebar }) {
       elem.classList.remove("recipient-item-active");
     });
     e.target.tagName === "IMG" ||
-    e.target.tagName === "H2" ||
-    e.target.tagName === "H3" ||
-    e.target.tagName === "SPAN"
+      e.target.tagName === "H2" ||
+      e.target.tagName === "H3" ||
+      e.target.tagName === "SPAN"
       ? e.target.parentElement.parentElement.parentElement.classList.add(
-          "recipient-item-active"
-        )
+        "recipient-item-active"
+      )
       : e.target.tagName === "LI"
-      ? e.target.classList.add("recipient-item-active")
-      : e.target.parentElement.parentElement.classList.add(
+        ? e.target.classList.add("recipient-item-active")
+        : e.target.parentElement.parentElement.classList.add(
           "recipient-item-active"
         );
   };
@@ -40,8 +43,8 @@ export default function MyProfile({ setSidebar, sidebar }) {
       e.target.tagName === "path"
         ? e.target.parentElement.parentElement.childNodes
         : e.target.tagName === "svg"
-        ? e.target.parentElement.childNodes
-        : e.target.childNodes[1]
+          ? e.target.parentElement.childNodes
+          : e.target.childNodes[1]
     );
     // const elems = document.querySelectorAll(".chat-dropdown-delete-btn");
     // elems.forEach((elem) => {
@@ -49,23 +52,28 @@ export default function MyProfile({ setSidebar, sidebar }) {
     // });
     e.target.tagName === "path"
       ? e.target.parentElement.parentElement.childNodes[2].classList.toggle(
-          "chat-dropdown-delete-btn_active"
-        )
+        "chat-dropdown-delete-btn_active"
+      )
       : e.target.tagName === "svg"
-      ? e.target.parentElement.childNodes[2].classList.toggle(
+        ? e.target.parentElement.childNodes[2].classList.toggle(
           "chat-dropdown-delete-btn_active"
         )
-      : e.target.childNodes[2].classList.toggle(
+        : e.target.childNodes[2].classList.toggle(
           "chat-dropdown-delete-btn_active"
         );
   };
 
   const [lastMessage, setLastMessage] = useState();
-  console.log("lastMessage??????", lastMessage?.data.at(-1));
+  // console.log("lastMessage??????", lastMessage?.data.at(-1));
+  const [specificData, setSpecificData] = useState();
+
+  // {lastMessage.map((roomdata) => {
+  //   console.log("Room data", roomdata)
+  // })}
 
   useEffect(async () => {
     try {
-    
+
       const response = await axios.get(
         "http://192.168.100.75:3030/api/v1/chats/rooms",
         {
@@ -74,21 +82,18 @@ export default function MyProfile({ setSidebar, sidebar }) {
           },
         }
       );
-      setLastMessage(response?.data);
-      console.log("Response chats rooms", response);
-    } catch (error) {
+      setLastMessage(response?.data);    } catch (error) {
       console.log(error, "error from chat room");
     }
   }, []);
 
   const [roomId, setRoomId] = useState(lastMessage?.data[0]?._id);
   const [messages, setMessages] = useState();
-  console.log("RoomID", messages);
 
   const roomFunction = async () => {
     try {
       socket.emit("chatJoin", user?._id, '6566e0f517264e9165d8c850')
-      socket.emit("mark-as-read",'6566e0f517264e9165d8c850',user?.role)
+      socket.emit("mark-as-read", '6566e0f517264e9165d8c850', user?.role)
       const response = await axios.get(
         `http://192.168.100.75:3030/api/v1/chats/single-chat?room=6566e0f517264e9165d8c850`,
         {
@@ -98,13 +103,17 @@ export default function MyProfile({ setSidebar, sidebar }) {
         }
       );
       setMessages(response?.data);
-      console.log(response?.data, "kkkkkkk");
+
+      const filteredRoomData=lastMessage?.data.find((ele)=>ele?._id=="6566e0f517264e9165d8c850")
+      console.log("🚀 ~ file: index.js:111 ~ roomFunction ~ filteredRoomData:", filteredRoomData)
+
+      setFilteredRoom(filteredRoomData);
+
     } catch (error) {
       console.log("Error from rooms", error);
     }
   };
 
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -117,12 +126,14 @@ export default function MyProfile({ setSidebar, sidebar }) {
                 className="chat-search-input form-control"
                 placeholder="Search for contacts"
               />
-              <div
+              <Link
                 className="edit-product-container"
                 style={{ height: "70vh", overflowY: "scroll" }}
                 onClick={roomFunction}
+                state={filteredRoom}
               >
                 {lastMessage?.data?.map((element, index) => {
+                
                   return (
                     <li
                       key={index}
@@ -138,15 +149,16 @@ export default function MyProfile({ setSidebar, sidebar }) {
                             src={element?.lastMessage?.user?.avatar}
                             alt="User"
                           />
-                          <span className="unread-count">
-                            {user?.role == "user"
-                              ? element?.user2UnreadCount
-                              : element?.user1UnreadCount}
-                          </span>
+
+                          {element?.user2UnreadCount !== 0 && (
+                            <span className="unread-count">
+                              {user?.role === "user" ? element?.user2UnreadCount : element?.user1UnreadCount}
+                            </span>
+                          )}
                         </div>
                         <div>
                           <h2 className="name-div">
-                            {element?.lastMessage?.user?.name}{" "}
+                          {user?.role === "user" ? element?.user1?.firstName : element?.user2?.firstName}
                             <span>25 min</span>
                           </h2>
                           <h3> {element?.lastMessage?.text} </h3>
@@ -165,11 +177,12 @@ export default function MyProfile({ setSidebar, sidebar }) {
                     </li>
                   );
                 })}
-              </div>
+              </Link>
             </ul>
           </aside>
           <Messages
             recipient={messages}
+            filteredRoom={filteredRoom}
             innerSidebar={innerSidebar}
             setInnerSidebar={setInnerSidebar}
           />

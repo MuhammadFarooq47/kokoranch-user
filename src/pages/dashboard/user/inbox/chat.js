@@ -1,95 +1,141 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaRegPaperPlane, FaBars } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { GET, POST } from "../../../../apis/requests";
-import { io } from "socket.io-client";
-import { BASE_URL } from "../../../../apis/constant";
+// import { useSelector } from "react-redux";
 import Images from "../../../../constants/images";
+import { useEffect } from "react";
+import axios from "axios";
+import {io} from "socket.io-client";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+
+const socket = io.connect('http://192.168.100.75:3030');
 
 export default function Messages(props) {
-  const { recipient } = props; // recipient is the user who is currently chatting with
-  const { user, token } = useSelector((state) => state.authReducer); // CURRENT USER
+  // console.log("Prop......", props)
+  const { recipient, filteredRoom } = props; // recipient is the user who is currently chatting with
+  // const { user, token } = useSelector((state) => state.authReducer); // CURRENT USER
+  console.log(filteredRoom, "receipt.........")
+
+  const location = useLocation();
+  console.log("location", location);
+  // console.log("lastMessage??????", location?.state?.user2?.email);
+  const {user} = useSelector((state) => state?.authReducer);
+// console.log("User", user)
   const [message, setMessage] = useState(""); // new message
-  const [messages, setMessages] = useState([]); // all messages
+  console.log("🚀 ~ file: chat.js:25 ~ Messages ~ message:", message)
+  // const [messages, setMessages] = useState([
+  //   { message: "hello", sendBy: "niaz" },
+  // ]); // all messages
 
-  // CONNECTING WITH SOCKET & GETIING MESSAGES
-  useEffect(() => {
-    const socket = io(BASE_URL); // socket connection
-    // RESPONSE
-    recipient?._id && // CHEING IF RECIPIENT IS NOT NULL
-      GET(`/chats/get/`, token, recipient._id) // request to get messages
-        .then((res) => {
-          console.log(res);
-          setMessages(res.chat);
-        })
-        .catch((err) => {
-          toast.error(err.message);
-        });
+  // const onsubmit = () => {
+  //   // let arr = [...messages];
+  //   arr.push({ message: message, sendby: "niaz" });
+  //   // setMessages(arr);
+  //   // setMessage("");
+  // };
 
-    return () => {
-      socket.disconnect(); // disconnecting socket when component unmounts
-    };
-  }, [recipient]); // eslint-disable-line react-hooks/exhaustive-deps
+  // const [id, setId] = useState();
+  // console.log("ID<<<<<<<<<<<<<<", id)
 
-  const onsubmit = (e) => {
-    e.preventDefault();
-    // CHECKING IF MESSAGE IS EMPTY
-    if (message.trim() !== "") {
-      const data = {
-        message: message,
-        recipient: recipient._id,
-        sender: user._id,
-      }; // data to be sent to server
+const [messages, setMessages] = useState();
+console.log("messages", messages)
 
-      POST("/chats/create", token, data)
-        .then((res) => {
-          if (res.success) {
-            setMessages([...messages, res.message]);
-            setMessage("");
-          } else {
-            toast.error(res.message);
-          }
-        })
-        .catch((err) => toast.error(err.message));
+const sendMessage = () => {
+  let msg,msgTo,roomId,currentUser;
+socket.emit('msg',
+  msg={
+    text: message,
+    user:{
+      _id: user?._id,
+      // avatar: user?.photo,
+      avatar: user?.photo,
+      name: `${user?.firstName} ${user?.lastName}`
     }
-  };
+  },
+  msgTo= filteredRoom?.user1?._id,
+  roomId=filteredRoom?._id,
+ currentUser=user?.role
+ )
+}
+
+useEffect(() => {
+  console.log("User UseEffect!!!!!!!!!!")
+  // const socket = io.connect('http://192.168.100.75:3030');
+
+  // Listen for incoming messages
+  socket.on('msg', (data) => {
+    // Handle the incoming message
+    console.log('User Incoming Message:', data);
+
+    // Update the state with the new message
+    setMessages((prevMessages) => [...prevMessages, data?.msg]);
+  });
+
+  // Cleanup by removing the event listener when the component unmounts
+  // return () => {
+  //   socket.off('msg');
+  // };
+}, [socket]);
+
+  // useEffect(() => {
+  //   socket.on('msg', (msg,roomId) => setMessages([...messages, msg,roomId]));
+  //   console.log(msg,roomId)
+  // }, [socket, messages]);
+
+  const socketOn = () => {
+    socket.on('msg', (msg,roomId) => {
+      // Handle the incoming message, you can update the state or perform any actions
+      console.log('Vendor Incoming Message:',msg,roomId)})
+  }
+
   return (
     <>
-      <main>
+      <main style={{ height: "78vh" }}>
         <header>
-          <nav className="navbar top-navbar ">
-            <div
-              className="border-0 mx-4"
-              id="menu-btn"
-              onClick={() => {
-                props.setSidebar(!props.sidebar);
-              }}
-            >
-              <FaBars />
+          <nav className="navbar ">
+            <div className="navbar_left">
+              <div
+                className=" border-0 mx-4"
+                id="menu-btn"
+                onClick={() => {
+                  props.setInnerSidebar(!props.innerSidebar);
+                }}
+              >
+                <FaBars />
+              </div>
+              {recipient?.image && (
+                <img src={recipient?.image} width={55} height={55} alt="" />
+              )}
+              <div className="info-wrapper">
+                <h2 className="fs-2">
+                  {recipient?.firstName} {recipient?.lastName}
+                </h2>
+                <h4 className="fs-4">offline 45 min ago</h4>
+              </div>
             </div>
-            <img src={recipient.image} width={55} height={55} alt="" />
-            <div className="info-wrapper">
-              <h2>
-                {recipient.firstName} {recipient.lastName}
-              </h2>
-              <h3>offline 45 min ago</h3>
+            <div className="navbar_right">
+              <button className="btn btn-solid btn-solid-primary">
+                Delete
+              </button>
             </div>
           </nav>
         </header>
-        <ul id="chat">
-          {messages.length > 0 ? (
-            messages.map((element, index) => {
+        <ul id="chat" className="bg-black-pad my-5 " style={{ height: "60vh" }}>
+          {recipient?.data?.length > 0 ? (
+            recipient?.data?.map((element, index) => {
+              console.log(element)
               return (
                 <div>
                   <li className="you" key={index}>
                     <div className="message">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                      Aenean commodo ligula eget dolor.
+                     {element?.text}
                     </div>
                   </li>
                   <li className="me">
-                    <div className="message">{element.message}</div>
+                    <div className="message">
+                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                      Aenean commodo ligula eget dolor.
+                    </div>
                   </li>
                 </div>
               );
@@ -98,15 +144,14 @@ export default function Messages(props) {
             <div className="d-flex justify-content-center  align-items-center">
               <center>
                 <img
-                  src={Images.Pictures.chat}
+                  src={Images?.Pictures?.chat}
                   alt="misssing chat"
-                  width={230}
-                  height={230}
+                  style={{ width: "20rem", height: "17rem" }}
                 />
                 <br />
                 <p className="mt-4">
-                  You Haven't Started a Convesaton with {recipient.firstName}{" "}
-                  {recipient.lastName}
+                  You Haven't Started a Convesaton with {recipient?.firstName}{" "}
+                  {recipient?.lastName}
                 </p>
               </center>
             </div>
@@ -118,18 +163,19 @@ export default function Messages(props) {
             <textarea
               rows="1"
               name="message"
-              onChange={(e) => setMessage(e.target.value)}
               value={message}
+              onChange={(e) => setMessage(e.target.value)}
               placeholder="Type your message here..."
-            >
-              {message}
-            </textarea>
+            ></textarea>
             <button
               className="btn"
               disabled={message.length === 0}
-              onClick={onsubmit}
+              onClick={() => {
+                sendMessage();
+                // socketOn();
+              }}
             >
-              <FaRegPaperPlane style={{ size: "2rem" }} />
+              <FaRegPaperPlane />
             </button>
           </div>
         </footer>
