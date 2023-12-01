@@ -1,4 +1,4 @@
-import ActionTypes from "../constant/index";
+ import ActionTypes from "../constant/index";
 
 const initial_state = {
   isAuthenticated: false,

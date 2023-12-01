@@ -102,7 +102,7 @@ const REGISTER = (credentials, setLoading, navigate) => {
       // toast.error("An error occurred during registration.", error?.response?.data?.message);
       console.log("Registration error ==>>>", error?.response?.data?.message);
       console.log("Error ==================", error);
-    } 
+    }
   };
 };
 
@@ -126,7 +126,7 @@ const VENDOR_TRADER_REGISTER = (credentials, setLoading, navigate) => {
       // toast.error("An error occurred during registration.", error?.statusCode);
       console.log("Register message Error ==>>>", error?.response?.message);
       // console.log("Error ==================", error);
-    } 
+    }
   };
 };
 

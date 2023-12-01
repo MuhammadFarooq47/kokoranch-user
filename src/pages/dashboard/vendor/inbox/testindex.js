@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Messages from "./chat";
 import Navbar from "../NavBar";
 import { FaEllipsisV } from "react-icons/fa";
@@ -11,11 +11,10 @@ import { Link } from "react-router-dom";
 const socket = io.connect("http://192.168.100.75:3030");
 
 export default function MyProfile({ setSidebar, sidebar }) {
-  const socketRef = useRef(null)
   const [innerSidebar, setInnerSidebar] = useState(true);
   const { user } = useSelector((state) => state.authReducer);
   const [filteredRoom,setFilteredRoom]=useState()
-  // console.log("🚀 ~ file: index.js:17 ~ MyProfile ~ filteredRoom:", filteredRoom)
+  console.log("🚀 ~ file: index.js:17 ~ MyProfile ~ filteredRoom:", filteredRoom)
 
   const [recipient, setRecipient] = useState({});
   // handle classchange on active recipient
@@ -72,7 +71,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
   //   console.log("Room data", roomdata)
   // })}
 
-  const getRooms = async () => {
+  useEffect(async () => {
     try {
 
       const response = await axios.get(
@@ -86,29 +85,6 @@ export default function MyProfile({ setSidebar, sidebar }) {
       setLastMessage(response?.data);    } catch (error) {
       console.log(error, "error from chat room");
     }
-  }
-
-  // useEffect(async () => {
-  //   try {
-
-  //     const response = await axios.get(
-  //       "http://192.168.100.75:3030/api/v1/chats/rooms",
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     setLastMessage(response?.data);    } catch (error) {
-  //     console.log(error, "error from chat room");
-  //   }
-  // }, []);
-
-  useEffect(() => {
-    getRooms();
-    socketRef.current = io("http://192.168.100.75:3030");
-  
-    socketRef?.current?.emit("join", user?._id);
   }, []);
 
   const [roomId, setRoomId] = useState(lastMessage?.data[0]?._id);
@@ -116,10 +92,10 @@ export default function MyProfile({ setSidebar, sidebar }) {
 
   const roomFunction = async () => {
     try {
-      socketRef?.current.emit("chatJoin", user?._id, '6569ab8d078c201299775b5c')
-      socketRef?.current.emit("mark-as-read", '6569ab8d078c201299775b5c', user?.role)
+      socket.emit("chatJoin", user?._id, '6566e0f517264e9165d8c850')
+      socket.emit("mark-as-read", '6566e0f517264e9165d8c850', user?.role)
       const response = await axios.get(
-        `http://192.168.100.75:3030/api/v1/chats/single-chat?room=6569ab8d078c201299775b5c`,
+        `http://192.168.100.75:3030/api/v1/chats/single-chat?room=6566e0f517264e9165d8c850`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -128,7 +104,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
       );
       setMessages(response?.data);
 
-      const filteredRoomData=lastMessage?.data.find((ele)=>ele?._id=="6569ab8d078c201299775b5c")
+      const filteredRoomData=lastMessage?.data.find((ele)=>ele?._id=="6566e0f517264e9165d8c850")
       console.log("🚀 ~ file: index.js:111 ~ roomFunction ~ filteredRoomData:", filteredRoomData)
 
       setFilteredRoom(filteredRoomData);

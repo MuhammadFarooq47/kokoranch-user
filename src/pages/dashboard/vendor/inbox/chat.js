@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaRegPaperPlane, FaBars } from "react-icons/fa";
 // import { useSelector } from "react-redux";
 import Images from "../../../../constants/images";
@@ -11,71 +11,64 @@ import { useLocation } from "react-router-dom";
 const socket = io.connect('http://192.168.100.75:3030');
 
 export default function Messages(props) {
-  // console.log("Prop......", props)
-  const { recipient, filteredRoom } = props; // recipient is the user who is currently chatting with
-  // const { user, token } = useSelector((state) => state.authReducer); // CURRENT USER
-  console.log(filteredRoom, "receipt.........")
-
+  const { recipient, filteredRoom } = props;
   const location = useLocation();
-  console.log("location", location);
-  // console.log("lastMessage??????", location?.state?.user2?.email);
-  const {user} = useSelector((state) => state?.authReducer);
-// console.log("User", user)
-  const [message, setMessage] = useState(""); // new message
-  console.log("🚀 ~ file: chat.js:25 ~ Messages ~ message:", message)
-  // const [messages, setMessages] = useState([
-  //   { message: "hello", sendBy: "niaz" },
-  // ]); // all messages
+  const { user } = useSelector((state) => state?.authReducer);
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
+  const messagesRef = useRef(messages);
+  const socketRef = useRef(io('http://192.168.100.75:3030'));
 
-  // const onsubmit = () => {
-  //   // let arr = [...messages];
-  //   arr.push({ message: message, sendby: "niaz" });
-  //   // setMessages(arr);
-  //   // setMessage("");
-  // };
 
-  // const [id, setId] = useState();
-  // console.log("ID<<<<<<<<<<<<<<", id)
+  const sendMessage = () => {
+    let msg,msgTo,roomId,currentUser;
+    socketRef.current.emit('msg',
+    msg={
+      text: message,
+      user:{
+        _id: user?._id,
+        // avatar: user?.photo,
+        avatar: user?.photo,
+        name: `${user?.firstName} ${user?.lastName}`
+      }
+    },
+    msgTo= filteredRoom?.user2?._id,
+    roomId=filteredRoom?._id,
+   currentUser=user?.role
+   )
 
-const [messages, setMessages] = useState([]);
-console.log("messages", messages)
+   // On method
+socketRef.current.on('msg', (data) => {
+  console.log('User Incoming Message:', data);
+  setMessages((prevMessages) => [...prevMessages, data]);
+ });
+  }
 
-const sendMessage = () => {
-  let msg,msgTo,roomId,currentUser;
-socket.emit('msg',
-  msg={
-    text: message,
-    user:{
-      _id: user?._id,
-      // avatar: user?.photo,
-      avatar: user?.photo,
-      name: `${user?.firstName} ${user?.lastName}`
-    }
-  },
-  msgTo= filteredRoom?.user2?._id,
-  roomId=filteredRoom?._id,
- currentUser=user?.role
- )
-}
 
-useEffect(() => {
-  console.log("Vendor UseEfect")
-  // const socket = io.connect('http://192.168.100.75:3030');
+  useEffect(() => {
+    // Update messagesRef whenever messages change
+    messagesRef.current = messages;
 
-  // Listen for incoming messages
-  socket.on('msg', (msg, roomId) => {
-    // Handle the incoming message
-    console.log('User Incoming Message:', msg, roomId);
+    // Initialize the socket connection
+    // socketRef.current = io('http://192.168.100.75:3030');
 
-    // Update the state with the new message
-    setMessages((prevMessages) => [...prevMessages, msg]);
-  });
+    // Listen for incoming messages
+    socketRef.current.on('msg', (data) => {
+      console.log('Vendor Incoming Message:', data);
 
-  // Cleanup by removing the event listener when the component unmounts
-  // return () => {
-  //   socket.off('msg');
-  // };
-}, [socket]);
+      // Update the state with the new message
+      setMessages((prevMessages) => [...prevMessages, data]);
+    });
+
+    // Clean up the socket connection when the component unmounts
+    return () => {
+      socketRef.current.disconnect();
+      socketRef.current.off('msg'); // Remove the event listener
+    };
+  }, []);
+
+
+
 
 
 
@@ -114,7 +107,7 @@ useEffect(() => {
         <ul id="chat" className="bg-black-pad my-5 " style={{ height: "60vh" }}>
           {recipient?.data?.length > 0 ? (
             recipient?.data?.map((element, index) => {
-              console.log(element)
+              // console.log(element)
               return (
                 <div>
                   <li className="you" key={index}>
@@ -159,12 +152,10 @@ useEffect(() => {
               placeholder="Type your message here..."
             ></textarea>
             <button
+            type="submit"
               className="btn"
               disabled={message.length === 0}
-              onClick={() => {
-                sendMessage();
-                // socketOn();
-              }}
+              onClick={sendMessage}
             >
               <FaRegPaperPlane />
             </button>
