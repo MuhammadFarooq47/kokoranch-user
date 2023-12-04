@@ -8,7 +8,7 @@ import {io} from "socket.io-client";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-const socket = io.connect('http://192.168.100.75:3030');
+const socket = io.connect('http://192.168.100.33:3030');
 
 export default function Messages(props) {
   // console.log("Prop......", props)
@@ -60,7 +60,7 @@ socket.emit('msg',
 
 useEffect(() => {
   console.log("Vendor UseEfect")
-  // const socket = io.connect('http://192.168.100.75:3030');
+  // const socket = io.connect('http://192.168.100.33:3030');
 
   // Listen for incoming messages
   socket.on('msg', (msg, roomId) => {

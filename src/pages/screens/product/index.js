@@ -281,7 +281,7 @@ export default function Product({ isFavorite }) {
   console.log("Message", message)
   const sendMessage = async () => {
     try {
-      const response = await axios.post('http://192.168.100.75:3030/api/v1/chats/send-message', {
+      const response = await axios.post('http://192.168.100.33:3030/api/v1/chats/send-message', {
         to: currentProduct?.user?._id, 
         from: user?._id, 
         message: {

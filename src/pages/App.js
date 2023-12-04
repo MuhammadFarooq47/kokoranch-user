@@ -12,7 +12,7 @@ import "../assets/styles/Sass/globals.scss";
 import "react-toastify/dist/ReactToastify.css";
 import SocketIo from "socket.io-client";
 
-// const socket = SocketIo.connect("http://192.168.100.75:3030");
+// const socket = SocketIo.connect("http://192.168.100.33:3030");
 // console.log("🚀 ~ file: App.js:16 ~ socket:", socket);
 
 function App() {

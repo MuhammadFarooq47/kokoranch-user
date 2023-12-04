@@ -24,7 +24,7 @@ import {SiGumtree} from "react-icons/si";
 import {IoSettingsSharp} from "react-icons/io5";
 import { io } from "socket.io-client";
 
-const socket = io.connect("http://192.168.100.75:3030");
+const socket = io.connect("http://192.168.100.33:3030");
 
 export default function VendorSideBar({ children }) {
   const {user} = useSelector((state) => state.authReducer)

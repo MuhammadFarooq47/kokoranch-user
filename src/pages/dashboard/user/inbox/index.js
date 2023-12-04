@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Messages from "./chat";
+import ChatFooter from "./ChatFooter";
 // import Navbar from "../NavBar";
 import { FaEllipsisV } from "react-icons/fa";
 import { useEffect, useRef } from "react";
@@ -9,7 +10,7 @@ import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 import UserSideMenu from "../../../../components/userSideMenu";
 
-const socket = io.connect("http://192.168.100.75:3030");
+const socket = io.connect("http://192.168.100.33:3030");
 
 export default function MyProfile({ setSidebar, sidebar }) {
   const [innerSidebar, setInnerSidebar] = useState(true);
@@ -78,7 +79,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
     try {
 
       const response = await axios.get(
-        "http://192.168.100.75:3030/api/v1/chats/rooms",
+        "http://192.168.100.33:3030/api/v1/chats/rooms",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -90,39 +91,24 @@ export default function MyProfile({ setSidebar, sidebar }) {
     }
   }
 
-  // useEffect(async () => {
-  //   try {
-
-  //     const response = await axios.get(
-  //       "http://192.168.100.75:3030/api/v1/chats/rooms",
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     setLastMessage(response?.data);    } catch (error) {
-  //     console.log(error, "error from chat room");
-  //   }
-  // }, []);
-
   useEffect(() => {
     getRooms();
-    socketRef.current = io("http://192.168.100.75:3030");
+    socketRef.current = io("http://192.168.100.33:3030");
   
-    socketRef?.current?.emit("join", user?._id);
+   socket.emit("join", user?._id);
   }, []);
   
 
   const [roomId, setRoomId] = useState(lastMessage?.data[0]?._id);
   const [messages, setMessages] = useState();
+  const [socketMessages, setSocketMessages] = useState([])
 
   const roomFunction = async () => {
     try {
-      socketRef.current.emit("chatJoin", user?._id, '6569ab8d078c201299775b5c')
-      socketRef.current.emit("mark-as-read", '6569ab8d078c201299775b5c', user?.role)
+      socket.emit("chatJoin", user?._id, '6569ab8d078c201299775b5c')
+      socket.emit("mark-as-read", '6569ab8d078c201299775b5c', user?.role)
       const response = await axios.get(
-        `http://192.168.100.75:3030/api/v1/chats/single-chat?room=6569ab8d078c201299775b5c`,
+        `http://192.168.100.33:3030/api/v1/chats/single-chat?room=6569ab8d078c201299775b5c`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -140,6 +126,28 @@ export default function MyProfile({ setSidebar, sidebar }) {
       console.log("Error from rooms", error);
     }
   };
+
+  useEffect(() => {
+    // Update messagesRef whenever messages change
+    // messagesRef.current = messages;
+
+    // Initialize the socket connection
+    // socket = io('http://192.168.100.33:3030');
+
+    // Listen for incoming messages
+    socket.on('msg', (msg) => {
+      console.log('Vendor Incoming Message:', msg);
+
+      // Update the state with the new message
+      setSocketMessages([...socketMessages, msg]);
+    });
+
+    // Clean up the socket connection when the component unmounts
+    // return () => {
+    //   socket.disconnect();
+    //   socket.off('msg'); // Remove the event listener
+    // };
+  }, [ socket, socketMessages]);
 
 
   return (
@@ -161,6 +169,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
                 state={filteredRoom}
               >
                 {lastMessage?.data?.map((element, index) => {
+                // console.log("🚀 ~ file: index.js:164 ~ {lastMessage?.data?.map ~ element:", element)
                 
                   return (
                     <li
@@ -174,7 +183,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
                       <div className="recipient-item_left">
                         <div className="image-wrapper">
                           <img
-                            src={element?.lastMessage?.user?.avatar}
+                            src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${element?.user1?.photo}`}
                             alt="User"
                           />
 
@@ -208,12 +217,20 @@ export default function MyProfile({ setSidebar, sidebar }) {
               </Link>
             </ul>
           </aside>
+          <main style={{ height: "78vh" }}>
           <Messages
             recipient={messages}
+            socketMessages= {socketMessages}
+            socket={socket}
             filteredRoom={filteredRoom}
             innerSidebar={innerSidebar}
             setInnerSidebar={setInnerSidebar}
           />
+          <ChatFooter 
+          socket={socket}
+          filteredRoom={filteredRoom}
+          />
+          </main>
         </div>
       </div>
       </UserSideMenu>

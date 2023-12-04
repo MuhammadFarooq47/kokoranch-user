@@ -7,64 +7,97 @@ import axios from "axios";
 import {io} from "socket.io-client";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import ChatFooter from "./ChatFooter";
 
-const socket = io.connect('http://192.168.100.75:3030');
+// const socket = io.connect('http://192.168.100.33:3030');
 
 export default function Messages(props) {
-  const { recipient, filteredRoom } = props;
-  const location = useLocation();
-  const { user } = useSelector((state) => state?.authReducer);
-  const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState('');
-  const messagesRef = useRef(messages);
-  const socketRef = useRef(io('http://192.168.100.75:3030'));
+  const { recipient, filteredRoom, socketMessages, socket } = props;
+  console.log("🚀 ~ file: chat.js:15 ~ Messages ~ socketMessages:", socketMessages)
+  console.log("🚀 ~ file: chat.js:15 ~ Messages ~ recipient:", recipient)
 
-  const sendMessage = () => {
-    let msg,msgTo,roomId,currentUser;
-    socketRef.current.emit('msg',
-    msg={
-      text: message,
-      user:{
-        _id: user?._id,
-        // avatar: user?.photo,
-        avatar: user?.photo,
-        name: `${user?.firstName} ${user?.lastName}`
+  // console.log("🚀 ~ file: chat.js:15 ~ Messages ~ recipient:", recipient)
+  // const location = useLocation();
+  // const { user } = useSelector((state) => state?.authReducer);
+  // const [messages, setMessages] = useState([]);
+  // const [message, setMessage] = useState('');
+  // const messagesRef = useRef(messages);
+  // console.log("🚀 ~ file: chat.js:20 ~ Messages ~ messagesRef:", messagesRef)
+  // const socketRef = useRef(io('http://192.168.100.33:3030'));
+
+
+//   const sendMessage = () => {
+//     let msg,msgTo,roomId,currentUser;
+   
+//     socket.emit('msg',
+//     msg={
+//       text: message,
+//       user:{
+//         _id: user?._id,
+//         // avatar: user?.photo,
+//         avatar: user?.photo,
+//         name: `${user?.firstName} ${user?.lastName}`
+//       }
+//     },
+//     msgTo= filteredRoom?.user2?._id,
+//     roomId=filteredRoom?._id,
+//    currentUser=user?.role
+//    )
+//    console.log("🚀 ~ file: chat.js:27 ~ sendMessage ~ msg,msgTo,roomId,currentUser;:", msg,msgTo,roomId,currentUser)
+//    // On method
+// socket.on('msg', (msg) => {
+//   console.log('User Incoming Message:', msg);
+//   setMessages((prevMessages) => [...prevMessages, msg]);
+//  });
+//   }
+
+
+  // useEffect(() => {
+  //   // Update messagesRef whenever messages change
+  //   messagesRef.current = messages;
+
+  //   // Initialize the socket connection
+  //   // socket = io('http://192.168.100.33:3030');
+
+  //   // Listen for incoming messages
+  //   socket.on('msg', (msg) => {
+  //     console.log('Vendor Incoming Message:', msg);
+
+  //     // Update the state with the new message
+  //     setMessages((prevMessages) => [...prevMessages, msg]);
+  //   });
+
+  //   // Clean up the socket connection when the component unmounts
+  //   // return () => {
+  //   //   socket.disconnect();
+  //   //   socket.off('msg'); // Remove the event listener
+  //   // };
+  // }, [ socket, messages]);
+  const [message, setMessage] = useState("")
+    const { user } = useSelector((state) => state?.authReducer);
+    // const {  filteredRoom, socket } = props;
+
+    
+    const sendMessage = () => {
+        let msg,msgTo,roomId,currentUser;
+       
+        socket.emit('msg',
+        msg={
+          text: message,
+          user:{
+            _id: user?._id,
+            // avatar: user?.photo,
+            avatar: user?.photo,
+            name: `${user?.firstName} ${user?.lastName}`
+          }
+        },
+        msgTo= filteredRoom?.user2?._id,
+        roomId=filteredRoom?._id,
+       currentUser=user?.role
+       )
+       console.log("🚀 ~ file: chat.js:27 ~ sendMessage ~ msg,msgTo,roomId,currentUser;:", msg,msgTo,roomId,currentUser)
+       // On method
       }
-    },
-    msgTo= filteredRoom?.user2?._id,
-    roomId=filteredRoom?._id,
-   currentUser=user?.role
-   )
-
-   // On method
-socketRef.current.on('msg', (data) => {
-  console.log('User Incoming Message:', data);
-  setMessages((prevMessages) => [...prevMessages, data]);
- });
-  }
-
-  useEffect(() => {
-    // Update messagesRef whenever messages change
-    messagesRef.current = messages;
-
-    // Initialize the socket connection
-    // socketRef.current = io('http://192.168.100.75:3030');
-
-    // Listen for incoming messages
-    socketRef.current.on('msg', (data) => {
-      console.log('Vendor Incoming Message:', data);
-
-      // Update the state with the new message
-      setMessages((prevMessages) => [...prevMessages, data]);
-    });
-
-    // Clean up the socket connection when the component unmounts
-    return () => {
-      socketRef.current.disconnect();
-      socketRef.current.off('msg'); // Remove the event listener
-    };
-  }, []);
-
 
   
   
@@ -137,8 +170,8 @@ socketRef.current.on('msg', (data) => {
             </div>
           )}
         </ul>
-
-        <footer>
+{/* <ChatFooter /> */}
+        {/* <footer>
           <div className="input-wrapper">
             <textarea
               rows="1"
@@ -156,7 +189,7 @@ socketRef.current.on('msg', (data) => {
               <FaRegPaperPlane />
             </button>
           </div>
-        </footer>
+        </footer> */}
       </main>
     </>
   );

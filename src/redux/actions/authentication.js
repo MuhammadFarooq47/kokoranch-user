@@ -7,7 +7,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import { SiSsrn } from "react-icons/si";
 
-const socket = io.connect("http://192.168.100.75:3030");
+const socket = io.connect("http://192.168.100.33:3030");
 
 const LOGIN = (credentials, setLoading, navigate) => {
   return async (dispatch) => {
