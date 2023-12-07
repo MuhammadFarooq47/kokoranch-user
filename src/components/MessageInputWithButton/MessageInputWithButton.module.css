@@ -1,0 +1,42 @@
+.relative {
+    position: relative;
+    /* background: rgb(45, 47, 49); */
+  }
+  .passConti_b{
+    /* background: rgb(45, 47, 49); */
+    
+  }
+  .relative input{
+    width: 85%;
+  }
+  
+  .sendBtnDiv {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+  }
+  
+  .sendIcon {
+    position: absolute;
+    right: 17%;
+    top: 34%;
+    color: var(--black-color);
+  }
+  
+  .agent {
+    position: absolute;
+    right: 21px;
+    top: 14px;
+  }
+  @media (max-width:1450px) {
+    .relative input{
+      width: 80%;
+    }
+    
+  }
+  @media (max-width:1200px) {
+    .relative input{
+      width: 70%;
+    }
+    
+  }

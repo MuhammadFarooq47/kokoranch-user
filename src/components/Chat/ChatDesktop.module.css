@@ -1,0 +1,366 @@
+.chatPage {
+  height: 100vh;
+  padding-top: 200px;
+  /* background: transparent
+    linear-gradient(180deg, #ffffff 0%, #fef3e2b5 49%, #ffffff 100%); */
+  background-image: url(../../assets/images/packageScreen-Bg-Image.png);
+  background-position: top center;
+  background-size: 100% 100%;
+}
+.btn_div {
+  border-bottom: 3px solid #bab8b8;
+  border-radius: 20px 20px;
+  height: 75px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  left: 0;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.container {
+  max-width: 80%;
+  padding: 0px;
+}
+
+.sendAgreementBtn {
+  padding: 8px 16px;
+  /* position: absolute;
+  top: 16px;
+  right: 16px; */
+}
+
+.header {
+  border: 1px solid var(--main-color);
+  box-shadow: 0px 3px 26px #0000001a;
+}
+
+.searchBoxSection {
+  margin-top: 51px;
+  margin-bottom: 30px;
+}
+
+.chatRooms {
+  /* min-height: 500px; */
+  background: var(--white-color);
+  box-shadow: 0px 0px 11px #2222221c;
+  border-radius: 20px;
+  overflow-y: auto;
+  height: calc(100vh - 260px);
+}
+
+/* Chat Room Box */
+
+.chatRoomBox {
+  width: 100%;
+  padding: 18px 16px;
+  cursor: pointer;
+}
+
+.SideRoomDiv {
+  display: flex;
+}
+
+.SideRoomDiv img {
+  background-color: #d3d3d3;
+}
+
+.selectedRoom {
+  background-color: var(--black-color);
+  border: 1px solid #f0e8e8;
+}
+
+.SideRoomInnerDiv {
+  margin-left: 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.chatRoomBox img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  /* margin-right: 15px; */
+}
+
+.nameAndMsg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.chatRoomBox h6 {
+  color: var(--text-color-black);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  font-size: 20px !important;
+  margin-bottom: 0px;
+}
+
+.chatRoomBox p {
+  font-size: 16px;
+  color: #7a7a7a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: -webkit-box; */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  width: 100px;
+
+}
+
+.timeAndCount {
+}
+
+.timeAndCount p {
+  font-size: 13px;
+  color: var(--text-color-black);
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+.selectedRoom h6,
+.selectedRoom p {
+  color: var(--white-color);
+}
+
+.selectedRoom .timeAndCount p {
+  color: var(--main-color);
+}
+
+/* Inbox */
+
+.inbox {
+  background: var(--white-color);
+  box-shadow: 0px 0px 11px #2222221c;
+  border-radius: 20px;
+  height: 100%;
+  /* padding: 38px; */
+  position: relative;
+}
+
+/* room messages */
+
+.roomMessage {
+  background: #000;
+  border-radius: 40px 40px 40px 0px;
+  padding: 25px 38px;
+  margin-left: 14px;
+  color: var(--text-color-black);
+  font-size: 18px;
+  font-family: "plus-jakarta-display-regular";
+  max-width: 548px;
+}
+
+.roomMessageimgDiv img {
+  width: 41px;
+  height: 41px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  background-color: #d3d3d3;
+}
+
+.roomMessageMainDiv {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 8px;
+}
+
+.time {
+  color: var(--text-color-gray);
+  margin-left: 55px;
+  font-size: 16px;
+  font-family: "plus-jakarta-display-regular";
+}
+
+.rightime {
+  color: var(--text-color-gray);
+  margin-right: 55px;
+  font-size: 16px;
+  font-family: "plus-jakarta-display-regular";
+  text-align: right;
+}
+
+.mb32 {
+  margin-bottom: 32px;
+}
+
+.noRoomSelected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 336px);
+}
+
+.noRoomInnerSelected {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.chattingDiv {
+  padding: 80px 38px 38px 38px;
+  height: calc(100vh - 318px);
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  /* overflow-x: scroll; */
+}
+
+.chattingDiv::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chattingDiv::-webkit-scrollbar-thumb {
+  width: 6px;
+  background-color: var(--sea-green);
+  border-radius: 20px;
+}
+
+.chattingDiv::-webkit-scrollbar-track {
+  width: 6px;
+  border-radius: 20px;
+  background-color: var(--dark-gray);
+  margin: 40px 0px;
+}
+
+.sendBtnDiv {
+  position: absolute;
+  width: calc(100% - 76px);
+  bottom: 32px;
+  left: 38px;
+}
+
+.roomMessageRightMainDiv {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 8px;
+  flex-direction: row-reverse;
+}
+
+.roomRightMessage {
+  word-break: break-word;
+  background: #9f9f9f;
+  border-radius: 40px 40px 0px 40px;
+  padding: 25px 38px;
+  margin-right: 14px;
+  color: var(--white-color);
+  font-size: 18px;
+  font-family: "plus-jakarta-display-regular";
+  max-width: 548px;
+}
+
+/* NoData */
+.noDataContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.noData img {
+  width: 120px;
+}
+
+.loader {
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadMore_btn_main {
+  display: flex;
+  justify-content: center;
+}
+.loadMore_btn {
+  width: 120px;
+  padding: 10px 0;
+  background-color: var(--main-color);
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 1440px) {
+  .container {
+    max-width: 90% !important;
+  }
+.chatRoomBox p {
+  width: 120px;
+}
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 90% !important;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .container {
+    max-width: 85% !important;
+  }
+}
+
+@media (min-width: 1903px) {
+}
+
+p {
+  margin: 0px;
+}
+
+@media (max-width: 1509px) {
+  .chatPage {
+    padding-top: 0 !important;
+  }
+  .chatRoomBox p {
+    width: 100px;
+    color:#000
+  }
+  .container {
+    margin-top: 50px;
+  }
+  .chatRooms {
+    height: calc(100vh - 200px);
+  }
+}
+@media (max-width: 1024px) {
+  .roomRightMessage {
+    background: var(--sea-green);
+    border-radius: 40px 40px 0px 40px;
+    padding: 15px 38px;
+    margin-right: 14px;
+    color: var(--white-color);
+    font-size: 18px;
+    font-family: "plus-jakarta-display-regular";
+    max-width: 548px;
+  }
+  
+  .roomMessage {
+    background: var(--send-messageColor);
+    border-radius: 40px 40px 0px 40px;
+    padding: 15px 38px;
+    margin-right: 14px;
+    color: var(--text-color-black);
+    font-size: 18px;
+    font-family: "plus-jakarta-display-regular";
+    max-width: 548px;
+  }
+}

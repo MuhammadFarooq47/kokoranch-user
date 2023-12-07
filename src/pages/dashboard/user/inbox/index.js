@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Messages from "./chat";
 import ChatFooter from "./ChatFooter";
 // import Navbar from "../NavBar";
 import { FaEllipsisV } from "react-icons/fa";
-import { useEffect, useRef } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 import UserSideMenu from "../../../../components/userSideMenu";
 
-const socket = io.connect("http://192.168.100.33:3030");
+// const socket = io.connect("http://192.168.100.33:3030");
 
 export default function MyProfile({ setSidebar, sidebar }) {
   const [innerSidebar, setInnerSidebar] = useState(true);
@@ -95,18 +94,20 @@ export default function MyProfile({ setSidebar, sidebar }) {
     getRooms();
     socketRef.current = io("http://192.168.100.33:3030");
   
-   socket.emit("join", user?._id);
+   socketRef.current.emit("join", user?._id);
   }, []);
   
 
   const [roomId, setRoomId] = useState(lastMessage?.data[0]?._id);
-  const [messages, setMessages] = useState();
+  const [messages, setMessages] = useState([]);
+  console.log("🚀 ~ file: index.js:103 ~ messages:", messages)
   const [socketMessages, setSocketMessages] = useState([])
+  // console.log("🚀 ~ file: index.js:105 ~ socketMessages:", socketMessages)
 
   const roomFunction = async () => {
     try {
-      socket.emit("chatJoin", user?._id, '6569ab8d078c201299775b5c')
-      socket.emit("mark-as-read", '6569ab8d078c201299775b5c', user?.role)
+      socketRef.current.emit("chatJoin", user?._id, '6569ab8d078c201299775b5c')
+      socketRef.current.emit("mark-as-read", '6569ab8d078c201299775b5c', user?.role)
       const response = await axios.get(
         `http://192.168.100.33:3030/api/v1/chats/single-chat?room=6569ab8d078c201299775b5c`,
         {
@@ -116,6 +117,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
         }
       );
       setMessages(response?.data);
+      console.log("🚀 ~ file: index.js:120 ~ roomFunction ~ response?.data:", response?.data)
 
       const filteredRoomData=lastMessage?.data.find((ele)=>ele?._id=="6569ab8d078c201299775b5c")
       console.log("🚀 ~ file: index.js:111 ~ roomFunction ~ filteredRoomData:", filteredRoomData)
@@ -135,19 +137,32 @@ export default function MyProfile({ setSidebar, sidebar }) {
     // socket = io('http://192.168.100.33:3030');
 
     // Listen for incoming messages
-    socket.on('msg', (msg) => {
+    socketRef.current.on('msg', (msg) => {
       console.log('Vendor Incoming Message:', msg);
+      // setMessages((prev) => {
+      //   console.log('prev:', prev);
+      //   console.log('prev.data:', prev?.data);
+      //   prev?.data.push(msg)
+      //   return [...prev]
 
+      //  });
+       setMessages((prev)=>[msg])
       // Update the state with the new message
-      setSocketMessages([...socketMessages, msg]);
+      // setMessages((prev) => console.log( prev?.data,  "farooq"));
+      // setMessages((prev) => [msg, ...prev?.data]);
+      // setMessages([...messages]);
+      // setMessages((prev) =>
+      // prev?.data.push(msg));
     });
+    console.log("🚀 ~ file: index.js:145 ~ socketRef.current.on ~ setMessages:", messages)
 
     // Clean up the socket connection when the component unmounts
     // return () => {
-    //   socket.disconnect();
-    //   socket.off('msg'); // Remove the event listener
+    //   socketRef.current.disconnect();
+    //   socketRef.current.off('msg'); // Remove the event listener
     // };
-  }, [ socket, socketMessages]);
+    // roomFunction();
+  }, [messages]);
 
 
   return (
@@ -221,15 +236,18 @@ export default function MyProfile({ setSidebar, sidebar }) {
           <Messages
             recipient={messages}
             socketMessages= {socketMessages}
-            socket={socket}
+            socket={socketRef}
+            setMessages={setMessages}
             filteredRoom={filteredRoom}
             innerSidebar={innerSidebar}
             setInnerSidebar={setInnerSidebar}
           />
-          <ChatFooter 
-          socket={socket}
+          {/* <ChatFooter 
+          socket={socketRef}
           filteredRoom={filteredRoom}
-          />
+          recipient={messages}
+          setMessages={setMessages}
+          /> */}
           </main>
         </div>
       </div>

@@ -1,0 +1,126 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .labelText {
+    text-transform: uppercase !important;
+  }
+  
+  .inputBox {
+    height: 100%;
+    padding: 20px 20px 20px 30px;
+    width: 100%;
+    font-family: "display-Regular";
+  }
+  
+  .inputBox::placeholder {
+    font-size: 15px;
+    font-family: "display-Regular";
+    text-transform: capitalize;
+    vertical-align: middle;
+  }
+  
+  .noBorder {
+    border: none;
+  }
+  
+  .inputPassContainer {
+    display: flex;
+    position: relative;
+    background: #f5f3ff;
+    /* border-radius: 5px; */
+    /* border: 1px solid #E6E3F9; */
+    color: #afacc1;
+  }
+  
+  .inputPassContainer input {
+    font: normal normal 600 15px/19px "display-Regular";
+    font-size: 15px;
+    letter-spacing: 1.4px;
+    border-radius: inherit;
+    /* background-color: inherit; */
+    color: #afacc1;
+    background: #f5f3ff;
+    border: 1px solid #e6e3f9;
+  }
+  .inputPassContainer input:focus {
+    outline: none !important;
+    /* border: none !important; */
+  }
+  
+  input::placeholder {
+    color: #afacc1 !important;
+    font-family: "display-Regular";
+    /* font-family: "Muli, SemiBold"; */
+  }
+  
+  .inputPassContainer .passwordIcon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    bottom: 50%;
+    transform: translateY(-50%);
+    color: #cacaca;
+  }
+  
+  .errorText {
+    color: red;
+  }
+  
+  .disabled {
+  }
+  
+  .leftIconBox {
+    position: absolute;
+    left: 20px;
+    top: 55%;
+    bottom: 45%;
+    transform: translateY(-50%);
+    height: max-content;
+    color: #cccccc;
+  }
+  
+  .leftIconBox svg {
+    vertical-align: inherit;
+  }
+  
+  .deleteIcon {
+    position: absolute;
+    top: 38%;
+    right: 2%;
+    color: #c5c5c5;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  /* @media (max-width: 768px) {
+    .inputBox {
+      height: 100%;
+      padding: 10px;
+      width: 100%;
+      font-family: "display-Regular";
+    }
+  } */
+  
+  /* Black */
+  .blackVariantContainer {
+    border-radius: 10px !important;
+    background: transparent !important;
+  }
+  
+  .blackVariantContainer > div {
+    color: white !important;
+  }
+  
+  .blackVariantContainer input {
+    background: transparent !important;
+    color: white !important;
+    font-family: "display-Regular" !important;
+    font-weight: unset;
+  }
+  
+  .blackVariantContainer input::placeholder {
+    color: gray !important;
+  }

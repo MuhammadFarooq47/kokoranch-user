@@ -288,8 +288,7 @@ export default function Product({ isFavorite }) {
         text: message,
           user: {
             _id: user?._id,
-            // avatar: user?.photo,
-            avatar: 'https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png',
+            avatar:user?.photo,
             name: `${user?.firstName} ${user?.lastName}`
           }
         }

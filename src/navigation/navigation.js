@@ -176,6 +176,10 @@ const VendorNotifications = React.lazy(() =>
 const VendorProductReviews = React.lazy(() =>
   import("../pages/dashboard/vendor/VendorProductReviews")
 );
+
+const ChatComponent = React.lazy(() =>
+  import("../components/Chat/index")
+);
 const Home = React.lazy(() => import("../pages/screens/home"));
 
 export default function Navigation() {
@@ -589,7 +593,9 @@ export default function Navigation() {
           <ProtectedRoute redirectTo={"/login"}>
             <Suspense fallback={<FullScreenLoader />}>
               <Layout>
-                <Inbox />
+                {/* <Inbox />
+                 */}
+                 <ChatComponent/>
               </Layout>
             </Suspense>
           </ProtectedRoute>
@@ -918,7 +924,7 @@ export default function Navigation() {
           </Suspense>
         }
       />
-      <Route
+      {/* <Route
         path="/vendor-inbox"
         element={
           <Suspense fallback={<FullScreenLoader />}>
@@ -927,7 +933,7 @@ export default function Navigation() {
             </VendorSideBar>
           </Suspense>
         }
-      />
+      /> */}
       <Route
         path="/vendor-rating-and-review"
         element={
@@ -974,6 +980,16 @@ export default function Navigation() {
           <Suspense fallback={<FullScreenLoader />}>
             <VendorSideBar>
               <VendorProductReviews />
+            </VendorSideBar>
+          </Suspense>
+        }
+      />
+      <Route
+        path="/vendor-inbox"
+        element={
+          <Suspense fallback={<FullScreenLoader />}>
+            <VendorSideBar>
+              <ChatComponent />
             </VendorSideBar>
           </Suspense>
         }

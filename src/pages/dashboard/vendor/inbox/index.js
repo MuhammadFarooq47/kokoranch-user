@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 
-const socket = io.connect("http://192.168.100.33:3030");
+// const socket = io.connect("http://192.168.100.33:3030");
 
 export default function MyProfile({ setSidebar, sidebar }) {
   const socketRef = useRef(null)
@@ -40,14 +40,14 @@ export default function MyProfile({ setSidebar, sidebar }) {
   };
 
   const handleBtnActie = (e) => {
-    console.log(e.target.tagName);
-    console.log(
-      e.target.tagName === "path"
-        ? e.target.parentElement.parentElement.childNodes
-        : e.target.tagName === "svg"
-          ? e.target.parentElement.childNodes
-          : e.target.childNodes[1]
-    );
+    // console.log(e.target.tagName);
+    // console.log(
+    //   e.target.tagName === "path"
+    //     ? e.target.parentElement.parentElement.childNodes
+    //     : e.target.tagName === "svg"
+    //       ? e.target.parentElement.childNodes
+    //       : e.target.childNodes[1]
+    // );
     // const elems = document.querySelectorAll(".chat-dropdown-delete-btn");
     // elems.forEach((elem) => {
     //   elem.classList.remove("chat-dropdown-delete-btn_active");
@@ -84,8 +84,9 @@ export default function MyProfile({ setSidebar, sidebar }) {
           },
         }
       );
-      setLastMessage(response?.data);    } catch (error) {
-      console.log(error, "error from chat room");
+      setLastMessage(response?.data);    
+    } catch (error) {
+      // console.log(error, "error from chat room");
     }
   }
 
@@ -95,17 +96,19 @@ export default function MyProfile({ setSidebar, sidebar }) {
     getRooms();
     socketRef.current = io("http://192.168.100.33:3030");
   
-    socket.emit("join", user?._id);
+    socketRef.current.emit("join", user?._id);
   }, []);
 
   const [roomId, setRoomId] = useState(lastMessage?.data[0]?._id);
-  const [messages, setMessages] = useState();
+  const [messages, setMessages] = useState([]);
+  // console.log("🚀 ~ file: index.js:103 ~ MyProfile ~ messages:", messages)
   const [socketMessages, setSocketMessages] = useState([])
+  // console.log("🚀 ~ file: index.js:104 ~ MyProfile ~ socketMessages:", socketMessages)
 
   const roomFunction = async () => {
     try {
-     socket.emit("chatJoin", user?._id, '6569ab8d078c201299775b5c')
-     socket.emit("mark-as-read", '6569ab8d078c201299775b5c', user?.role)
+     socketRef.current.emit("chatJoin", user?._id, '6569ab8d078c201299775b5c')
+     socketRef.current.emit("mark-as-read", '6569ab8d078c201299775b5c', user?.role)
       const response = await axios.get(
         `http://192.168.100.33:3030/api/v1/chats/single-chat?room=6569ab8d078c201299775b5c`,
         {
@@ -117,12 +120,12 @@ export default function MyProfile({ setSidebar, sidebar }) {
       setMessages(response?.data);
 
       const filteredRoomData=lastMessage?.data.find((ele)=>ele?._id=="6569ab8d078c201299775b5c")
-      console.log("🚀 ~ file: index.js:111 ~ roomFunction ~ filteredRoomData:", filteredRoomData)
+      // console.log("🚀 ~ file: index.js:111 ~ roomFunction ~ filteredRoomData:", filteredRoomData)
 
       setFilteredRoom(filteredRoomData);
 
     } catch (error) {
-      console.log("Error from rooms", error);
+      // console.log("Error from rooms", error);
     }
   };
 
@@ -134,19 +137,33 @@ export default function MyProfile({ setSidebar, sidebar }) {
     // socket = io('http://192.168.100.33:3030');
 
     // Listen for incoming messages
-    socket.on('msg', (msg) => {
-      console.log('Vendor Incoming Message:', msg);
-
+    socketRef.current.on('msg', (msg) => {
+      console.log('User Incoming Message:', msg);
       // Update the state with the new message
-      setSocketMessages([...socketMessages, msg]);
+      // setMessages((prev) => console.log( prev?.data.push(msg),  "farooq"));
+      // setMessages((prev) => console.log(...prev?.data, msg,  "farooq"));
+      // setMessages((prev) =>
+      //  prev?.data.push(msg));
+      // setMessages((prev) => [msg, ...prev?.data]);
+      // setMessages([...messages, msg]);
+      // setMessages([...messages]);
+      // setMessages((prev) => {
+      //   console.log('prev:', prev);
+      //   console.log('prev.data:', prev?.data);
+      //   // return [msg, ...(prev || [])];
+      //   return (prev.push(msg));
+      //  });
+      setMessages((prev)=>[msg])
+       
     });
-
+    console.log("🚀 ~ file: index.js:145 ~ socketRef.current.on ~ setMessages:", messages)
     // Clean up the socket connection when the component unmounts
     // return () => {
-    //   socket.disconnect();
-    //   socket.off('msg'); // Remove the event listener
+    //   socketRef.current.disconnect();
+    //   socketRef.current.off('msg'); // Remove the event listener
     // };
-  }, [ socket, socketMessages]);
+    // roomFunction();
+  }, [messages]);
 
 
   return (
@@ -217,16 +234,19 @@ export default function MyProfile({ setSidebar, sidebar }) {
           <main style={{ height: "78vh" }}>
           <Messages
             recipient={messages}
-            socketMessages= {socketMessages}
-            socket={socket}
+            // socketMessages= {socketMessages}
+            socket={socketRef}
+            setMessages={setMessages}
             filteredRoom={filteredRoom}
             innerSidebar={innerSidebar}
             setInnerSidebar={setInnerSidebar}
           />
-          <ChatFooter 
-          socket={socket}
+          {/* <ChatFooter 
+          socket={socketRef}
           filteredRoom={filteredRoom}
-          />
+          recipient={messages}
+          setMessages={setMessages}
+          /> */}
           </main>
         </div>
       </div>
