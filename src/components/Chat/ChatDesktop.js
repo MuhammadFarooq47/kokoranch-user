@@ -15,8 +15,11 @@ import Button from "../../components/Buttons/Buttons";
 import Tooltip from "@mui/material/Tooltip";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Link } from "react-router-dom";
+import { BsEmojiSmileFill } from "react-icons/bs";
+import { FaEllipsisV } from "react-icons/fa";
 
 export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
   const role = useSelector((item) => item?.authReducer?.user?.role);
   const isVendorOrTraderOrAdmin = role == "trader" || role == "vendor" || role == "admin"; // User1
   const userData = useSelector((state) => state.authReducer?.user);
@@ -55,14 +58,14 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
         setter(data);
       }}
       style={{
-        borderTopLeftRadius: index === 0 ? "20px" : "0px",
-        borderTopRightRadius: index === 0 ? "20px" : "0px",
+        borderTopLeftRadius: index === 0 ? "20px" : "20px",
+        borderTopRightRadius: index === 0 ? "20px" : "20px",
         backgroundColor:
           userData?._id == data?.user1?._id && data?.user1UnreadCount > 0
-            ? "#000"
+            ? "#fff"
             : userData?._id == data?.user2?._id &&
             data?.user2UnreadCount > 0 &&
-            "#000",
+            "#383838",
       }}
     >
       <div className={[classes.SideRoomDiv]}>
@@ -77,16 +80,23 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
         </div>
         <div className={[classes.SideRoomInnerDiv]}>
           <div className={classes.nameAndMsg}>
-            <h6 style={{ color: "#000" }}>{`${chatRoomBoxFullName}`}</h6>
+            <h6 style={{ color: "#fff", fontSize: "14px !important" }}>{`${chatRoomBoxFullName}`}</h6>
             <p className="maxLine1">
               {data?.lastMessage !== null
                 ? data?.lastMessage?.text
                 : "You haven't chat with this user"}
             </p>
-          </div>
-          <div className={classes.timeAndCount}>
+            <div className={classes.timeAndCount}>
             <p>{moment(data?.updatedAt).format("hh:mm a")}</p>
           </div>
+          </div>
+          <div className="recipient-item_right">
+           <FaEllipsisV
+             className="dropown-dots"
+             onClick={() => setShowDeleteButton(current => !current)}
+           />
+           {showDeleteButton && <button style={{ backgroundColor: "#383838",  color: '#f61616', padding: '0.5rem 1rem',  borderRadius: '1rem', border: "none", fontSize: "10px", marginLeft: "-25px", marginTop: "5px"}}>Delete</button>}
+         </div>
         </div>
       </div>
     </div>
@@ -158,7 +168,8 @@ const ChatDesktop = (props) => {
                     ) : (
                       <>
                        
-                        {messages?.map((item, i) => {
+                        {[...messages].reverse()?.map((item, i) => {
+                          console.log("🚀 ~ file: ChatDesktop.js:162 ~ {messages[selectedRoom?._id]?.map ~ item:", item)
                           return (
                             <>
                               {
@@ -169,7 +180,7 @@ const ChatDesktop = (props) => {
                                     selectedRoom?.user2?._id // user1 msg (agent or sp)
                                     : item?.user?._id !== userData?._id
                                 ) ? (
-                                  <div className={[classes.mb32].join(" ")}>
+                                  <div>
                                     <div
                                       className={[
                                         classes.roomMessageMainDiv,

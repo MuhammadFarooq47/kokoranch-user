@@ -64,11 +64,11 @@ const Chat = () => {
       _id: Math.ceil(Math.random() * 10),
       createdAt: moment().format(),
     };
-    setMessages((prev) => [data, ...messages]);
+    // setMessages((prev) => [data, ...messages]);
 
     setRoomsData((prev) => {
       const updatedRoomLastMessage = prev.map((item) => {
-        if (item?._id == selectedRoom?._id) {
+        if (item?._id === selectedRoom?._id) {
           return { ...item, lastMessage: data, updatedAt: Date.now() };
         }
         return item;
@@ -87,17 +87,18 @@ const Chat = () => {
     socket.current.emit(
       "msg",
       data,
-      selectedRoom?.user1?._id == userData?._id
+      selectedRoom?.user1?._id === userData?._id
         ? selectedRoom?.user2?._id
         : selectedRoom?.user1?._id,
       selectedRoom?._id,
+      // userData?._id,
       userData?.role
     );
     console.log(selectedRoom?.user1?._id, "user1");
     console.log(selectedRoom?.user2?._id, "user2");
     console.log(userData?._id, "USER ID MY");
     console.log(
-      selectedRoom?.user1?._id == userData?._id
+      selectedRoom?.user1?._id === userData?._id
         ? selectedRoom?.user2?._id
         : selectedRoom?.user1?._id,
       "Sending Tooo...."
@@ -124,20 +125,20 @@ const Chat = () => {
     );
     const maxLength = (page - 1) * limit;
 
-    if (page == 1) {
+    if (page === 1) {
       const response = await Get(apiUrl, token);
       if (response !== undefined) {
         // setPage((prev) => prev + 1);
         setMessages(response?.data?.data);
-        setTotalRecords(response?.data?.totalRecords);
+        // setTotalRecords(response?.data?.totalRecords);
       }
-    } else if (maxLength == mess?.length) {
+    } else if (maxLength === mess?.length) {
       const response = await Get(apiUrl, token);
       if (response !== undefined) {
         // setPage((prev) => prev + 1);
         const append = mess.concat(response?.data?.data);
         const appendtwo = mess.concat(response?.data?.totalRecords);
-        setMessages(append);
+        // setMessages(append);
         setTotalRecords(appendtwo);
       }
     }
@@ -147,21 +148,36 @@ const Chat = () => {
     getRooms();
     socket.current = io(apiUrl);
 
-    socket?.current?.emit("join", userId);
+    socket.current.emit("join", userId);
+
+    // return () => {
+    //   socket.current.disconnect();
+    // };
   }, []);
+
+  // useEffect(() => {
+  //   if(selectedRoom) {
+  //     socket.current.emit("join", selectedRoom?._id); 
+  //   }
+  // }, [selectedRoom])
 
   useEffect(() => {
     if (selectedRoom !== null) {
       getMessages(messages);
       socket.current.emit("mark-as-read", selectedRoom?._id,userData?.role);
-      socket?.current.on("msg", (message, roomId) => {
-        if (message.user._id !== userId && selectedRoom?._id == roomId) {
-          setMessages((prev) => [message, ...prev]);
+      socket.current.on("msg", (message, roomId) => { 
+        if (message.user._id !== userId || selectedRoom?._id === roomId) {
+          setMessages((prev) => [...prev, message]);
           socket.current.emit("mark-as-read", selectedRoom?._id,userData?.role);
           console.log("ssss", message, roomId, message.user._id, userId, selectedRoom?._id, roomId )
+          console.log('New message received:', message);
         }
       });
     }
+    return () => {
+      // Cleanup code here (e.g., disconnect the socket)
+      socket.current.off('msg');
+    };
   }, [selectedRoom]);
 
 console.log(roomsData,"roomsData roomsData roomsData")

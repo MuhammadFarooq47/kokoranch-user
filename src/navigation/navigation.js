@@ -7,6 +7,7 @@ import Layout from "../components/layout";
 import TraderSideBar from "../components/traderSideBar";
 // Vendor Imports
 import VendorSideBar from "../pages/dashboard/vendor/SideBar";
+import UserSideMenu from "../components/userSideMenu";
 import ServiceOrderIndividual from "../pages/dashboard/vendor/ServiceOrderIndividual";
 
 // Full Screen Loader
@@ -593,9 +594,12 @@ export default function Navigation() {
           <ProtectedRoute redirectTo={"/login"}>
             <Suspense fallback={<FullScreenLoader />}>
               <Layout>
-                {/* <Inbox />
-                 */}
+                {/* <Inbox /> */}
+                <UserSideMenu>
+
                  <ChatComponent/>
+                </UserSideMenu>
+                
               </Layout>
             </Suspense>
           </ProtectedRoute>

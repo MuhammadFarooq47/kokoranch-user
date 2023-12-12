@@ -3,10 +3,11 @@
   padding-top: 200px;
   /* background: transparent
     linear-gradient(180deg, #ffffff 0%, #fef3e2b5 49%, #ffffff 100%); */
-  background-image: url(../../assets/images/packageScreen-Bg-Image.png);
+  /* background-image: url(../../assets/images/packageScreen-Bg-Image.png); */
   background-position: top center;
   background-size: 100% 100%;
 }
+
 .btn_div {
   border-bottom: 3px solid #bab8b8;
   border-radius: 20px 20px;
@@ -69,20 +70,22 @@
 }
 
 .selectedRoom {
-  background-color: var(--black-color);
-  border: 1px solid #f0e8e8;
+  background-color: #383838;
+  /* border: 0.5px solid #f0e8e8; */
+  border-radius: 1.2rem;
+  
 }
 
 .SideRoomInnerDiv {
-  margin-left: 16px;
+  margin-left: 10px;
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
 .chatRoomBox img {
-  width: 56px;
-  height: 56px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
@@ -102,7 +105,7 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
-  font-size: 20px !important;
+  /* font-size: 20px; */
   margin-bottom: 0px;
 }
 
@@ -151,14 +154,16 @@
 /* room messages */
 
 .roomMessage {
-  background: #000;
+  word-break: break-word;
+  background: rgba(0, 0, 0, 0.2784313725);
   border-radius: 40px 40px 40px 0px;
   padding: 25px 38px;
   margin-left: 14px;
-  color: var(--text-color-black);
+  color: var(--white-color);
   font-size: 18px;
-  font-family: "plus-jakarta-display-regular";
-  max-width: 548px;
+  font-family: Poppins, sans-serif;
+  max-width: 1000px;
+  margin-top: 30px;
 }
 
 .roomMessageimgDiv img {
@@ -179,15 +184,15 @@
 .time {
   color: var(--text-color-gray);
   margin-left: 55px;
-  font-size: 16px;
-  font-family: "plus-jakarta-display-regular";
+  font-size: 10px;
+   font-family: Poppins, sans-serif;
 }
 
 .rightime {
   color: var(--text-color-gray);
   margin-right: 55px;
-  font-size: 16px;
-  font-family: "plus-jakarta-display-regular";
+  font-size: 10px;
+   font-family: Poppins, sans-serif;
   text-align: right;
 }
 
@@ -254,13 +259,13 @@
 
 .roomRightMessage {
   word-break: break-word;
-  background: #9f9f9f;
+  background: #14a384;
   border-radius: 40px 40px 0px 40px;
   padding: 25px 38px;
   margin-right: 14px;
   color: var(--white-color);
   font-size: 18px;
-  font-family: "plus-jakarta-display-regular";
+   font-family: Poppins, sans-serif;
   max-width: 548px;
 }
 
@@ -332,13 +337,17 @@ p {
   }
   .chatRoomBox p {
     width: 100px;
-    color:#000
+    font-size: 1.2rem;
+    color: #7e818a;
+    font-weight: normal;
+
   }
   .container {
     margin-top: 50px;
   }
   .chatRooms {
     height: calc(100vh - 200px);
+    border-right: 1px solid #726a6acc;
   }
 }
 @media (max-width: 1024px) {
@@ -349,7 +358,7 @@ p {
     margin-right: 14px;
     color: var(--white-color);
     font-size: 18px;
-    font-family: "plus-jakarta-display-regular";
+     font-family: Poppins, sans-serif;
     max-width: 548px;
   }
   
@@ -360,7 +369,7 @@ p {
     margin-right: 14px;
     color: var(--text-color-black);
     font-size: 18px;
-    font-family: "plus-jakarta-display-regular";
+     font-family: Poppins, sans-serif;
     max-width: 548px;
   }
 }
