@@ -17,9 +17,11 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Link } from "react-router-dom";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { FaEllipsisV } from "react-icons/fa";
+import Robot from "../../assets/images/robot.gif";
 
 export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
   const [showDeleteButton, setShowDeleteButton] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const role = useSelector((item) => item?.authReducer?.user?.role);
   const isVendorOrTraderOrAdmin = role == "trader" || role == "vendor" || role == "admin"; // User1
   const userData = useSelector((state) => state.authReducer?.user);
@@ -60,12 +62,12 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
       style={{
         borderTopLeftRadius: index === 0 ? "20px" : "20px",
         borderTopRightRadius: index === 0 ? "20px" : "20px",
-        backgroundColor:
-          userData?._id == data?.user1?._id && data?.user1UnreadCount > 0
-            ? "#fff"
-            : userData?._id == data?.user2?._id &&
-            data?.user2UnreadCount > 0 &&
-            "#383838",
+        // backgroundColor:
+        //   userData?._id == data?.user1?._id && data?.user1UnreadCount > 0
+        //     ? "#fff"
+        //     : userData?._id == data?.user2?._id &&
+        //     data?.user2UnreadCount > 0 &&
+        //     "#383838",
       }}
     >
       <div className={[classes.SideRoomDiv]}>
@@ -213,7 +215,7 @@ const ChatDesktop = (props) => {
 
                                     <p className={[classes.time]}>
                                       {moment(item?.createdAt).format(
-                                        "DD MMM YYYY hh:mm"
+                                        "DD MMM hh:mm a"
                                       )}
                                     </p>
                                   </div>
@@ -251,7 +253,7 @@ const ChatDesktop = (props) => {
 
                                     <p className={[classes.rightime]}>
                                       {moment(item?.createdAt).format(
-                                        "DD MMM YYYY hh:mm"
+                                        "DD MMM hh:mm a"
                                       )}
                                     </p>
                                   </div>
@@ -307,7 +309,14 @@ const ChatDesktop = (props) => {
                   </div>
                 )
                   : (
-                    <></>
+                    <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", color: "white"}}>
+                        <img src={Robot} alt="welcome" style={{height: '30rem'}} />
+        <h2>
+            Welcome, <span style={{color: "#14a384", textTransform: "capitalize"}}> {userData?.firstName} !</span>
+            {/* {currentUser.username} */}
+        </h2>
+        <h3>Please select a chat to start Messaging.</h3>
+                    </div>
                     // <div className={[classes.sendBtnDiv]}>
                     //     <MessageInputWithButton
                     //       state={message}

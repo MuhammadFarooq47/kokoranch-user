@@ -7,9 +7,26 @@ import InputClasses from "../Input/input.module.css";
 import { FiSend } from "react-icons/fi";
 import PropTypes from "prop-types";
 import { useMediaQuery } from "@mui/material";
+import Picker from 'emoji-picker-react'
+import { BsEmojiSmileFill } from "react-icons/bs";
 
 export const MessageInputWithButton = ({ state, setter, onClick }) => {
+  console.log("🚀 ~ file: MessageInputWithButton.js:14 ~ MessageInputWithButton ~ state:", state)
   const matches = useMediaQuery("(min-width:600px)");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  // const [msg, setMsg] = useState("");
+
+  const handleEmojiPickerHideShow = () => {
+    setShowEmojiPicker(!showEmojiPicker);
+  };
+
+  const handleEmojiClick = (e, emoji) => {
+    console.log("🚀 ~ file: MessageInputWithButton.js:24 ~ handleEmojiClick ~ emoji:", emoji)
+    let message = state;
+    message += emoji.emoji;
+    setter(message);
+  }
+
   return (
     <div className={[classes.relative, classes.passConti_b].join(" ")}>
       <style jsx>{`
@@ -17,22 +34,24 @@ export const MessageInputWithButton = ({ state, setter, onClick }) => {
           color: var(--text-color-black) !important;
         }
       `}</style>
+      
+      {/* <BsEmojiSmileFill size={20} color="#14a384" onClick={() => alert("hello")} /> */}
       <Input
         placeholder="Message..."
         value={state}
         setter={setter}
         type="text"
         customStyle={{
-          borderRadius: "46px",
+          borderRadius: "50px",
           background: "#2d2f31",
-          height: "64px",
-          color:"#0000"
+          height: "50px",
+          color: "#0000"
         }}
         inputStyle={{
           border: "none",
           fontSize: "18px",
           padding: "15px 15px 15px 24px",
-          fontFamily: "plus-jakarta-display-regular",
+          fontFamily: "Poppins, sans-serif",
           background: "#2D2F31",
         }}
         onKeyDown={(e) =>
@@ -40,7 +59,7 @@ export const MessageInputWithButton = ({ state, setter, onClick }) => {
         }
       />
       <div className={[classes.sendBtnDiv].join(" ")}>
-        <Button
+        {/* <Button
           label={matches && "Sent"}
           customStyle={{
             backgroundColor: "var(--main-color)",
@@ -48,20 +67,31 @@ export const MessageInputWithButton = ({ state, setter, onClick }) => {
             width: matches ? "130px" :  "50px",
             height: "50px",
             padding: "0px",
-            fontFamily: "plus-jakarta-display-regular",
+            fontFamily: "Poppins, sans-serif",
             fontSize: "18px",
             borderRadius: "30px",
           }}
           onClick={onClick}
-        />
+        /> */}
+        {/* <BsEmojiSmileFill
+          style={{
+            top: !matches && "20px",
+            right: !matches && "17px",
+            marginRight: "35px"
+          }}
+          onClick={handleEmojiPickerHideShow}
+          className={classes.agent} size="25px" color="#14a384" />
+          { showEmojiPicker && <Picker onEmojiClick={handleEmojiClick}/> } */}
 
-        <FiSend 
-        style={{
-          top: !matches && "16px",
-          right: !matches && "17px",
-        }}
-        
-        className={classes.agent} size="20px" />
+        <FiSend
+          style={{
+            top: !matches && "20px",
+            right: !matches && "17px",
+            marginLeft: "10px",
+          }}
+          onClick={onClick}
+          className={classes.agent} size="25px" color="#14a384" />
+        {/* <BsEmojiSmileFill size={20} color="#14a384" onClick={() => alert("hello")} /> */}
       </div>
     </div>
   );
