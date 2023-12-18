@@ -211,7 +211,7 @@ const [popupOpen, setPopupOpen] = useState(false);
               </div>
             </NavLink>
           </h4>
-          <h4 className="fs-5">
+          {/* <h4 className="fs-5">
             <NavLink to="/vendor-rating-and-review" className="vendor-link">
               <div className="vendor-inbox-link">
               <MdRateReview size={20} />
@@ -220,7 +220,7 @@ const [popupOpen, setPopupOpen] = useState(false);
               </div>
             </NavLink>
           </h4>
-          {/* <h4 className="fs-5">
+          <h4 className="fs-5">
             <NavLink to="/vendor-medical-merijuana" className="vendor-link">
               <div className="vendor-inbox-link">
               <SiGumtree size={20} />

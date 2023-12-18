@@ -78,7 +78,7 @@ export default function ChaBar({ setSidebar, sidebar }) {
     try {
 
       const response = await axios.get(
-        "http://192.168.100.33:3030/api/v1/chats/rooms",
+        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/chats/rooms",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -106,7 +106,7 @@ export default function ChaBar({ setSidebar, sidebar }) {
       socket.emit("chatJoin", user?._id, '6569ab8d078c201299775b5c')
       socket.emit("mark-as-read", '6569ab8d078c201299775b5c', user?.role)
       const response = await axios.get(
-        `http://192.168.100.33:3030/api/v1/chats/single-chat?room=6569ab8d078c201299775b5c`,
+        `https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/chats/single-chat?room=6569ab8d078c201299775b5c`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
