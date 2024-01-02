@@ -8,10 +8,8 @@ import {FaSignOutAlt} from "react-icons/fa";
 
 export default function NavBar({ setSidebar, sidebar, title }) {
   const { user } = useSelector((state) => state.authReducer);
-  console.log(user)
   const navigate = useNavigate();
   useEffect(() => {
-    // console.log("user changed");
   }, [user]);
 
   const dispatch = useDispatch()

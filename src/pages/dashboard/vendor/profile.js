@@ -20,10 +20,6 @@ export default function Profile({ setSidebar, sidebar }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer);
   
-  console.log("user from vendor profile", user);
-
-  
-
   const [editAble, setEditAble] = useState(false);
   const [bankEditable, setBankEditable] = useState(false);
   const [profileImage, setProfileImage] = useState("");
@@ -43,7 +39,6 @@ export default function Profile({ setSidebar, sidebar }) {
   });
 
   const changeProfileImage = (e) => {
-    console.log("target", e.target.files[0]);
     // setProfileImage(URL.createObjectURL(e.target.files[0]));
     setProfileData({
       ...profileData,
@@ -53,7 +48,6 @@ export default function Profile({ setSidebar, sidebar }) {
     // let reader = new FileReader();
     // reader.onload = (e) => {};
     // reader.readAsDataURL(e.target.files[0]);
-    // console.log("reader", reader.result);
   };
 
 
@@ -71,7 +65,6 @@ export default function Profile({ setSidebar, sidebar }) {
     phoneNumber: "",
   });
 
-  console.log("vendor Form Data ????????????", formData)
 
   // const dispatch = useDispatch();
   const token = localStorage.getItem("token");
@@ -91,7 +84,6 @@ export default function Profile({ setSidebar, sidebar }) {
     setLoading(true)
     try {
       const response = await GET("/users/me", token);
-      console.log("CHECK_TOKEN", response);
       setUserData(response.data);
       // Initialize formData here with user data
       setFormData({
@@ -135,19 +127,16 @@ export default function Profile({ setSidebar, sidebar }) {
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    console.log("first", profileData.fileContent);
     var myformData = new FormData();
     myformData.append("firstName", profileData.firstName);
     myformData.append("lastName", profileData.lastName);
     myformData.append("email", profileData.email);
     myformData.append("phoneNumber", profileData.phoneNumber);
-    console.log("jksahdjk: ", myformData);
 
     if (profileData.fileContent) {
       myformData.append("image", profileData.fileContent);
     }
     try {
-      console.log("after: ", myformData);
       dispatch(UPDATE_VENDOR(myformData));
       // setEditAble(false);
     } catch (e) {
@@ -158,7 +147,6 @@ export default function Profile({ setSidebar, sidebar }) {
     dispatch(UPDATE_ACCOUNT_DETAIL(bankDetail, token, user._id));
   };
   useEffect(() => {
-    console.log("prfile data", profileData);
     setProfileData({
       ...profileData,
       firstName: user?.firstName ? user.firstName : "",

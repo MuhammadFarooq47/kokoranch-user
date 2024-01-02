@@ -22,7 +22,6 @@ function ProductShippingDetail({ sidebar, setSidebar }) {
 
   const getShippingDetail = async () => {
     try {
-      // console.log("user", user._id);
       setLoader(true);
       const res = await GET(
         `/shipping-details/${user._id}`,
@@ -35,7 +34,6 @@ function ProductShippingDetail({ sidebar, setSidebar }) {
       } else {
         setData(res.data);
         setLoader(false);
-        // console.log("data", res.data);
       }
     } catch (err) {
       toast.error(err.message);

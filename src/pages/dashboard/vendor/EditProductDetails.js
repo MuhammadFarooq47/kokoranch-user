@@ -23,7 +23,6 @@ function EditProductDetails({ sidebar, setSidebar }) {
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("userData");
   const location = useLocation();
-  console.log("Location State", location?.state)
   const [popupOpen, setPopupOpen] = useState(false);
   const [successfulPopup, setSuccessfulPopup] = useState(false);
   const [mainCategories, setMainCategoires] = useState([]);
@@ -82,7 +81,6 @@ function EditProductDetails({ sidebar, setSidebar }) {
     }
   };
   const handleProductDelete = (i) => {
-    console.log("indexx>>>>>>>", i);
     let arr = [...productImages];
     let arr2 = [...productDetails.images];
     arr.splice(i, 1);
@@ -92,13 +90,11 @@ function EditProductDetails({ sidebar, setSidebar }) {
   };
   const getSubSubCategory = async () => {
     try {
-      console.log("hit Sub Sub");
       const res = await GET(
         "/subSubCategories/getSubSubCategoryById",
         null,
         `/${categories.mainCategory}/${categories.subCategory}`
       );
-      console.log("/////", res);
       if (res.success == true) {
         setSubSubCategoires(res.category);
       } else {
@@ -111,13 +107,11 @@ function EditProductDetails({ sidebar, setSidebar }) {
   };
   const getSubCategory = async () => {
     try {
-      console.log("hit Sub");
       const res = await GET(
         "/subCategories/getCategoryById",
         null,
         `/${categories.mainCategory}`
       );
-      console.log("/////subsub", res);
       if (res.success == true) {
         setSubCategoires(res.category);
       } else {
@@ -186,14 +180,10 @@ function EditProductDetails({ sidebar, setSidebar }) {
     formData.append("name", productDetails.productName);
     const arr = productDetails.images.filter((item) => item?.public_id);
     const file = productDetails.images.filter((item) => !item?.public_id);
-    console.log("public id", arr);
-    console.log("file", file);
-
     if (arr.length > 0) {
       arr.map((item) => formData.append("images", item));
     }
     formData.append("oldImages", arr);
-    console.log("images: ", formData.images);
     // uri: selectedImage.path,
     //   name: selectedImage?.filename ? selectedImage.filename : 'profileImg',
     //   type: selectedImage.mime,
@@ -216,7 +206,6 @@ function EditProductDetails({ sidebar, setSidebar }) {
     Object.keys(productDetails.shippingDetails).forEach((key) =>
       formData.append(key, productDetails.shippingDetails[key])
     );
-    console.log("formdata", formData);
     const res = await PUT(
       "/products/update",
       token,
@@ -224,7 +213,6 @@ function EditProductDetails({ sidebar, setSidebar }) {
       formData,
       true
     );
-    console.log("eeeeeeeeeeeeeeeeeeeeee", res);
     // if(res?.success == true){
     //   toast.success(res.message);
     //   navigate('/vendor-my-products');
@@ -234,7 +222,6 @@ function EditProductDetails({ sidebar, setSidebar }) {
     // }
     // setSuccessfulPopup(true);
   };
-  // console.log('description>>>>>>>>>>>>>>>>>>>>>>>>>>>',productDetails?.description)
   return (
     <>
       <Popup open={successfulPopup} setOpen={setSuccessfulPopup}>
@@ -421,8 +408,8 @@ function EditProductDetails({ sidebar, setSidebar }) {
                       },
                     }}
                   >
-                    {subCategories?.map((item) => (
-                      <MenuItem value={item._id}>{item?.subCategory}</MenuItem>
+                    {subCategories?.map((item, index) => (
+                      <MenuItem value={item._id} key={index}>{item?.subCategory}</MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -555,6 +542,7 @@ function EditProductDetails({ sidebar, setSidebar }) {
                   return (
                     <Grid item lg={3} md={4} sm={4} xs={12}>
                       <div
+                      key={i}
                         style={{
                           height: "100px",
                           width: "100px",

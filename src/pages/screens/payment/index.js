@@ -14,7 +14,6 @@ export default function Payment() {
   const [loading, setLoading] = useState(false);
 
   const handleOrder = async (values) => {
-    console.log(values);
     setLoading(true);
     // closeSnackbar();
     // try {

@@ -54,7 +54,6 @@ export default function Profile({ setSidebar, sidebar }) {
         .catch((error) => {
           setLoading(false);
           toast.error(error.message);
-          console.log(error.message);
         });
     }
   };

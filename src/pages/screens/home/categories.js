@@ -16,14 +16,6 @@ export default function Categories() {
     (state) => state.CategoriesReducers
   );
 
-  {allCategories?.map((d) => {
-    console.log("data", d);
-  })}
-
-  console.log("allCategories ??????", allCategories);
-
-  const slicedCategoryList = allCategories?.slice(0, 5);
-
   const [activeCate, setActiveCate] = useState("");
   let [loading, setLoading] = useState(false);
   let [color, setColor] = useState("#14A384");
@@ -57,7 +49,6 @@ export default function Categories() {
  
       setLoading(false);
       // categoriesProducts?.map((item) => {
-        // console.log("Element?????????", [item])
       //   setproductsList([item]);
       // });
       // setActiveCate(slicedCategoryList[0]._id);
@@ -171,7 +162,6 @@ export default function Categories() {
 
             {categoriesProducts?.length !== 0 ? (
               categoriesProducts?.map((element, index) => {
-                // console.log(element, "<<>><><><><><>()")
                 if (element?.category?._id === activeCate) {
                   return (
                     <div

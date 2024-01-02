@@ -32,7 +32,6 @@ function VendorProducts({ setSidebar, sidebar }) {
   const [filterCard, setFilterCard] = useState([]);
 
   const [activeCard, setActiveCard] = useState("all");
-  console.log("activeCard", activeCard)
   const [deletePopup, setDeletePopup] = useState(false);
   const [deleteSuccessfulPopup, setDeleteSuccessfulPopup] = useState(false);
   const [subCategory, setSubCategory] = useState("");
@@ -55,27 +54,21 @@ function VendorProducts({ setSidebar, sidebar }) {
   useEffect(() => {
     if (filterCard.length > 0 && tableRowData.length > 0) {
       let temp = [];
-      console.log("active cardss>>>>>>>>>>>>", activeCard);
       if (activeCard == "all") {
         temp = tableRowData;
-        console.log("all", temp);
       }
       else if (activeCard == "active") {
-        console.log("active");
         temp = tableRowData.filter((item) => [true,"true"].includes(item?.isActive));
       }
       else if (activeCard == "inActive") {
-        console.log("inActive");
         temp = tableRowData.filter((item) =>  [false,"false"].includes(item?.isActive));
       }
-      console.log("data>>>>>>>>>>>", temp);
       setRowData(temp);
       // setTableRowData(temp)
     }
   }, [activeCard, filterCard, tableRowData]);
   
   useEffect(() => {
-    // console.log("sortdata>>>>>>>>>>>>>>>>>>>>>>>>>>>>", sortData);
     if (sortData) {
       let temp = [];
       if (sortData == "asc") {
@@ -111,7 +104,6 @@ function VendorProducts({ setSidebar, sidebar }) {
     try {
     setLoader(true);
     const res = await GET(`/products/my-products?status=${activeCard}`);
-    console.log("jhfjhjhvhjch", res);
    
       // setVendorProducts(res.products);
 
@@ -129,7 +121,6 @@ function VendorProducts({ setSidebar, sidebar }) {
       //   })
       // }
       // )
-      console.log('responsee',arr)
       setTableRowData(arr);
       
       let filterArray = [
@@ -159,18 +150,15 @@ function VendorProducts({ setSidebar, sidebar }) {
   }, []);
 
  const hanldeDeleteProduct = async () => {
-  console.log("click")
   let idToSave = ''; // Initialize a variable to store the ID
 
   rowData.map((v, i) => {
     idToSave = v._id; // Save the ID in the variable
   });
   
-  console.log('Saved ID:', idToSave);
   const token = localStorage.getItem("token")
   try {
     const res = await DELETE(`/products/${idToSave}`, token );
-    console.log("resssssssssssssssssssssssssssss", res);
 
     // After successful deletion, filter out the deleted item from rowData and tableRowData
     const updatedRowData = rowData.filter(item => item._id !== idToSave);

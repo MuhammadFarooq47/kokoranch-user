@@ -26,7 +26,6 @@ function EditServiceDetails({ sidebar, setSidebar }) {
     category: "",
   });
 
-  console.log(categories, "??????????????");
 
   const [serviceDetails, setServiceDetails] = useState({
     serviceName: "",
@@ -38,7 +37,6 @@ function EditServiceDetails({ sidebar, setSidebar }) {
     images: [],
   });
 
-  console.log("Product Details ===============>>>>>>", serviceDetails);
 
   useEffect(() => {
     console.log(serviceDetails);
@@ -72,7 +70,6 @@ function EditServiceDetails({ sidebar, setSidebar }) {
     let arr2 = [...serviceDetails.images];
     if (files.length > 0) {
       files.map((item) => {
-        console.log("imageeeeeeeeeeee>>>>>>>>", item);
         arr2.push(item);
         arr.push(URL.createObjectURL(item));
       });
@@ -89,7 +86,6 @@ function EditServiceDetails({ sidebar, setSidebar }) {
   };
 
   const handleProductDelete = (i) => {
-    // console.log("indexx>>>>>>>", i);
     let arr = [...productImages];
     arr.splice(i, 1);
     setProductImages(arr);
@@ -119,7 +115,6 @@ function EditServiceDetails({ sidebar, setSidebar }) {
     });
 
     const formDataObject = Object.fromEntries(formData.entries());
-    console.log(formDataObject);
   };
 
   const onSubmit = async () => {
@@ -140,7 +135,6 @@ function EditServiceDetails({ sidebar, setSidebar }) {
 
       // const formDataObject = Object.fromEntries(formData.entries());
 
-      console.log("formdata>>>>>>>>>>>>>>>>>>>>>>>>>>", formData);
 
       const response = await POST(
         "/agricultural-services",
@@ -148,7 +142,6 @@ function EditServiceDetails({ sidebar, setSidebar }) {
         formData
       );
 
-      console.log("eeeeeeeeeeeeeeeeeeeeee", response?.data);
       toast.success("Service added successfully");
       setTimeout(() => {
         navigate("/vendor-agricultural-services");
@@ -473,6 +466,7 @@ function EditServiceDetails({ sidebar, setSidebar }) {
                   return (
                     <Grid item lg={3} md={4} sm={4} xs={12}>
                       <div
+                      key={i}
                         style={{
                           height: "100px",
                           width: "100px",

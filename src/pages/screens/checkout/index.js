@@ -19,26 +19,16 @@ export default function Checkout() {
 
   const {checkout} = useSelector((state) => state?.CheckoutReducer);
   // const {isAuthenticated, user} = useSelector((state) => state?.AuthReducer);
-  console.log("Checkout Reducer", checkout);
 
   
   const { cartItems } = useSelector((state) => state.CartReducers);
-  console.log("cartItems <<<<<<<<<<<<<<", cartItems);
-  
-  // {cartItems.map((cartData) => {
-  //   console.log("<<<<<<<<cartData?????", cartData)
-  // })}
   
   const dispatch = useDispatch();
   
   const location = useLocation();
   const receivedData = location?.state;
 
-  console.log("Received data:", receivedData);
-
-
   const  finalPrice = receivedData?.productDataToSend2?.deliveryCharges + receivedData?.productDataToSend2?.totalPrice;
-  console.log(finalPrice);
   
 
   const handleOrder = async (values) => {
@@ -52,9 +42,6 @@ export default function Checkout() {
 
     values.items = receivedData?.productDataToSend; 
     values.totalPrice = finalPrice;
-
-    console.log("Values>>>>>>>>>>>>>>", values);
-    // console.log("ADD_CHECKOUT Items", items)
     dispatch(ADD_CHECKOUT(values))
     // setLoading(true);
   };
@@ -271,7 +258,6 @@ export default function Checkout() {
                         required: true,
                       }}
                       render={({ field }) => {
-                        console.log("zipCode field value", field)
                         return (
                           <input
                             className="form-control"

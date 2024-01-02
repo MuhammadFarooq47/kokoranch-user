@@ -1,7 +1,7 @@
 import { GET } from "../../apis/requests";
 // POST
 import ActionTypes from "../constant";
-import { toast } from "react-toastify";
+
 
 // const GET_All_PRODUCTS = (condition, token) => {
 //   return (dispatch) => {
@@ -43,10 +43,6 @@ const GET_FEATURED_PRODUCTS = () => {
   return async (dispatch) => {
     try {
       const response = await GET("/products/featured", null, "",);
-      console.log("GET_FEATURED_PRODUCTS RESPONSE", response);
-      if (response.success === "fail") {
-        toast.error(response.message);
-      }
       dispatch({
         type: ActionTypes.GET_FEATURED_PRODUCTS,
         payload: response.data,

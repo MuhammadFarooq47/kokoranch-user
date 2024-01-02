@@ -21,7 +21,6 @@ export default function PasswordChangeForm() {
   const navigate = useNavigate();
 
   const { token } = useSelector((state) => state.authReducer);
-  // console.log("token ????????????????", token)
   const [isLoading, setLoading] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
 
@@ -36,7 +35,6 @@ export default function PasswordChangeForm() {
           "",
           data
         );
-        console.log("users/updateMyPassword", response?.message);
         if (response.success === false) {
           toast.error(response.message);
           setLoading(false);
@@ -52,7 +50,6 @@ export default function PasswordChangeForm() {
       } catch (error) {
         setLoading(false);
         toast.error(error.response.data.message);
-        console.log(error.response.data.message);
       }
     }
   };

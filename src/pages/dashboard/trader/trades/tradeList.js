@@ -51,7 +51,6 @@ export default function TradeList({
   }
 
   let [traderTrades, setTraderTrades] = useState();
-  console.log("Response from trade get request", traderTrades)
 
   useEffect( async () => {
 try {
@@ -62,8 +61,6 @@ try {
     }
   })
   setTraderTrades(response?.data);
-  // navigate(-1)
-  // console.log("Response from trade get request", response?.data)
 } catch (error) {
   console.log("Error from trade get request", error)
 }
@@ -164,7 +161,6 @@ try {
            </div>
            <button
              onClick={() => {
-               console.log(dateSelectedFilter)
                setsortType('Filter Date')
              }}
              className="btn btn-solid btn-solid-primary mx-auto"
@@ -207,7 +203,6 @@ try {
      <tbody>
        {traderTrades
          ?.data?.map((order, index) => {
-          console.log("Order...............", order?._id)
            return (
              <tr key={index}>
                <td data-heading="Code">

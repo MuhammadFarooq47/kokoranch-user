@@ -113,7 +113,7 @@ export default function TradeList({ setView, view }) {
             </thead>
             <tbody>
               {traderTrades?.map((order, index) => {
-                return <TradeRequestItem props={order} setView={setView} />
+                return <TradeRequestItem key={index} props={order} setView={setView} />
               })}
             </tbody>
           </table>

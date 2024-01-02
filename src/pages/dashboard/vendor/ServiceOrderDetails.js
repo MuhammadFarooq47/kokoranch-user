@@ -13,7 +13,6 @@ const ServiceOrderDetails = ({ setSidebar, sidebar }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // console.log(location);
   const [popupOpen, setPopupOpen] = useState(false);
   const [successfulPopup, setSuccessfulPopup] = useState(false);
   const [orderStatus, setOrderStatus] = useState(location?.state?.data?.status);
@@ -209,10 +208,10 @@ const ServiceOrderDetails = ({ setSidebar, sidebar }) => {
             <hr className="hr-rule" />
             <div className="soi-main-services">
               <h3 className="mb-4">Services</h3>
-              {location?.state?.data?.services.map((item) => {
+              {location?.state?.data?.services.map((item, index) => {
                 return (
                   <>
-                    <div className="d-flex justify-content-between my-5">
+                    <div className="d-flex justify-content-between my-5" key={index}>
                       <p>{item.service_id.serviceName}</p>
                       <p>$ {item.price}</p>
                     </div>

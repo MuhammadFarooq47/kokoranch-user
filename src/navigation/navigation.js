@@ -188,10 +188,6 @@ export default function Navigation() {
   const { isAuthenticated, userType, token, user } = useSelector(
     (state) => state.authReducer
   );
-  console.log("🚀 ~ file: navigation.js:182 ~ Navigation ~ user:", user);
-
-  console.log("user Type", userType);
-  console.log("user Token", token);
   const tokenStorage = localStorage.getItem("token");
 
   const dispatch = useDispatch();
@@ -477,7 +473,9 @@ export default function Navigation() {
         element={
           <Suspense fallback={<FullScreenLoader />}>
             <Layout>
+            <UserSideMenu>
               <Cart />
+            </UserSideMenu>
             </Layout>
           </Suspense>
         }

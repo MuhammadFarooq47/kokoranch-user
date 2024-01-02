@@ -27,7 +27,6 @@ const dispatch = useDispatch();
     images:[],
   })
 
-  console.log("Trades Details ===============>>>>>>", trades);
   
   const [productImages, setProductImages] = useState([]);
   const [detailInputs, setDetailsInputs] = useState([1, 1]);
@@ -41,7 +40,6 @@ const dispatch = useDispatch();
     let arr2 = [...trades.images];
     if (files.length > 0) {
       files.map((item) => {
-        console.log('imageeeeeeeeeeee>>>>>>>>',item)
         arr2.push(item);
         arr.push(URL.createObjectURL(item));
       });
@@ -58,7 +56,6 @@ const dispatch = useDispatch();
     }
   };
   const handleProductDelete = (i) => {
-    // console.log("indexx>>>>>>>", i);
     let arr = [...productImages];
     arr.splice(i, 1);
     setProductImages(arr);
@@ -88,7 +85,6 @@ const dispatch = useDispatch();
         trades?.images.map((item) => {
           formData.append('images', item);
         });
-        console.log('formdata>>>>>>>>>>>>>>>>>>>>>>>>>>', formData);
         // dispatch(CREATE_TRADE_ACTION(formData))
         const response = await axios.post('https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/api/v1/trades', formData, {
           headers: {
@@ -96,7 +92,6 @@ const dispatch = useDispatch();
             Authorization: `Bearer ${storageToken}`,
           },
         });
-        console.log('eeeeeeeeeeeeeeeeeeeeee', response?.data);
        toast.success("Trade Created successfully");
           // navigate('/vendor-my-products');
       } catch (error) {
@@ -267,6 +262,7 @@ const dispatch = useDispatch();
                   return (
                     <Grid item lg={3} md={4} sm={4} xs={12}>
                       <div
+                      key={i}
                         style={{
                           height: "100px",
                           width: "100px",

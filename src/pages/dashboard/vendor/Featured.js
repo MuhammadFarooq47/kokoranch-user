@@ -63,13 +63,6 @@ function Featured({ setSidebar, sidebar }) {
 
   const storageToken = localStorage.getItem("token");
 
-  // useEffect(() => {
-  //   const res =  GET(
-  //     "/agricultural-services/my-agricultural-services?type=featured", storageToken
-  //   );
-
-  //   console.log(res, "huhyuggty");
-  // }, [])
 
   const getAllFeaturedItems = async () => {
     try {
@@ -79,7 +72,6 @@ function Featured({ setSidebar, sidebar }) {
         "/agricultural-services/my-agricultural-services?type=featured",
         storageToken
       );
-      console.log(res, "huhyuggty");
       setLoader(false);
       setRowData(res.data);
       setTableRowData(res.data);

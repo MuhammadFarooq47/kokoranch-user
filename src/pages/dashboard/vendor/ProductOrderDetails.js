@@ -15,17 +15,13 @@ const ProductOrderDetails = ({ setSidebar, sidebar }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location, "Location");
   const [popupOpen, setPopupOpen] = useState(false);
   const [successfulPopup, setSuccessfulPopup] = useState(false);
   const [orderStatus, setOrderStatus] = useState(location?.state?.data?.status);
-  console.log("orderStatus", orderStatus);
 
-  console.log(orderStatus);
   const updateStatusHandler = async () => {
     const formData = new FormData();
     formData.append("status", orderStatus);
-    console.log("Form Data?????????", formData)
     try {
       const res = await axios.patch(
         `https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/product-orders/${location?.state?.data?._id}`,
@@ -37,7 +33,6 @@ const ProductOrderDetails = ({ setSidebar, sidebar }) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         }}
       );
-      console.log("Response ", res)
       toast.success("Status Updated Successfully");
       navigate('/vendor-productorders')
       setSuccessfulPopup(true);
@@ -208,7 +203,6 @@ const ProductOrderDetails = ({ setSidebar, sidebar }) => {
           <div className="soi-top">
             <div className="row">
               {/* {location?.state?.data?.items?.map((orderNumber) => {
-                // console.log("{location?.state?.data?.items?.map((orderNumber)", orderNumber?.productId?._id)
                 <div className="col-4 col-sm-12 col-md-4 col-lg-4 soi-orderNo">
                   <h2>Order No. {orderNumber?.productId?._id?.substr(orderNumber?.productId?._id.length - 4).toUpperCase()}</h2>
                 </div>;
@@ -261,7 +255,6 @@ const ProductOrderDetails = ({ setSidebar, sidebar }) => {
               <div className="col-2"></div>
 
               {location?.state?.data?.items.map((item, index) => {
-                console.log("item?.productId?.quantity", item);
                 return (
                   <>
                     <div className="col-6 my-5" key={index}>

@@ -36,7 +36,6 @@ function Payment({ sidebar, setSidebar }) {
           location?.state?.featuredItem,
           { duration: location?.state?.plan }
         );
-        // console.log("featured response", res);
         if (res.status == true) {
           setSuccessfulServicePopup(true);
           setPopupOpen(false);
@@ -53,7 +52,6 @@ function Payment({ sidebar, setSidebar }) {
         // isFeatures: true
         //duration 1 week
         // amount: 
-        console.log("featured response", res);
         if (res.status == true) {
           setSuccessfulPopup(true);
           setPopupOpen(false);
@@ -117,7 +115,6 @@ function Payment({ sidebar, setSidebar }) {
             className="btn btn-solid btn-solid-primary soi-success-btn"
             onClick={() => {
               setSuccessfulPopup(false);
-              console.log("state check", location.state);
               navigate("/vendor-my-products");
             }}
           >

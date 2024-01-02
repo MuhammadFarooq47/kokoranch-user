@@ -16,7 +16,6 @@ import Popup from "../popUp/popUp"
 
 export default function TraderSideBar({ children }) {
   const { user } = useSelector((state) => state.authReducer);
-console.log(user)
   const [sidebar, setSidebar] = useState(true);
   const [vendor] = useState("Vendor")
   const [trader] = useState("Trader")

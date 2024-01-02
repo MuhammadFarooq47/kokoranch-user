@@ -1,6 +1,6 @@
 import ActionTypes from "../constant";
 import { toast } from "react-toastify";
-import { POST, GET, DELETE } from "../../apis/requests";
+import { GET } from "../../apis/requests";
 
 
 export const addtoCart = (item) => {
@@ -124,7 +124,6 @@ export const getAllCartItems = (token) => {
         })
         .catch((error) => {
           toast.error(error.message);
-          console.log(error.message);
         });
     } else {
       dispatch({

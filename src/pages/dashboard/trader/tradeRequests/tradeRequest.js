@@ -185,7 +185,7 @@ export default function TradeRequest({ setView, singleTrade }) {
                                 (item1, index) => {
                                   return (
                                     <>
-                                      <div className="tab-content_ratings-reviews_customer-reviews-wrapper_review_replay-wrapper_inner-wrapper">
+                                      <div className="tab-content_ratings-reviews_customer-reviews-wrapper_review_replay-wrapper_inner-wrapper" key={index} >
                                         <h3 className="fs-3 tab-content_ratings-reviews_customer-reviews-wrapper_review_replay-wrapper_inner-wrapper_name">
                                           {item1.traderId.firstName +
                                             ' ' +

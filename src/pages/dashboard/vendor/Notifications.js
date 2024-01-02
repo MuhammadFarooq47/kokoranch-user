@@ -112,10 +112,10 @@ function Notifications({ sidebar, setSidebar }) {
         elevation={20}
       >
         <div className="row ">
-          {data.map((item) => {
+          {data.map((item, index) => {
             return (
               <>
-                <div className="col-10 col-md-6 col-lg-6 col-sm-8">
+                <div className="col-10 col-md-6 col-lg-6 col-sm-8" key={index}>
                   {item.details}
                   <div className="row mt-5">
                     <div className="col-3" style={{ color: "#ffc524" }}>

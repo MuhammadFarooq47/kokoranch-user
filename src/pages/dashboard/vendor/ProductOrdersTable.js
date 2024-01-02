@@ -28,10 +28,8 @@ const ProductOrdersTable = ({
   setDeleteProduct,
   onDelete,
 }) => {
-  // console.log(tRowData, "vbjvgh")
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // console.log("activeCard", activeCard);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -45,7 +43,6 @@ const ProductOrdersTable = ({
   };
 
   const [productitemsData, setProductitemsData ] = useState();
-  // console.log(productitemsData,"???????????")
 
   useEffect(() => {
     if (tRowData) {
@@ -56,7 +53,6 @@ const ProductOrdersTable = ({
   
 // const {user} = useSelector((state) => state.AuthReducer);
 
-// console.log(user, "jkjkjkj")
 
   // const deleteProduct = async (id) => {
   //   try {
@@ -126,15 +122,11 @@ const ProductOrdersTable = ({
           </TableHead>
           <TableBody sx={{ backgroundColor: "#1e1e1e", color: "#FFFFFF" }}>
             {tRowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-                // console.log("Rooooooooooooooooooooooooooow", row)
                 return (
                   <TableRow key={index} hover role="checkbox" tabIndex={-1}>
                     {tHeadData.map((column, index1) => {
-                      // console.log("helloo", column.id, row);
-                      // console.log("helloo", column);
                       let value;
                       if (column.id == "order_id") {
-                            // console.log("orderNo", orderNo?.price)
                             value =   row?.orderNumber
                        
                        
@@ -144,7 +136,6 @@ const ProductOrdersTable = ({
                           .toUpperCase();
                       } else if (column.id == "productName") {
                         {row?.items?.map((itemsData) => {
-                            console.log("itemsData", itemsData)
                             value = itemsData?.productId?.productName || row?.serviceName;
                         })}
                       } else if (column.id == "updateDate") {
@@ -152,7 +143,6 @@ const ProductOrdersTable = ({
                       } else if (column.id == "totalPrice") {
                         
                         {row?.items?.map(((totalPrice) => {
-                            // console.log("orderNo", orderNo?.price)
                             value = `$${totalPrice?.price * totalPrice?.quantity}`
                         }))}
                           

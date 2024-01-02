@@ -59,7 +59,6 @@ export default function InfoForm({ setFormChange }) {
     setLoading(true)
     try {
       const response = await GET("/users/me", token);
-      console.log("CHECK_TOKEN", response);
       setUserData(response.data);
       // Initialize formData here with user data
       setFormData({
@@ -90,7 +89,6 @@ export default function InfoForm({ setFormChange }) {
       toast.success("User Info Updated Successfully");
       // setFormChange(false);
     } catch (error) {
-      console.log(error.message, "Error while updating user info");
       toast.error("Error updating user info");
     }
   };

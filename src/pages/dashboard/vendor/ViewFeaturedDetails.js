@@ -11,7 +11,6 @@ import moment from "moment";
 function ViewFeaturedDetail({ sidebar, setSidebar }) {
   let navigate = useNavigate();
   let location = useLocation();
-  // console.log(location.state.data)
   // const [data, setData] = useState({
   //   location: "karta hisdfhjkh",
   //   shippingTo: "shdfkjhs",

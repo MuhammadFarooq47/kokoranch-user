@@ -36,15 +36,12 @@ const TableComponent = ({
   setDeleteProduct,
   onDelete,
 }) => {
-  console.log(tRowData, "vbjvgh")
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // console.log("activeCard", activeCard);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const {reviews} = useSelector((state) => state?.ReviewsReducers);
-  console.log("state?.ReviewsReducers", reviews);
 
   useEffect(() => {
     {tRowData?.map((data) => {
@@ -65,7 +62,6 @@ const TableComponent = ({
 
 // const {user} = useSelector((state) => state.AuthReducer);
 
-// console.log(user, "jkjkjkj")
 
   // const deleteProduct = async (id) => {
   //   try {
@@ -135,12 +131,9 @@ const TableComponent = ({
           </TableHead>
           <TableBody sx={{ backgroundColor: "#1e1e1e", color: "#FFFFFF" }}>
             {tRowData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-                // console.log("Rooooooooooooooooooooooooooow", row)
                 return (
                   <TableRow key={index} hover role="checkbox" tabIndex={-1}>
                     {tHeadData.map((column, index1) => {
-                      // console.log("helloo", column.id, row);
-                      // console.log("helloo", column.id);
                       let value;
                       if (column.id == "serviceCategory") {
                         value = row[column.id].category;

@@ -3,9 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { CREATE_NEW_PASSWORD } from "../../../redux/actions/authentication";
 import Images from "../../../constants/images";
 import { useDispatch } from "react-redux";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { BiErrorCircle } from "react-icons/bi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -39,18 +37,14 @@ function MyVerticallyCenteredModal(props) {
 
 export default function CreateNewPassword() {
   const location = useLocation();
-  // const resetPasswordScreencredidentials = location.state.credidentials;
-  // console.log(
-  //   "Reset Password Screen Credentials",
-  //   resetPasswordScreencredidentials
-  // );
+
   // FORM DATA
   const [credidentials, setCredidentials] = useState({
     email: localStorage.getItem("email"),
     password: "",
     passwordConfirm: "",
   });
-  console.log(credidentials, "create Password data");
+
   const navigate = useNavigate();
   // IS LOADING
   const [isLoading, setLoading] = useState(false);
@@ -91,7 +85,6 @@ export default function CreateNewPassword() {
     } catch (error) {
       setError(error);
       toast.error(error, "chgfhgfhgfhgfhg");
-      console.log(error); // Set the error message if there's an error
     }
   };
 

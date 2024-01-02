@@ -13,11 +13,8 @@ import moment from "moment";
 
 export default function Messages(props) {
   const { recipient, filteredRoom, socketMessages, setMessages, socket } = props;
-  // console.log("🚀 ~ file: chat.js:15 ~ Messages ~ socketMessages:", socketMessages)
-  console.log("🚀 ~ file: chat.js:15 ~ Messages ~ recipient:", recipient)
 
   const { user } = useSelector((state) => state.authReducer);
-  console.log("🚀 ~ file: chat.js:19 ~ user:", user)
   const [message, setMessage] = useState("")
 
   const [selectedRoom, setSelectedRoom] = useState({
@@ -116,8 +113,6 @@ export default function Messages(props) {
     )
     setMessage("");
     setMessages((prev) => [data, ...prev?.data]);
-    //  setMessages((prev) => console.log(prev, "sdgr"));
-    console.log("🚀 ~ file: chat.js:27 ~ sendMessage ~ msg,msgTo,roomId,currentUser;:", msg, msgTo, roomId, currentUser)
     // return ""; // Clear the message after sending
     // });
 
@@ -158,7 +153,6 @@ export default function Messages(props) {
         </header>
         <ul id="chat" className="bg-black-pad my-5 " style={{ height: "60vh" }}>
           {recipient?.data?.map((item, index) => {
-            // console.log(element)
             return (
               <>
                 {
@@ -169,7 +163,7 @@ export default function Messages(props) {
                       selectedRoom?.user2?._id // user1 msg (agent or sp)
                     : item?.user?._id !== user?._id
                 ) ?  (
-                    <div>
+                    <div key={index}>
                       <li
                         className={[
                           "me"

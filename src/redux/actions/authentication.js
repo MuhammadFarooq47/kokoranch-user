@@ -1,11 +1,10 @@
 import { toast } from "react-toastify";
 import ActionTypes from "../constant";
-import { GET, POST, PUT, PATCH } from "../../apis/requests";
+import { GET, POST, PUT } from "../../apis/requests";
 // import CryptoJS from 'crypto-js';
 import axios from "axios";
 
 import { io } from "socket.io-client";
-import { SiSsrn } from "react-icons/si";
 
 const socket = io.connect("http://192.168.100.33:3030");
 
@@ -14,7 +13,6 @@ const LOGIN = (credentials, setLoading, navigate) => {
     try {
       setLoading(true);
       const response = await POST("/users/login", null, credentials);
-      console.log("Response Login", response);
 
       // Successful login
       setLoading(false);
@@ -28,14 +26,12 @@ const LOGIN = (credentials, setLoading, navigate) => {
       // localStorage.setItem("role", response?.data?.user?.role);
       socket.emit("join", response?.data?.user?._id)
       const updatedUserData = await GET('/users/me')
-      console.log("🚀 ~ file: authentication.js:31 ~ return ~ updatedUserData:", updatedUserData)
       dispatch({
         type: ActionTypes.LOGIN,
         payload: updatedUserData,
       });
     } catch (error) {
       // Handle other errors
-      console.log("Login message Error ==>>>", error.response.data.message);
       toast.error(error?.response?.data?.message);
     }
   };
@@ -45,10 +41,8 @@ const LOGIN = (credentials, setLoading, navigate) => {
 //     try {
 //       setLoading(true);
 //       const response = await GET("/users/login", null, credentials);
-//       console.log("Response", response.data);
 
 //       // if (response.status === "fail") {
-//       //   console.log("If response ==>>", response);
 //       //   throw new Error(response.message);
 //       // }
 //       // Successful login
@@ -63,7 +57,6 @@ const LOGIN = (credentials, setLoading, navigate) => {
 //       });
 //     } catch (error) {
 //       // Handle other errors
-//       console.log("Login message Error ==>>>", error.message);
 //       toast.error(error.message)
 //     }
 //   };
@@ -80,7 +73,7 @@ const LOGOUT = (token, navigate) => {
       navigate("/login"); // Redirect to the desired page after logout.
     } catch (error) {
       // If there is an error during logout, dispatch logoutFailure.
-      console.log(error, "logout error");
+      toast.error("Error during Logout")
     }
   };
 };
@@ -101,7 +94,6 @@ const REGISTER = (credentials, setLoading, navigate) => {
     } catch (error) {
       // toast.error("An error occurred during registration.", error?.response?.data?.message);
       console.log("Registration error ==>>>", error?.response?.data?.message);
-      console.log("Error ==================", error);
     }
   };
 };
@@ -111,8 +103,6 @@ const VENDOR_TRADER_REGISTER = (credentials, setLoading, navigate) => {
     try {
       setLoading(true);
       const response = await axios.post("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/users/signup", credentials, null, "");
-      console.log("Registration Successful");
-      console.log("response data =>>", response);
       toast.success("Registration Successfull");
       setLoading(false);
       navigate("/signup-success");
@@ -125,7 +115,6 @@ const VENDOR_TRADER_REGISTER = (credentials, setLoading, navigate) => {
     } catch (error) {
       // toast.error("An error occurred during registration.", error?.statusCode);
       console.log("Register message Error ==>>>", error?.response?.message);
-      // console.log("Error ==================", error);
     }
   };
 };
@@ -162,19 +151,8 @@ const UPDATE_USER = (data) => {
       });
       toast.success("User Info Updated Successfully");
 
-      // if (response.status === 200) {
-      //   dispatch({
-      //     type: ActionTypes.UPDATE_AUTH,
-      //     payload: response.data,
-      //   });
-      //   toast.success("User Info Updated Successfully");
-      // } else {
-      //   toast.error("Error updating user info");
-      // }
     } catch (error) {
-      console.log(error);
       toast.error("Error updating user info");
-      // console.log(error.response, "rrrrrrrrrrr")
     }
   };
 };
@@ -211,19 +189,9 @@ const UPDATE_VENDOR = (data) => {
         payload: response.data,
       });
 
-      // if (response.status === 200) {
-      //   dispatch({
-      //     type: ActionTypes.UPDATE_AUTH,
-      //     payload: response.data,
-      //   });
-      //   toast.success("User Info Updated Successfully");
-      // } else {
-      //   toast.error("Error updating user info");
-      // }
     } catch (error) {
       console.log(error);
       // toast.error("Error updating user info");
-      // console.log(error.response, "rrrrrrrrrrr")
     }
   };
 };
@@ -255,7 +223,6 @@ const UPDATE_TRADER = (formData) => {
         }
       );
 
-      console.log(response.data, "UPDATE_TRADER")
       toast.success("User Info Updated Successfully");
 
       dispatch({
@@ -265,8 +232,6 @@ const UPDATE_TRADER = (formData) => {
 
     } catch (error) {
       console.log(error?.message);
-      // toast.error("Error updating user info");
-      // console.log(error.response, "rrrrrrrrrrr")
     }
   };
 };
@@ -275,7 +240,6 @@ const UPDATE_ACCOUNT_DETAIL = (data, token, userId) => {
   return (dispatch) => {
     return PUT("/users/update/bank/detail", token, userId, data)
       .then((response) => {
-        console.log(response);
         // debugger
         if (response.status === false) {
           toast.error(response.message);
@@ -288,7 +252,6 @@ const UPDATE_ACCOUNT_DETAIL = (data, token, userId) => {
         }
       })
       .catch((error) => {
-        console.log(error);
         toast.error(error.message);
       });
   };
@@ -298,10 +261,6 @@ const CHECK_TOKEN = (headers) => {
   return async (dispatch) => {
     try {
       const response = await GET("/users/me", headers, "");
-      console.log("CHECK_TOKEN", response.data.role);
-      // if (response.status === "fail") {
-      //   toast.error(response.message);
-      // }
       dispatch({
         type: ActionTypes.CHECK_TOKEN,
         payload: response?.data,
@@ -318,9 +277,6 @@ const FORGOT_PASSWORD = (credentials, setLoading, navigate) => {
     try {
       setLoading(true);
       const response = await POST("/users/forgotPassword", null, credentials);
-      // navigate('/reset-password', { state: { credidentials: response.data.email } });
-      // localStorage.setItem("email", response.data.email)
-      // console.log(response.data, "????????????")
       // navigate('/reset-password');
       setLoading(false);
       dispatch({
@@ -342,16 +298,8 @@ const OTP_VERIFY = (credentials, setLoading, navigate) => {
         null,
         credentials
       );
-      console.log("Response", response);
       setLoading(false); // Set loading to false
-      // Use the 'navigate' function to navigate to the desired route
       navigate("/create-new-password");
-      if (response.status === "error") {
-        // Handle server error (status code 500)
-        toast.error("Server error occurred. Please try again later.");
-        console.log("Server error occurred. Please try again later.");
-      }
-
       dispatch({
         type: ActionTypes.OTP_VERIFY,
         payload: response.data,
@@ -359,7 +307,6 @@ const OTP_VERIFY = (credentials, setLoading, navigate) => {
     } catch (error) {
       // Handle network or other unexpected errors
       toast.error(error.message);
-      console.log(error.message);
       setLoading(false); // Set loading to false
     }
   };
@@ -384,7 +331,6 @@ const CREATE_NEW_PASSWORD = (credentials, setLoading, navigate) => {
       });
     } catch (error) {
       toast.error(error.message);
-      console.log(error.message);
     } finally {
       setLoading(false);
     }

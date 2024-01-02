@@ -15,7 +15,6 @@ export default function MyProfile({ setSidebar, sidebar }) {
   const [innerSidebar, setInnerSidebar] = useState(true);
   const { user } = useSelector((state) => state.authReducer);
   const [filteredRoom,setFilteredRoom]=useState()
-  // console.log("🚀 ~ file: index.js:17 ~ MyProfile ~ filteredRoom:", filteredRoom)
 
   const socketRef = useRef(null)
 
@@ -41,18 +40,6 @@ export default function MyProfile({ setSidebar, sidebar }) {
   };
 
   const handleBtnActie = (e) => {
-    console.log(e.target.tagName);
-    console.log(
-      e.target.tagName === "path"
-        ? e.target.parentElement.parentElement.childNodes
-        : e.target.tagName === "svg"
-          ? e.target.parentElement.childNodes
-          : e.target.childNodes[1]
-    );
-    // const elems = document.querySelectorAll(".chat-dropdown-delete-btn");
-    // elems.forEach((elem) => {
-    //   elem.classList.remove("chat-dropdown-delete-btn_active");
-    // });
     e.target.tagName === "path"
       ? e.target.parentElement.parentElement.childNodes[2].classList.toggle(
         "chat-dropdown-delete-btn_active"
@@ -67,12 +54,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
   };
 
   const [lastMessage, setLastMessage] = useState();
-  // console.log("lastMessage??????", lastMessage?.data.at(-1));
   const [specificData, setSpecificData] = useState();
-
-  // {lastMessage.map((roomdata) => {
-  //   console.log("Room data", roomdata)
-  // })}
 
   const getRooms = async () => {
     try {
@@ -100,9 +82,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
 
   const [roomId, setRoomId] = useState(lastMessage?.data[0]?._id);
   const [messages, setMessages] = useState([]);
-  console.log("🚀 ~ file: index.js:103 ~ messages:", messages)
   const [socketMessages, setSocketMessages] = useState([])
-  // console.log("🚀 ~ file: index.js:105 ~ socketMessages:", socketMessages)
 
   const roomFunction = async () => {
     try {
@@ -117,11 +97,9 @@ export default function MyProfile({ setSidebar, sidebar }) {
         }
       );
       setMessages(response?.data);
-      console.log("🚀 ~ file: index.js:120 ~ roomFunction ~ response?.data:", response?.data)
-
+      
       const filteredRoomData=lastMessage?.data.find((ele)=>ele?._id=="6569ab8d078c201299775b5c")
-      console.log("🚀 ~ file: index.js:111 ~ roomFunction ~ filteredRoomData:", filteredRoomData)
-
+      
       setFilteredRoom(filteredRoomData);
 
     } catch (error) {
@@ -154,8 +132,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
       // setMessages((prev) =>
       // prev?.data.push(msg));
     });
-    console.log("🚀 ~ file: index.js:145 ~ socketRef.current.on ~ setMessages:", messages)
-
+    
     // Clean up the socket connection when the component unmounts
     // return () => {
     //   socketRef.current.disconnect();
@@ -184,8 +161,6 @@ export default function MyProfile({ setSidebar, sidebar }) {
                 state={filteredRoom}
               >
                 {lastMessage?.data?.map((element, index) => {
-                // console.log("🚀 ~ file: index.js:164 ~ {lastMessage?.data?.map ~ element:", element)
-                
                   return (
                     <li
                       key={index}

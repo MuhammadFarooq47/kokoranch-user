@@ -33,8 +33,6 @@ function AddProductDetails({ sidebar, setSidebar }) {
     subCategory:'',
   });
 
-  console.log(categories, "??????????????")
-
   const [data, setData] = useState({
     itemLocation: "",
     shippingTo: "",
@@ -65,15 +63,12 @@ function AddProductDetails({ sidebar, setSidebar }) {
     
   })
 
-  console.log("Product Details ===============>>>>>>", productDetails);
-  
   const [productImages, setProductImages] = useState([]);
   const [detailInputs, setDetailsInputs] = useState([1, 1]);
   const [mainCategories,setMainCategoires]=useState([]);
   const [subCategories,setSubCategoires]=useState([]);
   const [subSubCategories,setSubSubCategoires]=useState([]);
 
-  // console.log('details>>>>>>>>>>>>>>>>>>>',productDetails)
 
   // Start shpping details
   // const [data, setData] = useState({
@@ -88,7 +83,6 @@ function AddProductDetails({ sidebar, setSidebar }) {
 
   const getShippingDetail = async () => {
     try {
-      // console.log("user", user._id);
       // setLoader(true);
       const res = await GET(
         `/shipping-details/${user._id}`,
@@ -101,7 +95,6 @@ function AddProductDetails({ sidebar, setSidebar }) {
       } else {
         setData(res.data);
         // setLoader(false);
-        // console.log("data", res.data);
       }
     } catch (err) {
       toast.error(err.message);
@@ -123,7 +116,6 @@ function AddProductDetails({ sidebar, setSidebar }) {
     let arr2 = [...productDetails.images];
     if (files.length > 0) {
       files.map((item) => {
-        console.log('imageeeeeeeeeeee>>>>>>>>',item)
         arr2.push(item);
         arr.push(URL.createObjectURL(item));
       });
@@ -140,7 +132,6 @@ function AddProductDetails({ sidebar, setSidebar }) {
     }
   };
   const handleProductDelete = (i) => {
-    // console.log("indexx>>>>>>>", i);
     let arr = [...productImages];
     arr.splice(i, 1);
     setProductImages(arr);
@@ -157,7 +148,6 @@ function AddProductDetails({ sidebar, setSidebar }) {
   const getSubCategory=async()=>{
     try{
       const res= await GET('/subCategories/getCategoryById',null,`/${categories.mainCategory}`);
-      // console.log('/////',res)
       if(res.success == true){
         setSubCategoires(res.category)
       }
@@ -237,11 +227,9 @@ function AddProductDetails({ sidebar, setSidebar }) {
         formData.append('shippingDetails.return', shippingDetails?.return);
         formData.append('shippingDetails.shippingAndHandling', shippingDetails?.shippingAndHandling);
         
-        console.log('formdata>>>>>>>>>>>>>>>>>>>>>>>>>>', storageToken, formData);
         // formData.append('token', token);
         // formData.append('quantity', productDetails.inStock);
         const response = await POST('/products',  storageToken, formData);
-        console.log('eeeeeeeeeeeeeeeeeeeeee', response?.data);
        toast.success("Product add successfully");
           navigate('/vendor-my-products');
       } catch (error) {
@@ -398,7 +386,8 @@ function AddProductDetails({ sidebar, setSidebar }) {
                 }
               }}
             >
-              {subCategories?.map(item=>(<MenuItem value={item._id}>{item?.subCategory}</MenuItem>))}
+              {subCategories?.map((item, index)=>(<MenuItem value={item._id} key={index
+              }>{item?.subCategory}</MenuItem>))}
           
             </Select>
             </FormControl>
@@ -431,7 +420,7 @@ function AddProductDetails({ sidebar, setSidebar }) {
                 }
               }}
             >
-              {subSubCategories.map(item=>(<MenuItem value={item._id}>{item.subSubCategory}</MenuItem>))}
+              {subSubCategories.map((item, index)=>(<MenuItem value={item._id} key={index}>{item.subSubCategory}</MenuItem>))}
               
             </Select>
             </FormControl>
@@ -511,7 +500,6 @@ function AddProductDetails({ sidebar, setSidebar }) {
                     style={{border:'1px solid #FFFFFF',color:'#FFFFFF', backgroundColor:'transparent'}}
                     onChange={(e)=>{
                       let arr=[...productDetails.description];
-                      // console.log('consoleeeeeeeeeeeeeeee>>>>>>>',arr[i+1])
                       if(arr[i+1] == undefined){
                         arr.push(e.target.value);
                       }
@@ -597,6 +585,7 @@ function AddProductDetails({ sidebar, setSidebar }) {
                           alignItems: "center",
                           justifyContent: "center",
                         }}
+                        key={i}
                       >
                         <img
                           src={item}

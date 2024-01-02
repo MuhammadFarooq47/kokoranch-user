@@ -36,7 +36,6 @@ export default function Header() {
     (state) => state.authReducer
   );
 
-  console.log("User reducer", user);
 
   const { categories, subCategories, subSubCategories, allCategories } =
     useSelector((state) => state.CategoriesReducers);
@@ -51,9 +50,6 @@ export default function Header() {
     (item) => item?.user?._id === user?._id
   );
 
-  if (wishlistItems) {
-    console.log("Yes both ids are same");
-  }
 
   const dispatch = useDispatch();
   const closeSideBar = (e) => {
@@ -68,7 +64,6 @@ export default function Header() {
       category: searchType,
     };
     if (searchText && searchType) {
-      console.log("Search Text");
       // dispatch(GET_SEARCH_PRODUCTS_ACTION(condition, token));
     }
   };
@@ -91,11 +86,9 @@ export default function Header() {
   const handleOnSearch = (string, results) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
-    // console.log(string, results);
   };
   const handleOnSelect = (item) => {
     // the item selected
-    console.log(item);
     setSearchText(item.name);
     setsearchType(item.category.category);
   };
@@ -291,13 +284,13 @@ export default function Header() {
                                       return element;
                                     }
                                   })
-                                  .map((item) => {
+                                  .map((item, index) => {
                                     return (
                                       <li
                                         onClick={() => {
                                           handleSelectSearchType(item.category);
                                         }}
-                                        key={item._id}
+                                        key={index}
                                       >
                                         <Link className="dropdown-item" to="#">
                                           {item.category}
@@ -491,7 +484,6 @@ export default function Header() {
                 style={{ display: "flex", flexDirection: "row" }}
               >
                 {allCategories?.slice(0, 10).map((cat, index) => (
-                  // console.log(cat.categoryName)
                   <li
                     className="btn btn-solid-dark-rounded f-bold header-bottom-dropdown-button"
                     type="button"
@@ -503,7 +495,7 @@ export default function Header() {
                     <FaAngleDown />
                     {cat.subCategories && (
                       <ul className="sub-menu sub-menu-left">
-                        {cat.subCategories.map((subCat, subCatIndex) => (
+                        {cat.subCategories.map((subCat) => (
                           <li key={subCat?.category?._id}>
                             {subCat.subCategoryName}
                             {subCat.subCategories && <FaAngleRight />}

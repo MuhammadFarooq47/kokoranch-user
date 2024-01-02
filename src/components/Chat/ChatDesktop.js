@@ -32,8 +32,6 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
     data?.user1?._id == userData?._id
       ? data?.user2?.firstName
       : data?.user1?.firstName;
-  // console.log(data,"data  vdatadata data")
-
   return (
     <div
       className={`${[
@@ -42,9 +40,8 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
       ].join(" ")}`}
       onClick={() => {
         setRoomsData((prev) => {
-          const updatedRoomLastMessage = prev.map((item) => {
+          const updatedRoomLastMessage = prev.map((item, index) => {
             if (item?._id == data?._id) {
-              console.log(item, "2333333333");
               return {
                 ...item,
                 user1UnreadCount: 0,
@@ -70,7 +67,7 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
         //     "#383838",
       }}
     >
-      <div className={[classes.SideRoomDiv]}>
+      <div className={[classes.SideRoomDiv]} key={index}>
         <div>
           <img
             src={imageUrl(chatRoomBoxPhoto)}
@@ -171,7 +168,6 @@ const ChatDesktop = (props) => {
                       <>
                        
                         {[...messages].reverse()?.map((item, i) => {
-                          console.log("🚀 ~ file: ChatDesktop.js:162 ~ {messages[selectedRoom?._id]?.map ~ item:", item)
                           return (
                             <>
                               {

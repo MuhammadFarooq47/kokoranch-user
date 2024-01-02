@@ -89,7 +89,6 @@ export default function Settings({ setSidebar, sidebar }) {
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
-    console.log("event.target.checked", event.target.checked);
   };
   // SETTING STATE WITH INPUT
   const onchange = (e) => {
@@ -100,12 +99,10 @@ export default function Settings({ setSidebar, sidebar }) {
     e.preventDefault();
     try {
       const res = await PATCH("/users/updateMyPassword", token, "", value);
-      console.log("/users/updatePassword", res)
       setPopupOpen(true)
       toast.success("Password Updated Successfully...");
     } catch (err) {
       toast.error(err?.response?.data?.message);
-      console.log(err?.response?.data?.message)
     }
   };
 

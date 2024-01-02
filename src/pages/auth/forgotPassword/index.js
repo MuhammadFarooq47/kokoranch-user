@@ -16,7 +16,6 @@ export default function ForgotPassword() {
   const [credidentials, setCredidentials] = useState({
     email: "",
   });
-  console.log(credidentials, "LoginData")
   localStorage.setItem("email", credidentials.email)
   const navigate = useNavigate();
   // IS LOADING
@@ -47,7 +46,6 @@ export default function ForgotPassword() {
     } catch (error) {
       setError(error); // Set the error message if there's an error
       setModalShow(true); // Show the modal
-      console.log("Error from Forgot Password", error);
     }
  
   };

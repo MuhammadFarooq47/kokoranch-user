@@ -9,13 +9,11 @@ import moment from "moment"
 export default function OrderDetails(props) {
 
   const location = useLocation();
-  console.log("Location,,,,,,,,", location?.state)
   const orderNum = location?.state?.orderNumber
 
   const [order, setOrder] = useState({}); //eslint-disable-line
 
   const {checkout} = useSelector((state) => state?.CheckoutReducer);
-  // console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::", checkout)
 
 
   // useEffect(() => {
@@ -48,9 +46,8 @@ export default function OrderDetails(props) {
       </div>
       {checkout?.map((order, index) => {
         if(orderNum === order?.orderNumber){
-          console.log("Yes both ids are equal")
           return(
-            <div className="col-12 orderDetails-wrapper_inner-wrapper">
+            <div className="col-12 orderDetails-wrapper_inner-wrapper" key={index}>
             <div className="row">
               <div className="col-6 ">
                 <h4 className="title-color">Order No. {order.orderNumber}</h4>
@@ -125,7 +122,7 @@ export default function OrderDetails(props) {
               {
                     order.items.map((productDelivery, index) => {
                       return (
-                        <div className="row">
+                        <div className="row" key={index}>
                         <div className="col-6 ">
                           <h5 className="fs-5">Shipping Charges:</h5>
                         </div>

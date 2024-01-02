@@ -145,9 +145,7 @@ export default function ChaBar({ setSidebar, sidebar }) {
                 state={filteredRoom}
               >
                 {lastMessage?.data?.map((element, index) => {
-                // console.log("🚀 ~ file: index.js:164 ~ {lastMessage?.data?.map ~ element:", element)
-                
-                  return (
+                return (
                     <li
                       key={index}
                       className="recipient-item"

@@ -16,7 +16,6 @@ const ServiceDetails = ({ setSidebar, sidebar }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log("location.state.data.status", location.state.data)
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.authReducer);
 
@@ -25,7 +24,6 @@ const ServiceDetails = ({ setSidebar, sidebar }) => {
   const [deletePopup, setDeletePopup] = useState(false);
   const [deleteSuccessfulPopup, setDeleteSuccessfulPopup] = useState(false);
   const [orderStatus, setOrderStatus] = useState(location.state.data);
-  // console.log("orderStatus ====================", orderStatus.category)
   return (
     <div>
       <Popup open={popupOpen} setOpen={setPopupOpen}>
@@ -329,6 +327,7 @@ const ServiceDetails = ({ setSidebar, sidebar }) => {
                   return (
                     <Grid key={item?.url} item lg={3} md={4} sm={4} xs={12}>
                       <div
+                      key={i}
                         style={{
                           height: "100px",
                           width: "100px",

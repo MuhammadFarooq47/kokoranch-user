@@ -45,7 +45,6 @@ function VendorProductOrders({ setSidebar, sidebar }) {
     let temp = [];
     if (activeCard == "Total Orders") {
       temp = tableRowData;
-      // console.log("all");
     } else if (activeCard == "pending") {
       temp = tableRowData.filter((item) => item.status == "pending");
     } else if (activeCard == "on-the-way") {
@@ -61,17 +60,14 @@ function VendorProductOrders({ setSidebar, sidebar }) {
     try {
       setLoader(true);
       const res = await GET("/product-orders/vendor/all");
-      console.log("/product-orders/vendor/all", res)
       if (res.success == false) {
         toast.error(res.message);
         setLoader(false);
       } else {
-        // console.log("product orders", res?.data);
         setTableRowData(res?.data);
         setLoader(false);
         let totalAmount = 0;
         res?.data.map((item) => {
-          console.log("Item>>>>>>>>>>>>>>>", item)
           totalAmount = totalAmount + item.totalPrice;
         });
         let filterData = [

@@ -12,7 +12,6 @@ const CREATE_TRADE_ACTION = (formdata) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("Create Trade Response", response);
     toast.success("Trade create successfull");
     dispatch({
       type: ActionTypes.CREATE_TRADE,

@@ -25,7 +25,6 @@ const GET_PRODUCT_REVIEWS = (id) =>{
         type: ActionTypes.GET_PRODUCT_REVIEWS,
         payload: response?.data
       })
-      console.log('GET PRODUCT REVIEW', response.data);
     } catch (error) {
       console.log("error from reviews/product", error.message)
     }

@@ -17,10 +17,6 @@ export default function Profile({ setSidebar, sidebar }) {
   const dispatch = useDispatch();
   const { user, userUpdated } = useSelector((state) => state.authReducer);
   
-  console.log("user from Trader profile", user, userUpdated);
-
-  
-
   const [editAble, setEditAble] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [profileData, setProfileData] = useState({
@@ -35,7 +31,6 @@ export default function Profile({ setSidebar, sidebar }) {
 
 
   const changeProfileImage = (e) => {
-    console.log("target", e.target.files[0]);
     // setProfileImage(URL.createObjectURL(e.target.files[0]));
     setProfileData({
       ...profileData,
@@ -45,7 +40,6 @@ export default function Profile({ setSidebar, sidebar }) {
     // let reader = new FileReader();
     // reader.onload = (e) => {};
     // reader.readAsDataURL(e.target.files[0]);
-    // console.log("reader", reader.result);
   };
 
 
@@ -62,7 +56,6 @@ export default function Profile({ setSidebar, sidebar }) {
     phoneNumber: "",
   });
 
-  console.log("Trader Form Data ????????????", formData)
 
   // const dispatch = useDispatch();
   const token = localStorage.getItem("token");
@@ -82,7 +75,6 @@ export default function Profile({ setSidebar, sidebar }) {
     setLoading(true)
     try {
       const response = await GET("/users/me", token);
-      console.log("CHECK_TOKEN", response);
       setUserData(response.data);
       // Initialize formData here with user data
       setFormData({
@@ -119,7 +111,6 @@ export default function Profile({ setSidebar, sidebar }) {
       // setFormChange(false);
    
     } catch (error) {
-      console.log(error.response, "Error while updating user info");
       toast.error("Error updating user info");
     }
    };
@@ -129,10 +120,7 @@ export default function Profile({ setSidebar, sidebar }) {
   const submitHandler = async (e) => {
     e.preventDefault()
   
-    // console.log("jksahdjk: ", myformData);
-
-  
-    try {
+try {
       var myformData = new FormData();
       if (profileData.fileContent) {
         myformData.append("image", profileData.fileContent);
@@ -146,7 +134,6 @@ export default function Profile({ setSidebar, sidebar }) {
     // toast.success("User Info Updated Successfully");
     } catch (e) {
       toast.error(e.message);
-      console.log(e.message)
     }
   };
 

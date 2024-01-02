@@ -11,7 +11,6 @@ import Picker from 'emoji-picker-react'
 import { BsEmojiSmileFill } from "react-icons/bs";
 
 export const MessageInputWithButton = ({ state, setter, onClick }) => {
-  console.log("🚀 ~ file: MessageInputWithButton.js:14 ~ MessageInputWithButton ~ state:", state)
   const matches = useMediaQuery("(min-width:600px)");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   // const [msg, setMsg] = useState("");
@@ -21,7 +20,7 @@ export const MessageInputWithButton = ({ state, setter, onClick }) => {
   };
 
   const handleEmojiClick = (e, emoji) => {
-    console.log("🚀 ~ file: MessageInputWithButton.js:24 ~ handleEmojiClick ~ emoji:", emoji)
+
     let message = state;
     message += emoji.emoji;
     setter(message);

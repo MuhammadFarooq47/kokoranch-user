@@ -14,7 +14,6 @@ export default function MyWishlist() {
 
   const {user, isAuthenticated} = useSelector((state) => state.authReducer);
   const { wishlist, removeItemWishList } = useSelector((state) => state.WishlistReducers);
-  console.log(wishlist, "WishList")
   const {alreadyPresentCart} = useSelector((state) => state.CartReducers);
   const { cartItems } = useSelector((state) => state.CartReducers);
 
@@ -50,7 +49,6 @@ export default function MyWishlist() {
         <div className="col-12 wishist-wrapper_inner-wrapper ">
           {wishlistFilters.length != 0 ? (
             wishlist?.map((element, index) => {
-              console.log("Element from wishlist", element)
               return (
                 <div
                   className="row wishist-wrapper_inner-wrapper_item"

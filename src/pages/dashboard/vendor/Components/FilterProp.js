@@ -34,7 +34,6 @@ const FilterProp = (props) => {
               className="cursor-pointer"
               onClick={() => {
                 props.setSortData && props.setSortData("high");
-                console.log("click Price Low To High ");
               }}
             >
               Price Low To High
@@ -43,7 +42,6 @@ const FilterProp = (props) => {
               className="cursor-pointer"
               onClick={() => {
                 props.setSortData && props.setSortData("low");
-                console.log("click Price High To Low ");
               }}
             >
               Price High To Low

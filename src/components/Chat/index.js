@@ -14,7 +14,6 @@ const Chat = () => {
   const userId = useSelector((state) => state.authReducer?.user?._id);
   const userData = useSelector((state) => state.authReducer.user);
   const role = useSelector((state) => state.authReducer?.user?.role);
-  console.log("🚀 ~ file: index.js:17 ~ Chat ~ role:", role)
   // const token = useSelector((state) => state.authReducer?.token);
   const token = localStorage.getItem("token")
 

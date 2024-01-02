@@ -11,7 +11,6 @@ export default function Agricultural() {
   const { categories } = useSelector((state) => state.CategoriesReducers);
 const {agricultural} = useSelector((state) => state.ServicesReducers)
 
-console.log("agricultural Services", agricultural)
 
   const dispatch = useDispatch();
   const [data, setData] = useState([]);

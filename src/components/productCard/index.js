@@ -12,14 +12,7 @@ import Popup from '../../components/popUp/popUp';
 import ProductImg from "../../assets/images/product.png";
 
 export default function ProductCard({ product }) {
-  // console.log("Prop product", product)
-
   const [productName, setProductName] = useState([product]);
-  // console.log("ProductName State", productName)
-
-  // {productName?.map((d) => {
-  //   return (console.log(d, "ddddddddddddddd"))
-  // })}
   
   const { wishlist } = useSelector((state) => state.WishlistReducers)
   // Create a new Set object.
@@ -27,30 +20,13 @@ export default function ProductCard({ product }) {
 
   // Add the product category name to the Set object.
   categoryNameSet.add(product?.category?.categoryName);
-  // console.log("categoryNameSet", categoryNameSet)
-
-  // console.log(wishlist, ">>>>>>>>>>>>>>>>>>>>>") // Only console wishlist when it's defined
-  // useEffect(() => {
-  //   if (wishlist) {
-  //     console.log(wishlist, ">>>>>>>>>>>>>>>>>>>>>") // Only console wishlist when it's defined
-  //   } else{
-  //     console.log("wishlist error")
-  //   }
-  // }, [wishlist]);
-
- 
-
-  const {user, isAuthenticated} = useSelector(
+   const {user, isAuthenticated} = useSelector(
     (state) => state.authReducer
   );
 
 
   const { allCategories } = useSelector((state) => state.CategoriesReducers);
-  // console.log("Allproducts", allCategories)
-
-  // {allCategories.map((allcat) => {
-  //   console.log(allcat._id, "{{{{{{{{{{{{{}}}}}}}}}}}}}}}}")
-  // })}
+ 
   const [popupOpenLogin, setPopupOpenLogin] = useState(false)
   const [isPresentWishlist, setisPresentWishlist] = useState(false)
   const plant = [1, 2, 3, 4, 5]
@@ -71,35 +47,12 @@ export default function ProductCard({ product }) {
     )
   }
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     dispatch(GET_USER_WISHLIST(localStorage.getItem('token')));
-   
-  //   }
-
-  //   // wishlist?.map((item) => {
-  //   //   // console.log(item?.product?._id, "/////////////////////////")
-  //   //   if (item?.product?._id === product?._id) {
-  //   //     setisPresentWishlist(true)
-  //   //     console.log('Ids are same')
-  //   //   } else {
-  //   //     setisPresentWishlist(false)
-  //   //     console.log("Ids are not equal")
-  //   //   }
-  //   // })
-  // }, [])
-
   useEffect(() => {
     if (isAuthenticated) {
       wishlist?.map((item) => {
         if (item?.product?._id === product?._id) {
           setisPresentWishlist(true)
-          console.log('Ids are same')
-        } 
-        // else {
-        //   setisPresentWishlist(false)
-        //   console.log("Ids are not equal")
-        // }
+        }
       })
     }
    
@@ -131,7 +84,6 @@ export default function ProductCard({ product }) {
           {isPresentWishlist ? (
             <FaHeart
               onClick={() => {
-                console.log("remov e");
                 setisPresentWishlist(false);
                 handleRemoveFromWishlist();
               }}

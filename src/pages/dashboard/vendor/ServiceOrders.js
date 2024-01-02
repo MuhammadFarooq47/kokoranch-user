@@ -44,7 +44,6 @@ function VendorServiceOrders({ setSidebar, sidebar }) {
     let temp = [];
     if (activeCard == "Total Orders") {
       temp = tableRowData;
-      // console.log("all");
     } else if (activeCard == "Pending Orders") {
       temp = tableRowData.filter((item) => item.status == "Pending");
     } else if (activeCard == "Orders On The Way") {
@@ -64,7 +63,6 @@ function VendorServiceOrders({ setSidebar, sidebar }) {
   //       toast.error(res.message);
   //       setLoader(false);
   //     } else {
-  //       // console.log("service orders", res.orders);
   //       setTableRowData(res.orders);
   //       let totalAmount = 0;
   //       res.orders.map((item) => {

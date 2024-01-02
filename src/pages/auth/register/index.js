@@ -52,10 +52,8 @@ export default function Register() {
       // Check if error object has error status and message properties
       if (error.status && error.message) {
         toast.error(`Signup error: ${error.status} - ${error.message}`);
-        console.log(`Signup error: ${error.status} - ${error.message}`)
       } else {
         toast.error("An error occurred during signup.");
-        console.log("An error occurred during signup.");
       }
       // console.error("Signup error", error);
     }

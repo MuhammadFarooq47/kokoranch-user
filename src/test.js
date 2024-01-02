@@ -32,8 +32,6 @@ const Chat = () => {
   const [roomsData, setRoomsData] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [messages, setMessages] = useState([]);
-  // console.log(messages, "messages messages messages");
-  // console.log(selectedRoom, "selectedRoom selectedRoom selectedRoom");
   const [totalRecords, setTotalRecords] = useState([]);
 
   const [agreementModal, setAgreementModal] = useState(false);
@@ -55,12 +53,6 @@ const Chat = () => {
       behavior: "smooth",
     });
   }, []);
-
-//   console.log(
-//     [selectedRoom?.user1?.role, selectedRoom?.user2?.role].every(
-//       (item) => item == "agent"
-//     )
-//   );
 
   async function sendMessage(msg) {
     const isEmpty = (msg) => !msg.trim().length;
@@ -212,7 +204,6 @@ const Chat = () => {
     }
     setAgreementLoader(false);
   };
-console.log(roomsData,"roomsData roomsData roomsData")
   return (
     <>
       {isMobile ? (

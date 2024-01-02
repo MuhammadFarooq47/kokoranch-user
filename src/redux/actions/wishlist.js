@@ -1,4 +1,4 @@
-import { POST, GET, PATCH } from "../../apis/requests";
+import {GET} from "../../apis/requests";
 import ActionTypes from "../constant";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -18,7 +18,6 @@ const WISHLIST_ADD_ITEM = (id) => {
         null,
         config
       );
-      console.log("WISHLIST_ADD_ITEM Data", response?.data);
       dispatch({
         type: ActionTypes.ADD_TO_WISHLIST,
         payload: response?.data,
@@ -45,7 +44,6 @@ const WISHLIST_REMOVE_ITEM = (id, type) => {
         { type: "remove" }, // You can add data here if needed
         config // Pass the config object with headers
       );
-      console.log("WISHLIST_REMOVE_ITEM Data", response?.data);
       dispatch({
         type: ActionTypes.REMOVE_FROM_WISHLIST,
         payload: response?.data,
@@ -53,7 +51,6 @@ const WISHLIST_REMOVE_ITEM = (id, type) => {
       toast.success("Item Removed From wishlist");
     } catch (error) {
       toast.error(error?.response?.data?.message);
-      // console.log(error.message);
     }
   };
 };
@@ -62,7 +59,6 @@ const GET_USER_WISHLIST = (token) => {
   return async (dispatch) => {
     try {
       const response = await GET("/users/my/favourites", token, "");
-      console.log(response?.data, "GET WISHLIST");
       dispatch({
         type: ActionTypes.GET_WISHLIST,
         payload: response?.data,

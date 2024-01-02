@@ -14,7 +14,6 @@ export default function Login() {
     email: "",
     password: "",
   });
-  // console.log(credidentials, "LoginData");
   const navigate = useNavigate();
   // IS LOADING
   const [isLoading, setLoading] = useState(false);

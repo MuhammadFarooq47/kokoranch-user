@@ -48,7 +48,6 @@ export default function Products() {
       maxPrice: price.maxPrice.toString(),
     }
     if (searchText && searchCategory) {
-      console.log("search Text")
       // dispatch(GET_SEARCH_PRODUCTS_ACTION(condition, token))
     }
   }
@@ -64,7 +63,6 @@ export default function Products() {
       category: searchCategory,
     }
     if (searchText && searchCategory) {
-      console.log("Search Text 2")
       // dispatch(GET_SEARCH_PRODUCTS_ACTION(condition, token))
     }
   }
@@ -77,7 +75,6 @@ export default function Products() {
       maxPrice: price.maxPrice,
     }
     if (searchText && searchCategory) {
-      console.log("Search Text 3")
       // dispatch(GET_SEARCH_PRODUCTS_ACTION(condition, token))
     }
   }, [searchText, searchCategory, price])

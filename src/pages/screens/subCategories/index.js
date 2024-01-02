@@ -8,7 +8,6 @@ export default function SubCategories() {
   const { subCategories, subSubCategories } = useSelector(
     (state) => state.CategoriesReducers
   );
-  console.log("subCategories data", subCategories);
 
   const { id } = useParams();
 
@@ -19,7 +18,6 @@ export default function SubCategories() {
   const startingCharacters = categoryName.slice(0, 5); // Get the startingCharacters character
   const endingCharacters = categoryName.slice(5); // Get the endingCharacters character
 
-  console.log(`starting ${startingCharacters} ending ${endingCharacters}`)
 
   const dispatch = useDispatch()
 
@@ -43,7 +41,6 @@ export default function SubCategories() {
   <h2 style={{textAlign: "center"}}>No data Found</h2>
 ) : (
   subCategories?.map((element, index) => {
-    console.log("Element", element?.images)
       return (
         <div
           className="col-md-4 col-sm-6 col-lg-3 col-xl-2 mt-5"

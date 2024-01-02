@@ -16,7 +16,6 @@ import {
 
 export default function MyProfile() {
   const [formChange, setFormChange] = useState({});
-  // console.log("Form Change", formChange.data);
 
   const {user, isAuthenticated} = useSelector((state) => state.authReducer);
 
@@ -24,8 +23,6 @@ export default function MyProfile() {
 
   // const { user } = useSelector((state) => state.authReducer);
 
-  // console.log("My profile user data", user);
-  // console.log("My profile user token", token);
 
   const dispatch = useDispatch();
 
@@ -44,7 +41,6 @@ export default function MyProfile() {
   }, []);
 
 
-  // console.log(formChange);
   return (
     <UserSideMenu>
       <div className="my-profile-wrapper">

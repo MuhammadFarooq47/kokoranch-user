@@ -16,7 +16,6 @@ function ProductShippingDetailEdit({ sidebar, setSidebar }) {
   let navigate = useNavigate();
   const location = useLocation();
 
-  // console.log(location?.state?.edit);
   const [popupOpen, setPopupOpen] = useState(false);
   const [successfulPopup, setSuccessfulPopup] = useState(false);
   const [orderStatus, setOrderStatus] = useState("completed");
@@ -37,7 +36,6 @@ function ProductShippingDetailEdit({ sidebar, setSidebar }) {
   // FORM SUBMISSION
   const onsubmit = async (e) => {
     e.preventDefault();
-    // console.log("onsubmit", data);
     if (location?.state?.edit == "create") {
       try {
         const res = await POST(`/shipping-details/`, token, {

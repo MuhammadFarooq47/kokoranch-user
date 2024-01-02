@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { WISHLIST_ADD_ITEM } from "../../../redux/actions/wishlist";
 import { addtoCart, alreadyInCart } from "../../../redux/actions/cart";
-import {GET_USER_CHECKOUT_DATA} from "../../../redux/actions/checkout";
+import { GET_USER_CHECKOUT_DATA } from "../../../redux/actions/checkout";
 import Picker from 'emoji-picker-react';
 import axios from "axios";
 
@@ -24,33 +24,29 @@ export default function Product({ isFavorite }) {
 
 
 
-  
+
   const [inputStr, setInputStr] = useState('');
   const [showPicker, setShowPicker] = useState(false);
-//  console.log("inputStrinputStr" ,inputStr)
-  const onEmojiClick = async  (event, emojiObject) => {
+  const onEmojiClick = async (event, emojiObject) => {
     await emojiObject.ready;
-    console.log("inputStrinputStr" ,emojiObject?.srcElement?.image)
     setInputStr(prevInput => prevInput + emojiObject.emoji);
     setShowPicker(false);
   };
- 
+
 
   const [popupOpenLogin, setPopupOpenLogin] = useState(false);
   const [commented, setCommented] = useState(false);
   const location = useLocation();
   const pathID =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
-  console.log("location = useLocation();", location?.state?.user?._id);
 
   const dispatch = useDispatch();
 
   const { featuredProducts } = useSelector((state) => state.ProductsReducers);
   const currentProduct = location?.state;
-  // console.log("currentProduct", currentProduct?.images)
   const [selectedImage, setSelectedImage] = useState(currentProduct?.images[0]);
   // const { checkout } = useSelector((state) => state.CheckoutReducer);
-  
+
   const handleImageChange = (e, image) => {
     setSelectedImage(image);
     const elems = document.querySelectorAll(
@@ -66,7 +62,6 @@ export default function Product({ isFavorite }) {
   const previewImage = currentProduct?.images[0];
 
   const { user, isAuthenticated } = useSelector((state) => state.authReducer);
-  console.log("const { user, isAuthenticated } = useSelector((state) => state.authReducer);", user?._id)
   const { cartItems, alreadyPresentCart } = useSelector(
     (state) => state.CartReducers
   );
@@ -75,10 +70,9 @@ export default function Product({ isFavorite }) {
   const filteredCartItems = cartItems.filter((item) => item?.buyerId === user?._id)
   // const {alreadyPresentCart} = useSelector((state) => state.CartReducers);
 
-  
+
 
   const { reviews } = useSelector((state) => state.ReviewsReducers);
-  // console.log("reviews??????????", reviews)
 
   const { id } = useParams();
 
@@ -154,9 +148,8 @@ export default function Product({ isFavorite }) {
 
   useEffect(() => {
     setReviewsProduct(featuredProducts)
-    }, [reviews, featuredProducts]);
+  }, [reviews, featuredProducts]);
 
-    // console.log(reviewsProduct, "AAAAAAAAAA")
 
   // handle image change
   // const handleImageChange = (e, image) => {
@@ -184,7 +177,6 @@ export default function Product({ isFavorite }) {
   const [popupOpen, setPopupOpen] = useState(false);
   const [successPopupOpen, setSuccessPopupOpen] = useState(false);
   const [itemQuantity, setitemQuantity] = useState(1);
-  // console.log("itemQuantity", itemQuantity);
 
   const [cart, setCart] = useState(false);
 
@@ -192,9 +184,7 @@ export default function Product({ isFavorite }) {
 
   featuredProducts.map((productData, index) => {
     if (productData?._id === id) {
-      // console.log("Current product price", productData);
       const sumOfProduct = productData?.price * itemQuantity;
-      // console.log("Test Total price", sumOfProduct);
 
       // Update dataToSend object within the loop
       productDataToSend = {
@@ -211,11 +201,9 @@ export default function Product({ isFavorite }) {
     }
   });
 
-  // console.log("data To Send", productDataToSend);
 
   useEffect(() => {
     featuredProducts?.reviews?.map((item, index) => {
-      // console.log("useEffect featuredProducts?.reviews?.map", item);
       if (item?.rating === 5) {
         setReviewsSummary((prevState) => ({
           ...prevState,
@@ -267,28 +255,27 @@ export default function Product({ isFavorite }) {
       setCart(alreadyPresentCart);
     }
   }, [id, cartItems, dispatch]);
-// message:
-//   {
-//     text:
-//     user:{
-//     _id:
-//     avatar
-//     name
-//     }
-//     }
+  // message:
+  //   {
+  //     text:
+  //     user:{
+  //     _id:
+  //     avatar
+  //     name
+  //     }
+  //     }
   // Send Message to vendor
   const [message, setMessage] = useState('')
-  console.log("Message", message)
   const sendMessage = async () => {
     try {
       const response = await axios.post('https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/chats/send-message', {
-        to: currentProduct?.user?._id, 
-        from: user?._id, 
+        to: currentProduct?.user?._id,
+        from: user?._id,
         message: {
-        text: message,
+          text: message,
           user: {
             _id: user?._id,
-            avatar:user?.photo,
+            avatar: user?.photo,
             name: `${user?.firstName} ${user?.lastName}`
           }
         }
@@ -296,7 +283,7 @@ export default function Product({ isFavorite }) {
         // from: user?._id, 
         // message: message
       }, {
-        headers : {
+        headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         }
       })
@@ -314,7 +301,7 @@ export default function Product({ isFavorite }) {
             className="model-wrapper_image"
             alt="user-icon"
           />
-          <p className="model-wrapper_text">Please Login to Leave Review!</p>
+          <p className="model-wrapper_text">Please Login First!</p>
           <Link
             to="/login"
             onClick={() => setPopupOpen(false)}
@@ -352,23 +339,22 @@ export default function Product({ isFavorite }) {
               position: "relative",
             }}
           >
-    
+
             <div className="product-wrapper_image-desc-wrapper_product-image-wrapper">
               <div className="product-wrapper_image-desc-wrapper_product-image-wrapper_product-image">
                 <img
-                 src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${selectedImage}`}
+                  src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${selectedImage}`}
                   alt="product"
                 ></img>
               </div>
               <div className="product-wrapper_image-desc-wrapper_product-image-wrapper_product-thumbs">
                 {currentProduct?.images?.map((image, index) => {
-                  // console.log("featuredProducts,,,,,,,,,", image);
                   return (
                     <img
                       key={index}
                       className="product-wrapper_image-desc-wrapper_product-image-wrapper_product-thumbs_product-thumb-image"
                       src={`https://kokoranch-development.s3.ap-south-1.amazonaws.com/${image}`}
-              onClick={(e) => handleImageChange(e, image)}
+                      onClick={(e) => handleImageChange(e, image)}
                       alt="product"
                     />
                   );
@@ -376,7 +362,6 @@ export default function Product({ isFavorite }) {
               </div>
             </div>
             {featuredProducts.map((data, index) => {
-              // console.log(data, "Price??????????");
               if (data?._id === id) {
                 return (
                   <div
@@ -447,22 +432,36 @@ export default function Product({ isFavorite }) {
                           <label>In Stock:</label>
                           <span>&nbsp;{data?.inStock}</span>
                         </div>
-                        <button
-                         disabled={alreadyPresentCart}
-                         state={productDataToSend}
-                         className="btn btn-solid btn-solid-primary-rounded py-3 px-5 mb-5"
-                         style={{ width: "15rem" }}
-                         onClick={() => {
-                           let cart_item = { ...data }; // Clone the data object to avoid modifying the original data
-                           cart_item.quantity = itemQuantity;
-                           cart_item.totalPrice = itemQuantity * data.price;
-                           cart_item.deliveryCharges = Number(data.shippingDetails.shippingAndHandling);
-                           cart_item.buyerId  = user?._id
-                           dispatch(addtoCart(cart_item));
-                         }}
-                        >
-                          {alreadyPresentCart ? "Added" : "Add to Cart"}
-                        </button>
+                        {isAuthenticated ? (
+                          <button
+                            disabled={alreadyPresentCart}
+                            state={productDataToSend}
+                            className="btn btn-solid btn-solid-primary-rounded py-3 px-5 mb-5"
+                            style={{ width: "15rem" }}
+                            onClick={() => {
+                              let cart_item = { ...data }; // Clone the data object to avoid modifying the original data
+                              cart_item.quantity = itemQuantity;
+                              cart_item.totalPrice = itemQuantity * data.price;
+                              cart_item.deliveryCharges = Number(data.shippingDetails.shippingAndHandling);
+                              cart_item.buyerId = user?._id
+                              dispatch(addtoCart(cart_item));
+                            }}
+                          >
+                            {alreadyPresentCart ? "Added" : "Add to Cart"}
+                          </button>
+                        ) : (
+                          <button
+                            disabled={alreadyPresentCart}
+                            className="btn btn-solid btn-solid-primary-rounded py-3 px-5 mb-5"
+                            style={{ width: "15rem" }}
+                            onClick={() => {
+                              setPopupOpenLogin(true);
+                            }}
+                          >
+                            {alreadyPresentCart ? "Added" : "Add to Cart"}
+                          </button>
+                        )}
+
                         {/* {isAuthenticated ? (
                           <Link
                             to="/checkout"
@@ -512,13 +511,13 @@ export default function Product({ isFavorite }) {
                                 alt="empty"
                               ></img>,
                             ]}
-                            // fullSymbol={[
-                            //   <img
-                            //     width="30"
-                            //     src={Images.Pictures.plant}
-                            //     alt="full"
-                            //   ></img>,
-                            // ]}
+                          // fullSymbol={[
+                          //   <img
+                          //     width="30"
+                          //     src={Images.Pictures.plant}
+                          //     alt="full"
+                          //   ></img>,
+                          // ]}
                           />
                         </div>
                       </div>
@@ -561,10 +560,9 @@ export default function Product({ isFavorite }) {
           </div>
           {/* shipping , ratings and reviews start */}
           {featuredProducts.map((shippingandratings, index) => {
-            // console.log(shippingandratings, "Price??????????");
             if (shippingandratings?._id === id) {
               return (
-                <div className="row product-wrapper_tabs">
+                <div className="row product-wrapper_tabs" key={index}>
                   <div className="col-12">
                     <ul className="nav nav-tabs" id="myTab" role="tablist">
                       <li className="nav-item" role="presentation">
@@ -657,8 +655,8 @@ export default function Product({ isFavorite }) {
                                   {shippingandratings?.shippingCharge == 0
                                     ? "Free shipping"
                                     : "$" +
-                                      shippingandratings?.shippingDetails
-                                        ?.shippingAndHandling}
+                                    shippingandratings?.shippingDetails
+                                      ?.shippingAndHandling}
                                 </div>
                               </div>
                             </div>
@@ -720,10 +718,6 @@ export default function Product({ isFavorite }) {
                                 </div>
                                 <div className="tab-content_ratings-reviews_inner-wrapper_average_rating_rating-number">
                                   {shippingandratings?.totalReviews?.good}
-                                  {console.log(
-                                    "shippingandratings?.totalReviews?.good",
-                                    shippingandratings?.totalReviews?.good
-                                  )}
                                 </div>
                               </div>
                               <div className="tab-content_ratings-reviews_inner-wrapper_average_rating">
@@ -870,10 +864,7 @@ export default function Product({ isFavorite }) {
                             </h3>
                             {shippingandratings?.reviews?.map(
                               (reviewsData, index) => {
-                                // console.log(
-                                //   "ReviewData <<<<<<<<<<<<<",
-                                //   reviewsData
-                                // );
+
                                 return (
                                   <div
                                     className="tab-content_ratings-reviews_customer-reviews-wrapper_review"
@@ -888,7 +879,6 @@ export default function Product({ isFavorite }) {
                                           null,
                                           Array(reviewsData?.rating)
                                         ).map((item, index) => {
-                                          // console.log("Reviews Item", item);
                                           return (
                                             <>
                                               <img
@@ -911,10 +901,7 @@ export default function Product({ isFavorite }) {
                                     </div>
                                     <p className="tab-content_ratings-reviews_customer-reviews-wrapper_review_content">
                                       {reviewsData?.review}
-                                      {/* {console.log(
-                                        reviewsData?.review,
-                                        " {shippingandratings?.reviews?.review}"
-                                      )} */}
+
                                     </p>
                                   </div>
                                 );
@@ -950,7 +937,7 @@ export default function Product({ isFavorite }) {
                                       // rows={8}
                                       name="message"
                                       placeholder="Type Message Here.."
-                                      // required
+                                    // required
                                     ></textarea>
                                   </div>
                                   <button

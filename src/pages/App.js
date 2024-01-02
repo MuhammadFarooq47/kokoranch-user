@@ -10,10 +10,6 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "react-phone-input-2/lib/style.css";
 import "../assets/styles/Sass/globals.scss";
 import "react-toastify/dist/ReactToastify.css";
-import SocketIo from "socket.io-client";
-
-// const socket = SocketIo.connect("http://192.168.100.33:3030");
-// console.log("🚀 ~ file: App.js:16 ~ socket:", socket);
 
 function App() {
   return (

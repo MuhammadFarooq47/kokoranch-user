@@ -10,17 +10,14 @@ import { GET } from "../../../apis/requests";
 export default function Trade() {
   const dispatch = useDispatch();
 //   const { trades } = useSelector((state) => state.TradesReducers);
-// console.log("trades", trades)
 
 let [traderTrades, setTraderTrades] = useState();
-console.log("Trader Trades", traderTrades)
 
 useEffect( async () => {
   try {
     const response = await GET("/trades")
     setTraderTrades(response?.data);
     // navigate(-1)
-    console.log("Response from trade get request", response?.data)
   } catch (error) {
     console.log("Error from trade get request", error)
   }
@@ -61,7 +58,6 @@ useEffect( async () => {
           </div>
           <div className="row mt-5">
             {traderTrades?.slice(0, 4).map((element, index) => {
-              console.log(element.images)
               return (
                 <div className="col-lg-6 col-md-6  col-sm-12" key={index}>
                   <TradeCard props={element} image={element?.images[0]} />

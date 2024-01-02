@@ -3,18 +3,15 @@ import Pagination from "../../../components/pagination";
 import TradeCard from "../../../components/TradeCard";
 import Images from "../../../constants/images";
 
-import { useEffect, useState } from "react";
 // import { GET_All_TRADES } from "../../../redux/actions/trades";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 export default function AgricultureServices() {
-  const dispatch = useDispatch();
   const { trades } = useSelector((state) => state.TradesReducers);
 
   // useEffect(() => {
   //   dispatch(GET_All_TRADES());
   // }, []);
 
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <div className="container mt-5">
       <div className="dark-card">

@@ -59,7 +59,6 @@ const FormControlAuth = ({
     (state) => state.CategoriesReducers
   );
   
-  // console.log(allCategories);
   // const dispatch = useDispatch()
 
   // useEffect(() => {

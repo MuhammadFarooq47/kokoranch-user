@@ -14,7 +14,6 @@ const AuthReducer = (state = initial_state, action) => {
   switch (action.type) {
     
    case ActionTypes.LOGIN:
-    console.log(action.payload.data, "sadsfdsf")
       return {
         ...state,
         isAuthenticated: true,

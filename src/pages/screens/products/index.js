@@ -22,7 +22,6 @@ export default function Products() {
   const { categories, subCategories, subSubCategories, allCategories } = useSelector(
     (state) => state.CategoriesReducers,
   )
-  console.log("categories", allCategories.length)
   const [loading, setloading] = useState(false)
   const { featuredProducts } = useSelector((state) => state.ProductsReducers)
   // SLIDER CODE
@@ -248,7 +247,6 @@ dispatch(GET_FEATURED_PRODUCTS())
 
                     <button
                       onClick={() => {
-                        console.log("testing")
                         // handleFilterProducts()
                       }}
                       className="btn btn-solid btn-solid-primary px-5"
@@ -264,7 +262,6 @@ dispatch(GET_FEATURED_PRODUCTS())
                     </h4>
                     <ul className="category-list">
                       {allCategories?.map((cat, index) => {
-                        // console.log("categories from products", cat)
                         return (
                           <li
                             className="mt-3"

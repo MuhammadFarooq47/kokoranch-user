@@ -27,7 +27,6 @@ export default function VendorRegister() {
     photo: "",
   });
 
-  console.log(`${user?.role} Data`,  user)
   // CHANGE HANDLER
   const onchange = (e) => {
     setUser({
@@ -51,7 +50,6 @@ export default function VendorRegister() {
         }
       }
     }
-    console.log("user", user.photo);
     // dispatch(REGISTER(user, setLoading, Navigate));
     dispatch(VENDOR_TRADER_REGISTER(formData || user, setLoading, Navigate));
   };

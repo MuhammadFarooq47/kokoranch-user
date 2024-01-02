@@ -6,11 +6,6 @@ const GET_All_CATEGORIES = () => {
   return async (dispatch) => {
     try {
       const response = await GET("/categories/", null, "");
-      console.log("GET_All_CATEGORIES response", response?.data);
-      //  console.log("GET_All_CATEGORIES response icon", `https://kokoranch-development.s3.ap-south-1.amazonaws.com/${response?.data[0]?.icon}`);
-      if (response.success === "fail") {
-        toast.error(response.message);
-      }
       dispatch({
         type: ActionTypes.GET_All_CATEGORIES,
         payload: response?.data,
@@ -26,11 +21,6 @@ const GET_SUB_CATEGORIES = (id) => {
   return async (dispatch) => {
     try {
       const response = await GET(`/products/category/${id}`, null, "");
-      console.log("GET_SUB_CATEGORIES response", response?.data);
-      //  console.log("GET_All_CATEGORIES response icon", `https://kokoranch-development.s3.ap-south-1.amazonaws.com/${response?.data[0]?.icon}`);
-      if (response.success === "fail") {
-        toast.error(response.message);
-      }
       dispatch({
         type: ActionTypes.GET_SUB_CATEGORIES,
         payload: response?.data,
@@ -66,7 +56,6 @@ const GET_CATEGORIES_PRODUCTS = (productId, token) => {
   return async (dispatch) => {
     try {
       const response = await GET(`/products/category/${productId}`, null, '');
-      console.log('GET_CATEGORIES_PRODUCTS response', response?.data);
       dispatch({
         type: ActionTypes.GET_CATEGORIES_PRODUCTS,
         payload: response?.data,

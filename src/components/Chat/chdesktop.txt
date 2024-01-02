@@ -31,8 +31,6 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
     data?.user1?._id == userData?._id
       ? data?.user2?.fullName
       : data?.user1?.fullName;
-  // console.log(data,"data  vdatadata data")
-
   return (
     <div
       className={`${[
@@ -43,7 +41,6 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
         setRoomsData((prev) => {
           const updatedRoomLastMessage = prev.map((item) => {
             if (item?._id == data?._id) {
-              console.log(item, "2333333333");
               return {
                 ...item,
                 user1UnreadCount: 0,

@@ -10,10 +10,8 @@ export default function OrdersLists({ setShowOrder, setType }) {
 
   const { checkout } = useSelector((state) => state.CheckoutReducer);
 
-  console.log("checkout??????????", checkout);
 
   const [stateCheckout, setStateCheckout] = useState([checkout]);
-  console.log(stateCheckout,":::::::::::::")
 
   const dispatch = useDispatch();
 
@@ -128,7 +126,6 @@ dispatch(GET_USER_CHECKOUT_DATA())
               </thead>
               <tbody>
                 {checkout.map((order, index) => {
-               console.log("order?.items[0]?.productd?.productName", order?.items[0]?.productId?.productName)
                   return (
                     <tr Key={index}>
                       <td

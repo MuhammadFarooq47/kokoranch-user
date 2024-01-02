@@ -8,7 +8,6 @@ export default function InfoDetails({ setFormChange }) {
   // USER DATA
   const { user } = useSelector((state) => state.authReducer);
 
-  console.log("My profile user data", user)
 
   const [userData, setUserData] = useState(null);
 
@@ -17,7 +16,6 @@ export default function InfoDetails({ setFormChange }) {
     const token = localStorage.getItem("token");
     try {
       const response = await GET("/users/me", token);
-      console.log("CHECK_TOKEN", response);
       // Update the state with the user data
       setUserData(response.data);
     } catch (error) {
@@ -29,7 +27,6 @@ export default function InfoDetails({ setFormChange }) {
     // Fetch user data when the component mounts
     fetchUserData();
   }, []);
-//   console.log("My profile user token", token)
 
 //   const dispatch = useDispatch()
 

@@ -16,7 +16,6 @@ function EditFeatured({ sidebar, setSidebar }) {
     week4: location?.state.data?.featuredDuration == 4 ? true : false,
   });
 
-  console.log(checkbox, "kkkkkkkkkkkkkkkk")
   const [data, setData] = useState({
     location:
       "Your post will appear on featured post section for the number of weeks you will select below",
@@ -36,7 +35,6 @@ function EditFeatured({ sidebar, setSidebar }) {
         ? "3 week"
         : "4 week";
 
-        console.log(plan, "plaaaaaaaaaaaaaaaaaaaaaaan")
 
 
         let amount;
@@ -49,7 +47,6 @@ function EditFeatured({ sidebar, setSidebar }) {
             ? "$120"
             : "$150";
     
-            console.log(amount, "plaaaaaaaaaaaaaaaaaaaaaaan")
 
     const obj = {
       plan,
@@ -61,7 +58,7 @@ function EditFeatured({ sidebar, setSidebar }) {
       state: obj,
     });
   };
-  // console.log("locationnnnnnnnnnnnnnnnnn", location?.state.data);
+
   return (
     <>
       <NavBar

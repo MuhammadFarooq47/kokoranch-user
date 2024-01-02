@@ -132,9 +132,6 @@ const PopUp = ({
                           borderRadius: "5px",
                           fontSize: "12px",
                         }}
-                        onClick={() => {
-                          console.log("press");
-                        }}
                       >
                         View Product/Service Page
                       </button>
@@ -162,7 +159,7 @@ const PopUp = ({
                       }}
                       className="ratingPopup"
                     >
-                      {ratingData.map((item) => (
+                      {ratingData.map((item, index) => (
                         <div
                           style={{
                             height: "40vh",
@@ -173,6 +170,7 @@ const PopUp = ({
                             gap: "10px",
                             marginTop: "10px",
                           }}
+                          key={index}
                         >
                           <div
                             style={{

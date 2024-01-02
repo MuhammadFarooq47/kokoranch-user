@@ -46,11 +46,11 @@ const TradesReducers = (state = initial_state, action) => {
         ...state,
         createtradeRequestMessage: action.payload,
       }
-    case ActionTypes.GET_TRADER_TRADES:
-      return {
-        ...state,
-        createtradeRequestMessage: action.payload,
-      }
+    // case ActionTypes.GET_TRADER_TRADES:
+    //   return {
+    //     ...state,
+    //     createtradeRequestMessage: action.payload,
+    //   }
     // case ActionTypes.GET_TRADE:
     //   return {
     //     ...state,

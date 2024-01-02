@@ -13,22 +13,17 @@ export default function ResetPassword() {
 
   const {user} = useSelector((state) => state.authReducer);
 
-  // console.log("user khugy", user)
   const location = useLocation();
   const forgotPasswordScreencredidentials = location?.state?.credidentials;
-  console.log("Screen A credintials", forgotPasswordScreencredidentials?.email);
   // FORM DATA
   // const [credidentials, setCredidentials] = useState({
   //   email: forgotPasswordScreencredidentials.email,
   //   otpCode:""
   // });
 
-  // console.log("Credentials ...............", credidentials)
 
   const [email, setEmail] = useState(localStorage.getItem("email"));
-  console.log("useState Email", email);
   const [otpCode, setOtpCode] = useState();
-  // console.log("use State Otp", otpCode)
 
   const navigate = useNavigate();
   // IS LOADING
@@ -43,20 +38,6 @@ export default function ResetPassword() {
   const [error, setError] = useState(null); // State to store the error message
   const [modalShow, setModalShow] = React.useState(false);
   // ...
-
-  // FORM SUBMISSION
-  // const onsubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   try {
-  //     dispatch(OTP_VERIFY(...credidentials, setLoading, navigate));
-  //   } catch (error) {
-  //     setError(error); // Set the error message if there's an error
-  //     setModalShow(true); // Show the modal
-  //     console.log("Reset Password Error", error);
-  //   }
-  // };
-
     // FORM SUBMISSION
     const onsubmit =  (e) => {
       e.preventDefault();
@@ -68,13 +49,11 @@ export default function ResetPassword() {
         if (error.message === "500 Internal Server Error") {
           // Handle the server error without navigating
           // toast.error(error.message); 
-          console.log("Testing error")
         }
         // navigate('/create-new-password', { state: { credidentials } })
       } catch (error) {
         setError(error); // Set the error message if there's an error
         setModalShow(true); // Show the modal
-        console.log("Reset Password Error", error)
       }
    
     };

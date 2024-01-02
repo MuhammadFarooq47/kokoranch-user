@@ -26,7 +26,6 @@ const GET_SERVICE = (serviceId, token) => {
   return (dispatch) => {
     return GET("/services/get-service/", token, serviceId)
       .then((response) => {
-        console.log("resp", response);
         if (response.success === false) {
           toast.error(response.message);
         } else {
@@ -46,10 +45,6 @@ const GET_AGRICULTURAL_SERVICES = () => {
   return async (dispatch) => {
     try {
       const response = await GET("/agricultural-services-categories", null, "");
-      // console.log("agricultural data", response.data)
-      if (response.success === "fail") {
-        toast.error(response.message);
-      }
       dispatch({
         type: ActionTypes.GET_AGRICULTURAL_SERVICES,
         payload: response.data,
@@ -80,7 +75,6 @@ const CREATE_SERVICE = (data, token, popup) => {
   };
 };
 const UPDATE_SERVICE = (serviceId, data, token, popup) => {
-  console.log("jkdcjkjkx");
   return (dispatch) => {
     return PUT("/services/update", token, serviceId, data, true)
       .then((response) => {
@@ -92,7 +86,6 @@ const UPDATE_SERVICE = (serviceId, data, token, popup) => {
             type: ActionTypes.CREATE_SERVICE,
             payload: response,
           });
-          console.log(response);
         }
       })
       .catch((error) => {
@@ -102,7 +95,6 @@ const UPDATE_SERVICE = (serviceId, data, token, popup) => {
 };
 
 const SAVE_SINGLE_SERVICE = (data) => {
-  console.log("save service", data);
   return (dispatch) => {
     localStorage.setItem("singleService", JSON.stringify(data));
     dispatch({
@@ -135,7 +127,7 @@ const DELETE_SERVICE_BY_ID = (serviceId, token, popup) => {
   return (dispatch) => {
     return DELETE("/services/deleteServiceById", token, serviceId)
       .then((response) => {
-        if (response.success == false) {
+        if (response.success === false) {
           toast.error(response.message);
         } else {
           toast.success(response.message);
@@ -157,10 +149,8 @@ const GET_USER_SERVICES = (sellerId, token, setData, setLoader) => {
           toast.error(response.message);
           setLoader(false);
         } else {
-          console.log(response);
           setLoader(false);
           setData(response.services);
-          // console.log("resss", response.services);
           dispatch({
             type: ActionTypes.GET_USER_SERVICE,
             payload: response,

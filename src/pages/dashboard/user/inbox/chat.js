@@ -14,7 +14,6 @@ import moment from "moment";
 
 export default function Messages(props) {
   const { recipient, filteredRoom, socketMessages, setMessages, socket } = props;
-  // console.log("🚀 ~ file: chat.js:15 ~ Messages ~ socketMessages:", socketMessages)
   console.log("🚀 ~ file: chat.js:15 ~ Messages ~ recipient:", recipient);
 
   const { user } = useSelector((state) => state.authReducer);
@@ -176,7 +175,7 @@ e.preventDefault();
                       selectedRoom?.user1?._id // user1 msg (agent or sp)
                     : item?.user?._id !== user?._id
                 ) ?  (
-                    <div>
+                    <div key={index}>
                       <li
                         className={[
                           "me"

@@ -30,35 +30,28 @@ export default function Cart() {
   // } = useSelector((state) => state.CartReducers)
 
   const { cartItems } = useSelector((state) => state.CartReducers);
-  // console.log("cartItems <<<<<<<<<<<<<<", cartItems?.buyerId);
   const {user} = useSelector((state) => state?.authReducer);
   
-  const filteredCartItems = cartItems.filter(item => item.buyerId === user._id);
+  const filteredCartItems = cartItems.filter(item => item?.buyerId === user?._id);
 
-console.log("user", user?._id)
   // Calculate the total price of all items in the cart
   const totalCartPrice = cartItems.reduce((total, item) => {
     return total + item.price * item.quantity;
   }, 0);
 
   const totalCartPriceWishList = cartItems?.product?.reduce((total, item) => {
-    console.log(item, total, ">>>>>>>");
     return total + item.price * item.quantity;
   }, 0);
 
-  console.log(totalCartPriceWishList);
 
   const [deliveryCharges, setDeliveryCharges] = useState(30);
 
-  // console.log(totalCartPrice, "????????????")
 
   let productDataToSend2 = null;
 
   {
     cartItems.map((productData, index) => {
-      // console.log("Current product data", productData?.buy);
       // const sumOfProduct = productData?.price * itemQuantity;
-      // console.log("Test Total price", sumOfProduct);
 
       // Update dataToSend object within the loop
       productDataToSend2 = {
@@ -73,13 +66,11 @@ console.log("user", user?._id)
     });
   }
 
-  console.log("product data to send object data", productDataToSend2)
 
   let productDataToSend = [];
 
   {
     cartItems.map((productData, index) => {
-      console.log("Current product data", productData?.price);
   
       // Update dataToSend object within the loop and push it to the array
       productDataToSend.push({
@@ -94,10 +85,8 @@ console.log("user", user?._id)
     });
   }
   
-  console.log("product data to send object data", productDataToSend);
 
   const [wishlistCartItems, setwishlistCartItems] = useState([cartItems]);
-  console.log("Wishlist product data", wishlistCartItems);
 
   let wishListProductPrice = null;
 
@@ -105,7 +94,6 @@ console.log("user", user?._id)
     wishlistCartItems.map((a) => {
       {
         a.map((b) => {
-          console.log("bbbbbbbbb", b);
           if (b?.product) {
             wishListProductPrice = {
               images: b?.product?.images,
@@ -113,7 +101,6 @@ console.log("user", user?._id)
               price: b?.product?.price,
               totalPrice: totalCartPrice + b?.product?.price,
             };
-            console.log("Yes product is avaialble");
           } else {
             console.log("Product is not avaialable");
           }
@@ -121,9 +108,6 @@ console.log("user", user?._id)
       }
     });
   }
-
-  console.log("wishListProductPrice", wishListProductPrice?.price);
-
 
   const dispatch = useDispatch();
 
@@ -133,7 +117,6 @@ console.log("user", user?._id)
 
   const [cartItemsState, setCartItemsState] = useState(cartItems);
 
-  // console.log(cartItemsState, "MMMMMMMMMMMMMMMMMMM")
 
   const handleQuantityChange = (itemId, newQuantity) => {
     // Implement the logic to update the quantity for the item with itemId
@@ -143,7 +126,6 @@ console.log("user", user?._id)
       }
       return item;
     });
-    console.log(newQuantity);
     setCartItemsState(updatedCartItems);
   };
 
@@ -156,7 +138,6 @@ console.log("user", user?._id)
   };
 
   const handledecreaseQuantity = (itemId) => {
-    console.log("hello", itemId);
     dispatch(decreaseQuantity(itemId));
   };
 
@@ -339,7 +320,7 @@ console.log("user", user?._id)
             }}
             alt="leaf"
           ></img>
-          <div className="container mt-5">
+          {/* <div className="container mt-5">
             <div className="row">
               <div className="col-12 text-left">
                 <h2 className="fs-2">
@@ -356,7 +337,7 @@ console.log("user", user?._id)
                 );
               })}
             </div>
-          </div>
+          </div> */}
         </section>
       </TabContainer>
    </>

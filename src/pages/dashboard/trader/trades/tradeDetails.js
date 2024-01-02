@@ -62,20 +62,16 @@ const TradeDetails = ({ setSidebar, sidebar }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
-  console.log("location??????????", location);
   const [popupOpen, setPopupOpen] = useState(false);
   const [deletePopup, setDeletePopup] = useState(false);
   const [successfulPopup, setSuccessfulPopup] = useState(false);
   const [deleteSuccessfulPopup, setDeleteSuccessfulPopup] = useState(false);
   const [data, setData] = useState(location?.state?.data);
-  console.log("data222222222222222", data);
   const [orderStatus, setOrderStatus] = useState(location?.state?.data?.status);
   const deleteProduct = async () => {
     try {
-      // console.log("id>>>>>>>>>>", data?._id);
       const res = await DELETE(`/products/${data?._id}`, token);
       setDeleteSuccessfulPopup(true);
-      // console.log("res>>>>>>>>>>>>>>", res);
       if (res.status === "success") {
         setDeleteSuccessfulPopup(true);
       }
@@ -93,7 +89,6 @@ const TradeDetails = ({ setSidebar, sidebar }) => {
       };
 
       // const formData = new FormData();
-      // console.log(data.images);
       // formData.append("name", data.name);
       // formData.append("description", data.description);
       // formData.append("category", data.category);
@@ -116,7 +111,6 @@ const TradeDetails = ({ setSidebar, sidebar }) => {
         `${data?._id}`,
         obj
       );
-      console.log(res);
       if (res.success == true) {
         setOrderStatus(res?.data?.status);
       }
@@ -130,15 +124,12 @@ const TradeDetails = ({ setSidebar, sidebar }) => {
   //   let idToSave = ''; // Initialize a variable to store the ID
 
   //   rowData.map((v, i) => {
-  //     console.log(v._id, "?????");
   //     idToSave = v._id; // Save the ID in the variable
   //   });
 
-  //   console.log('Saved ID:', idToSave);
   //   const token = localStorage.getItem("token")
   //       try {
   //     const res = await DELETE(`/products/${idToSave}`, token );
-  //     console.log("resssssssssssssssssssssssssssss", res);
   //      setDeleteProduct("");
   //   } catch (err) {
   //     console.log("errrrrrr", err);
@@ -429,7 +420,6 @@ const TradeDetails = ({ setSidebar, sidebar }) => {
             >
               {/* <Carousel className="mx-2" infinite={true} responsive={responsive}></Carousel> */}
               {data?.images?.map((item) => {
-                // console.log(item, "iiiiiiiiiiiiiiiii"); // Add this line to inspect 'item' in the console
                 return (
                   <img
                     key={item?._id}

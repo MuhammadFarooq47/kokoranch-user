@@ -14,8 +14,7 @@ import TradeCarosual from "../../../components/TradeCarosual";
 export default function Product() {
   const dispatch = useDispatch();
   const location = useLocation();
-  console.log("Location data", location?.state)
-  const [tradeDetails, setTradeDetails] = useState(location?.state);
+  const [tradeDetails] = useState(location?.state);
   const { trade, createTradeRequest } = useSelector(
     (state) => state.TradesReducers
   );
@@ -256,7 +255,7 @@ export default function Product() {
 
                               {item.tradeRequestComments.map((item1, index) => {
                                 return (
-                                  <div className="tab-content_ratings-reviews_customer-reviews-wrapper_review_replay-wrapper">
+                                  <div className="tab-content_ratings-reviews_customer-reviews-wrapper_review_replay-wrapper" key={index}>
                                     <div className="tab-content_ratings-reviews_customer-reviews-wrapper_review_replay-wrapper_inner-wrapper">
                                       <h3 className="fs-3 tab-content_ratings-reviews_customer-reviews-wrapper_review_replay-wrapper_inner-wrapper_name">
                                         {item1.traderId.firstName +

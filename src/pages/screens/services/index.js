@@ -38,15 +38,13 @@ export default function SellerItems() {
     });
   };
   const handleSortServices = (a, b) => {
-    if (sortType == "   Price Low to High") {
+    if (sortType === "   Price Low to High") {
       return a.cost > b.cost ? 1 : -1;
-    } else if (sortType == "   Price High to Low") {
+    } else if (sortType === "   Price High to Low") {
       return a.cost < b.cost ? 1 : -1;
-    } else if (sortType == "Newest First") {
-      console.log(a.createdAt);
-      console.log(b.createdAt);
+    } else if (sortType === "Newest First") {
       return new Date(b.createdAt) - new Date(a.createdAt);
-    } else if (sortType == "Oldest First") {
+    } else if (sortType === "Oldest First") {
       return new Date(a.createdAt) - new Date(b.createdAt);
     }
   };
@@ -154,7 +152,7 @@ export default function SellerItems() {
   useEffect(() => {
     dispatch(GET_All_CATEGORIES_SERVICES("service"));
     // dispatch(GET_All_SERVICES(localStorage.getItem("token")));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -309,7 +307,7 @@ export default function SellerItems() {
                             >
                               <ul>
                                 {subCategories.map((sub_cat, index) => {
-                                  if (cat?._id === sub_cat.category?._id)
+                                  if (cat?._id === sub_cat.category?._id){
                                     return (
                                       <li
                                         className="mt-3"
@@ -461,6 +459,8 @@ export default function SellerItems() {
                                                       </li>
                                                     </>
                                                   );
+                                                } else{
+                                                  return null
                                                 }
                                               }
                                             )}
@@ -469,6 +469,10 @@ export default function SellerItems() {
                                         {/* sub sub category end */}
                                       </li>
                                     );
+                                  } else{
+                                    return null
+                                  }
+                                  
                                 })}
                               </ul>
                             </div>
