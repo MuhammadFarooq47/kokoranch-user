@@ -10,6 +10,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "react-phone-input-2/lib/style.css";
 import "../assets/styles/Sass/globals.scss";
 import "react-toastify/dist/ReactToastify.css";
+// Deploying
 
 function App() {
   return (
