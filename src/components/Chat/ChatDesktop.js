@@ -19,7 +19,9 @@ import { BsEmojiSmileFill } from "react-icons/bs";
 import { FaEllipsisV } from "react-icons/fa";
 import Robot from "../../assets/images/robot.gif";
 
-export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
+export const ChatRoomBox = ({ data, state, setter, index,roomsData, setRoomsData }) => {
+  console.log("🚀 ~ file: ChatDesktop.js:23 ~ ChatRoomBox ~ data:", data)
+  console.log('rrrrrrrrrrr',roomsData);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const role = useSelector((item) => item?.authReducer?.user?.role);
@@ -67,7 +69,7 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
         //     "#383838",
       }}
     >
-      <div className={[classes.SideRoomDiv]} key={index}>
+      <div style={{position:'relative'}} className={[classes.SideRoomDiv]} key={index}>
         <div>
           <img
             src={imageUrl(chatRoomBoxPhoto)}
@@ -76,6 +78,16 @@ export const ChatRoomBox = ({ data, state, setter, index, setRoomsData }) => {
               e.target.src = fallbackUser;
             }}
           />
+          {userData?.role === "user" ? (
+          userData?._id == data?.user2?._id &&
+            data?.user2UnreadCount > 0 &&
+          <p style={{color:'white',backgroundColor:'#14a384', borderRadius:'50%', textAlign:'center',width:'20px', height:'20px', position:'absolute', right:0, bottom:3,display:'flex', alignItems:'center', justifyContent:'center'}} >{data?.user2UnreadCount}</p>
+            
+          ) : userData?._id !== data?.user1?._id &&
+          data?.user1UnreadCount > 0 &&
+        <p style={{color:'white',backgroundColor:'#14a384', borderRadius:'50%', width:'20px', height:'20px', position:'absolute', right:0, bottom:3,display:'flex', alignItems:'center', justifyContent:'center'}} >{data?.user1UnreadCount}</p>}
+
+
         </div>
         <div className={[classes.SideRoomInnerDiv]}>
           <div className={classes.nameAndMsg}>
@@ -124,6 +136,8 @@ const ChatDesktop = (props) => {
   const [message, setMessage] = useState("");
   const check = totalRecords?.length / 5;
 
+  console.log('roomsData',roomsData);
+  console.log('messages',messages);
   return (
     <div className={classes.chatPage}>
       <section className={classes.chatSection}>
@@ -147,6 +161,7 @@ const ChatDesktop = (props) => {
                   roomsData?.map((item, i) => {
                     return (
                       <ChatRoomBox
+                      roomsData={roomsData}
                         setRoomsData={setRoomsData}
                         data={item}
                         state={selectedRoom}
@@ -268,7 +283,19 @@ const ChatDesktop = (props) => {
                             </>
                           );
                         })}
-                        {totalRecords?.length > limit && (
+{/*                         
+                          <div className={classes.loadMore_btn_main}>
+                          
+                            <button
+                              className={classes.loadMore_btn}
+                              onClick={HandleLoadMoreMsg}
+                              style={{color: "#fff", position: "absolute", bottom: "100px"}}
+                            >
+                              Load more
+                            </button>
+                          </div> */}
+                        
+                        {/* {totalRecords?.length > limit && (
                           <div className={classes.loadMore_btn_main}>
                             <button
                               className={classes.loadMore_btn}
@@ -277,7 +304,7 @@ const ChatDesktop = (props) => {
                               Load more
                             </button>
                           </div>
-                        )}
+                        )} */}
                       </>
                     )}
                     {userData?.role == "vendor" || userData?.role == "trader" || userData?.role == "admin" && (

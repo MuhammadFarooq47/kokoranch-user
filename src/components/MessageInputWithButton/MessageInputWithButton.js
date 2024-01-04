@@ -36,6 +36,7 @@ export const MessageInputWithButton = ({ state, setter, onClick }) => {
       
       {/* <BsEmojiSmileFill size={20} color="#14a384" onClick={() => alert("hello")} /> */}
       <Input
+        autofocus={'true'}
         placeholder="Message..."
         value={state}
         setter={setter}
@@ -56,6 +57,7 @@ export const MessageInputWithButton = ({ state, setter, onClick }) => {
         onKeyDown={(e) =>
           ["Enter", "NumpadEnter"].includes(e.code) && onClick()
         }
+        
       />
       <div className={[classes.sendBtnDiv].join(" ")}>
         {/* <Button

@@ -696,7 +696,7 @@ export default function Navigation() {
         element={
           <Suspense fallback={<FullScreenLoader />}>
             <TraderSideBar>
-              <TraderIndox />
+              <ChatComponent />
             </TraderSideBar>
           </Suspense>
         }

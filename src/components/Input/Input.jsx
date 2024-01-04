@@ -12,6 +12,7 @@ import { numberRegEx } from "../../config/apiUrl";
  * Primary UI component for user interaction
  */
 export const Input = ({
+  autofocus,
   type,
   label,
   value,
@@ -74,6 +75,7 @@ export const Input = ({
         >
           {leftIcon && <div className={classes.leftIconBox}>{leftIcon}</div>}
           <input
+          autofocus={autofocus}
             maxLength={maxLength}
             value={value}
             onChange={(e) => {

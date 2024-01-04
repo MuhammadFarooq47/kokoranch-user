@@ -14,7 +14,7 @@ const WISHLIST_ADD_ITEM = (id) => {
 
     try {
       const response = await axios.patch(
-        `https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/products/add-or-remove-favourite/${id}`,
+        `http://192.168.100.33:3030/api/v1//products/add-or-remove-favourite/${id}`,
         null,
         config
       );
@@ -40,7 +40,7 @@ const WISHLIST_REMOVE_ITEM = (id, type) => {
     };
     try {
       const response = await axios.patch(
-        `https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/products/add-or-remove-favourite/${id}`,
+        `http://192.168.100.33:3030/api/v1//products/add-or-remove-favourite/${id}`,
         { type: "remove" }, // You can add data here if needed
         config // Pass the config object with headers
       );

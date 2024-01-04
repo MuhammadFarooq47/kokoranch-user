@@ -75,7 +75,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
     try {
 
       const response = await axios.get(
-        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/chats/rooms",
+        "http://192.168.100.33:3030/api/v1//chats/rooms",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -95,7 +95,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
       socket.emit("chatJoin", user?._id, '6566e0f517264e9165d8c850')
       socket.emit("mark-as-read", '6566e0f517264e9165d8c850', user?.role)
       const response = await axios.get(
-        `https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/chats/single-chat?room=6566e0f517264e9165d8c850`,
+        `http://192.168.100.33:3030/api/v1//chats/single-chat?room=6566e0f517264e9165d8c850`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

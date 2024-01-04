@@ -27,6 +27,7 @@ const Chat = () => {
   const socket = useRef(null);
   const [roomsData, setRoomsData] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
+  console.log("🚀 ~ file: index.js:30 ~ Chat ~ selectedRoom:", selectedRoom)
   const [messages, setMessages] = useState([]);
   const [totalRecords, setTotalRecords] = useState([]);
 
@@ -63,16 +64,18 @@ const Chat = () => {
       _id: Math.ceil(Math.random() * 10),
       createdAt: moment().format(),
     };
-    // setMessages((prev) => [data, ...messages]);
-
+    // if (selectedRoom?.user1?._id ) {
+      
+    // }
+    
     setRoomsData((prev) => {
       const updatedRoomLastMessage = prev.map((item) => {
         if (item?._id === selectedRoom?._id) {
+          setMessages((prev) => [...prev, data]);
           return { ...item, lastMessage: data, updatedAt: Date.now() };
         }
         return item;
       });
-
       return updatedRoomLastMessage;
     });
 
@@ -102,7 +105,10 @@ const Chat = () => {
         : selectedRoom?.user1?._id,
       "Sending Tooo...."
     );
-
+    
+      // Cleanup code here (e.g., disconnect the socket)
+   socket.current.off('msg');
+    
     // send a message to the server
   }
 
@@ -126,6 +132,7 @@ const Chat = () => {
 
     if (page === 1) {
       const response = await Get(apiUrl, token);
+      console.log("🚀 ~ file: index.js:135 ~ getMessages ~ response:", response?.data?.data)
       if (response !== undefined) {
         // setPage((prev) => prev + 1);
         setMessages(response?.data?.data);
@@ -165,10 +172,10 @@ const Chat = () => {
       getMessages(messages);
       socket.current.emit("mark-as-read", selectedRoom?._id,userData?.role);
       socket.current.on("msg", (message, roomId) => { 
-        if (message.user._id !== userId || selectedRoom?._id === roomId) {
+        if (message.user._id !== userId && selectedRoom?._id === roomId) {
           setMessages((prev) => [...prev, message]);
           socket.current.emit("mark-as-read", selectedRoom?._id,userData?.role);
-          console.log("ssss", message, roomId, message.user._id, userId, selectedRoom?._id, roomId )
+          console.log("ssss", message, roomId, message.user._id, userId, "....", selectedRoom?._id, roomId )
           console.log('New message received:', message);
         }
       });
