@@ -17,8 +17,9 @@ import { toast } from "react-toastify";
 import { WISHLIST_ADD_ITEM } from "../../../redux/actions/wishlist";
 import { addtoCart, alreadyInCart } from "../../../redux/actions/cart";
 import { GET_USER_CHECKOUT_DATA } from "../../../redux/actions/checkout";
-import Picker from 'emoji-picker-react';
+import Picker, { Emoji } from 'emoji-picker-react';
 import axios from "axios";
+
 
 export default function Product({ isFavorite }) {
 
@@ -27,12 +28,6 @@ export default function Product({ isFavorite }) {
 
   const [inputStr, setInputStr] = useState('');
   const [showPicker, setShowPicker] = useState(false);
-  const onEmojiClick = async (event, emojiObject) => {
-    await emojiObject.ready;
-    setInputStr(prevInput => prevInput + emojiObject.emoji);
-    setShowPicker(false);
-  };
-
 
   const [popupOpenLogin, setPopupOpenLogin] = useState(false);
   const [commented, setCommented] = useState(false);
@@ -90,6 +85,18 @@ export default function Product({ isFavorite }) {
     review: "",
   });
 
+  const onEmojiClick = async (event, emojiObject) => {
+    console.log('event',event);
+    await emojiObject.ready;
+    setInputStr(prevInput => prevInput + event.emoji);
+    console.log('inputStr', inputStr);
+    setnewReview({
+      ...newReview,
+      review:  newReview.review + event.emoji,
+    });
+  };
+
+  console.log('newReview', newReview);
   // const handleSetRatingSummary = () => {
   //   featuredProducts?.reviews?.map((item, index) => {
   //     if (item?.rating === 5) {
@@ -312,22 +319,24 @@ export default function Product({ isFavorite }) {
         </div>
       </Popup>
       {/* Emoji */}
-      {/* <div className="app">
-      <h3>Add Emoji Picker in React App - <a href="https://www.cluemediator.com" target="_blank" rel="noopener">Clue Mediator</a></h3>
-      <div className="picker-container">
-        <input
-          className="input-style"
-          value={inputStr}
-          onChange={e => setInputStr(e.target.value)} />
-        <img
-          className="emoji-icon"
-          src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
-          onClick={() => setShowPicker(val => !val)} />
-        {showPicker && <Picker
-          pickerStyle={{ width: '100%' }}
-          onEmojiClick={onEmojiClick} />}
+      <div className="app">
+        {/* <h3>Add Emoji Picker in React App - <a href="https://www.cluemediator.com" target="_blank" rel="noopener">Clue Mediator</a></h3> */}
+        <div className="picker-container">
+          <input
+            className="input-style"
+            value={inputStr}
+            onChange={e => setInputStr(e.target.value)} />
+          <img
+            className="emoji-icon"
+            src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
+            onClick={() => setShowPicker(!showPicker)} />
+          {showPicker && <Picker
+            emojiStyle="native"
+            pickerStyle={{ width: '100%' }}
+            onEmojiClick={onEmojiClick}
+          />}
+        </div>
       </div>
-    </div> */}
       {/* Emoji */}
       <div className="product-outer-wrapper">
         <img src={Images.Pictures.brownLeftLeaf} alt="left-leaf"></img>
@@ -796,16 +805,37 @@ export default function Product({ isFavorite }) {
                                     .toUpperCase()}
                                 </div>
                               </div>
+                              <div style={{position:'relative'}} className="tab-content_ratings-reviews_inner-wrapper_review_input"> 
                               <textarea
-                                value={newReview.review}
-                                onChange={(e) => {
+                                value={inputStr}
+                                onChange={e => {
+                                  setInputStr(e.target.value)
                                   setnewReview({
                                     ...newReview,
-                                    review: e.target.value,
+                                    review:  e.target.value,
                                   });
-                                }}
+                                }
+                                } 
                                 className="tab-content_ratings-reviews_inner-wrapper_review_input"
-                              ></textarea>
+                              />
+                              <div>
+                                  <img
+                                  style={{position:'absolute', right:5, bottom:5, height: 20, width: 20}}
+                                  className="emoji-icon"
+                                  src="https://cdn141.picsart.com/316496118359211.png"
+                                  onClick={() => setShowPicker(!showPicker)} 
+                                  />
+                                  {showPicker && <Picker
+                                  theme="dark"
+                                  height={400}
+                                  style={{position:'absolute', right:30, top:0, zIndex:9}}
+                                  width={300}
+                                    emojiStyle="native"
+                                    onEmojiClick={onEmojiClick}
+                                  />}
+                                </div>
+                              </div>
+                             
                               <div className="tab-content_ratings-reviews_inner-wrapper_review_customer-review-and-button-wrapper">
                                 <div className="tab-content_ratings-reviews_inner-wrapper_review_customer-review-and-button-wrapper_customer-review">
                                   <h3 className="fs-3 tab-content_ratings-reviews_inner-wrapper_review_customer-review-and-button-wrapper_customer-review_label">
@@ -840,6 +870,7 @@ export default function Product({ isFavorite }) {
                                     ]}
                                   />
                                 </div>
+                              
                                 <div className="tab-content_ratings-reviews_inner-wrapper_review_customer-review-and-button-wrapper_button-wrapper">
                                   <h4 className="h4 tab-content_ratings-reviews_inner-wrapper_review_customer-review-and-button-wrapper_button-wrapper_title">
                                     {commented ? "Your Comment Submitted" : ""}
@@ -848,8 +879,9 @@ export default function Product({ isFavorite }) {
                                     onClick={() => {
                                       handleAddReview();
                                     }}
+                                    style={{zIndex:1}}
                                     className="btn btn-solid btn-solid-primary-rounded px-5 tab-content_ratings-reviews_inner-wrapper_review_customer-review-and-button-wrapper_button-wrapper_button"
-                                    disabled={isAuthenticated ? false : true}
+                                    // disabled={isAuthenticated ? false : true}
                                   >
                                     {commented ? "Submitted" : "Submit"}
                                   </button>
