@@ -42,13 +42,21 @@ export default function Header() {
   const { cartItems } = useSelector((state) => state.CartReducers);
   const { Allproducts } = useSelector((state) => state.ProductsReducers);
   const { wishlist } = useSelector((state) => state.WishlistReducers);
+  console.log("🚀 ~ file: index.js:45 ~ Header ~ wishlist:", wishlist)
 
   const filteredCartItems = cartItems.filter(
     (item) => item?.buyerId === user?._id
   );
-  const wishlistItems = wishlist.filter(
-    (item) => item?.user?._id === user?._id
-  );
+
+  let wishlistItems;
+
+  useEffect(() => {
+    const wishlistItems = wishlist.filter(
+      (item) => item?.user?._id === user?._id
+    );
+    console.log("wishlistItems", wishlistItems)
+  }, [wishlist])
+
 
 
   const dispatch = useDispatch();
@@ -109,6 +117,8 @@ export default function Header() {
     dispatch(GET_All_CATEGORIES());
     // dispatch(GET_All_PRODUCTS());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  
   useEffect(() => {
     dispatch(getAllCartItems(localStorage.getItem("token")));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

@@ -275,7 +275,7 @@ export default function Product({ isFavorite }) {
   const [message, setMessage] = useState('')
   const sendMessage = async () => {
     try {
-      const response = await axios.post('http://192.168.100.33:3030/api/v1//chats/send-message', {
+      const response = await axios.post('https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//chats/send-message', {
         to: currentProduct?.user?._id,
         from: user?._id,
         message: {
@@ -319,8 +319,7 @@ export default function Product({ isFavorite }) {
         </div>
       </Popup>
       {/* Emoji */}
-      <div className="app">
-        {/* <h3>Add Emoji Picker in React App - <a href="https://www.cluemediator.com" target="_blank" rel="noopener">Clue Mediator</a></h3> */}
+      {/* <div className="app">
         <div className="picker-container">
           <input
             className="input-style"
@@ -336,7 +335,7 @@ export default function Product({ isFavorite }) {
             onEmojiClick={onEmojiClick}
           />}
         </div>
-      </div>
+      </div> */}
       {/* Emoji */}
       <div className="product-outer-wrapper">
         <img src={Images.Pictures.brownLeftLeaf} alt="left-leaf"></img>

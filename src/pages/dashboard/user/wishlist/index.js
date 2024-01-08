@@ -20,12 +20,14 @@ export default function MyWishlist() {
   const wishlistFilters = wishlist.filter((item) => item?.user?._id === user?.id)
 
   const [itemRemoved, setitemRemoved] = useState(false)
+  console.log("🚀 ~ file: index.js:23 ~ MyWishlist ~ itemRemoved:", itemRemoved)
   
   const handleRemoveFromWishlist = (id) => {
     dispatch(
-      WISHLIST_REMOVE_ITEM({ productId: id }, localStorage.getItem('token')),
+      WISHLIST_REMOVE_ITEM(id),
     )
   }
+
   
   useEffect(() => {
     if (isAuthenticated || user) {
@@ -89,7 +91,8 @@ export default function MyWishlist() {
                             cart_item.quantity = 1;
                             cart_item.totalPrice = element?.product?.price;
                             cart_item.deliveryCharges = Number(element?.product?.shippingDetails?.shippingAndHandling);
-                            // dispatch(addtoCart(cart_item));
+                            cart_item.buyerId = user?._id
+                            dispatch(addtoCart(cart_item));
                           }}
                         >
                           <FaPlus></FaPlus>
