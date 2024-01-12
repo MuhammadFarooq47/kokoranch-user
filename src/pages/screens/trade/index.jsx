@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 // import { GET_TRADE } from "../../../redux/actions/trades";
 import Images from "../../../constants/images";
 import Pagination from "../../../components/pagination";
-import Popup from "../../../components/popUp/popUp.js";
+import Popup from "../../../components/popUp/popUp";
 
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";

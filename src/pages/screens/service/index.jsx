@@ -9,7 +9,7 @@ import Images from "../../../constants/images";
 import Rating from "react-rating";
 import Pagination from "../../../components/pagination";
 import ServiceCardSlider from "../../../components/serviceCardSlider";
-import Popup from "../../../components/popUp/popUp.js";
+import Popup from "../../../components/popUp/popUp";
 import { RATE_SERVICE_ACTION } from "../../../redux/actions/reviews";
 import { toast } from "react-toastify";
 import { WISHLIST_ADD_ITEM } from "../../../redux/actions/wishlist";
