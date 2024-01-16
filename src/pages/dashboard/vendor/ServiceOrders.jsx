@@ -61,7 +61,6 @@ function VendorServiceOrders({ setSidebar, sidebar }) {
     try {
       setLoader(true);
       const res = await GET("/service-orders/vendor/all");
-      console.log("🚀 ~ getOrdersData ~ res:", res)
       if (res.success == false) {
         toast.error(res.message);
         setLoader(false);
