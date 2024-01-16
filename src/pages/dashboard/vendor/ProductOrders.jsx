@@ -105,8 +105,8 @@ function VendorProductOrders({ setSidebar, sidebar }) {
     }
   };
   useEffect(() => {
-    token && getOrdersData();
-  }, [token]);
+    getOrdersData();
+  }, []);
 
   useEffect(() => {
     if (sortData) {

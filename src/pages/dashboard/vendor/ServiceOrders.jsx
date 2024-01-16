@@ -11,20 +11,21 @@ import { ReactComponent as PlusIcon } from "../../../assets/images/icons/icons8-
 import NavBar from "./NavBar";
 import InfoCards from "./Components/InfoCards";
 import Table from "./Components/Table";
+import { CircularProgress, Paper } from "@mui/material";
 import FormControlAuth from "./Components/formControl";
-import TableComponent from "./Components/Table";
+import ProductOrdersTable from "./ProductOrdersTable";
 import SearchBar from "./Components/SearchBar";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { GET } from "../../../apis/requests";
-import { CircularProgress } from "@mui/material";
+import { useSelector } from "react-redux";
+
 
 function VendorServiceOrders({ setSidebar, sidebar }) {
   const { user, token } = useSelector((state) => state.authReducer);
-  const [loader, setLoader] = useState(false);
   const [tableHeadData, seTableHeadData] = useState([
     { id: "order_id", label: "Order No" },
-    // { id: "userId", label: "User Id" },
+    { id: "user_id", label: "User Id" },
+    { id: "productName", label: "productName" },
     { id: "createdAt", label: "Date" },
     { id: "totalPrice", label: "Amount Paid" },
     { id: "status", label: "Status" },
@@ -39,73 +40,75 @@ function VendorServiceOrders({ setSidebar, sidebar }) {
 
   const [rowData, setRowData] = useState(tableRowData);
   const [sortData, setSortData] = useState("");
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     let temp = [];
     if (activeCard == "Total Orders") {
       temp = tableRowData;
-    } else if (activeCard == "Pending Orders") {
-      temp = tableRowData.filter((item) => item.status == "Pending");
-    } else if (activeCard == "Orders On The Way") {
-      temp = tableRowData.filter((item) => item.status == "On the way");
-    } else if (activeCard == "Delevered Orders") {
-      temp = tableRowData.filter((item) => item.status == "Delivered");
-    } else if (activeCard == "Cancelled Orders") {
-      temp = tableRowData.filter((item) => item.status == "Cancelled");
+    } else if (activeCard == "pending") {
+      temp = tableRowData.filter((item) => item.status == "pending");
+    } else if (activeCard == "on-the-way") {
+      temp = tableRowData.filter((item) => item.status == "on-the-way");
+    } else if (activeCard == "delivered") {
+      temp = tableRowData.filter((item) => item.status == "delivered");
+    } else if (activeCard == "cancelled") {
+      temp = tableRowData.filter((item) => item.status == "cancelled");
     }
     setRowData(temp);
   }, [activeCard, tableRowData]);
-  // const getOrdersData = async () => {
-  //   try {
-  //     setLoader(true);
-  //     const res = await GET("/orders/get/service/orders/", token, user._id);
-  //     if (res.success == false) {
-  //       toast.error(res.message);
-  //       setLoader(false);
-  //     } else {
-  //       setTableRowData(res.orders);
-  //       let totalAmount = 0;
-  //       res.orders.map((item) => {
-  //         totalAmount = totalAmount + item.totalPrice;
-  //       });
-  //       let filterData = [
-  //         { topText: "Total Orders", bottomText: res.orders.length },
-  //         {
-  //           topText: "Pending Orders",
-  //           bottomText: res.orders.filter((item) => item.status == "Pending")
-  //             .length,
-  //         },
-  //         {
-  //           topText: "Orders On The Way",
-  //           bottomText: res.orders.filter((item) => item.status == "On the way")
-  //             .length,
-  //         },
-  //         {
-  //           topText: "Delevered Orders",
-  //           bottomText: res.orders.filter((item) => item.status == "Delivered")
-  //             .length,
-  //         },
-  //         {
-  //           topText: "Cancelled Orders",
-  //           bottomText: res.orders.filter((item) => item.status == "Cancelled")
-  //             .length,
-  //         },
-  //         {
-  //           topText: "Total Amount",
-  //           bottomText: "$" + totalAmount,
-  //         },
-  //       ];
-  //       setFilterCard(filterData);
-  //       setRowData(res.orders);
-  //       setLoader(false);
-  //     }
-  //   } catch (err) {
-  //     toast.error(err.message);
-  //   }
-  // };
-  // useEffect(() => {
-  //   token && getOrdersData();
-  // }, [token]);
+  const getOrdersData = async () => {
+    try {
+      setLoader(true);
+      const res = await GET("/service-orders/vendor/all");
+      console.log("🚀 ~ getOrdersData ~ res:", res)
+      if (res.success == false) {
+        toast.error(res.message);
+        setLoader(false);
+      } else {
+        setTableRowData(res?.data);
+        setLoader(false);
+        let totalAmount = 0;
+        res?.data.map((item) => {
+          totalAmount = totalAmount + item.totalPrice;
+        });
+        let filterData = [
+          { topText: "Total Orders", bottomText: res?.data.length },
+          {
+            topText: "pending",
+            bottomText: res?.data.filter((item) => item.status == "pending")
+              .length,
+          },
+          {
+            topText: "on-the-way",
+            bottomText: res?.data.filter((item) => item.status == "on-the-way")
+              .length,
+          },
+          {
+            topText: "delivered",
+            bottomText: res?.data.filter((item) => item.status == "delivered")
+              .length,
+          },
+          {
+            topText: "cancelled",
+            bottomText: res?.data.filter((item) => item.status == "cancelled")
+              .length,
+          },
+          // {
+          //   topText: "Total Amount",
+          //   bottomText: "$" + totalAmount,
+          // },
+        ];
+        setFilterCard(filterData);
+        setRowData(res?.data);
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+  useEffect(() => {
+    getOrdersData();
+  }, []);
 
   useEffect(() => {
     if (sortData) {
@@ -136,7 +139,7 @@ function VendorServiceOrders({ setSidebar, sidebar }) {
       <NavBar
         setSidebar={setSidebar}
         sidebar={sidebar}
-        title="Service Orders"
+        title="Product Orders"
       />
       {loader ? (
         <div className="d-flex justify-content-center align-items-center">
@@ -145,7 +148,7 @@ function VendorServiceOrders({ setSidebar, sidebar }) {
       ) : (
         <article className="vendor-profile-main">
           <div className="vendor-profile-main_form">
-            {tableRowData.length > 0 && (
+            {tableRowData?.length > 0 && (
               <InfoCards
                 data={filterCard}
                 activeCard={activeCard}
@@ -167,7 +170,7 @@ function VendorServiceOrders({ setSidebar, sidebar }) {
               color: "black",
             }}
           >
-            <div className=" col-md-12">
+            <div className="col-12 col-md-12">
               <div style={{ marginTop: "20px", color: "white" }}>
                 <div
                   style={{
@@ -175,6 +178,7 @@ function VendorServiceOrders({ setSidebar, sidebar }) {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     width: "95%",
+                    height: "100%",
                   }}
                 >
                   <h4 style={{ marginLeft: "20px" }}>Total Orders</h4>
@@ -182,19 +186,12 @@ function VendorServiceOrders({ setSidebar, sidebar }) {
                     <SearchBar />
                   </div>
                 </div>
-                {/* <div
-                style={{
-                  width: "95%",
-                  margin: "20px",
-                }}
-              > */}
-                <TableComponent
-                  tHeadData={tableHeadData}
-                  tRowData={rowData}
-                  edit={"serviceOrder"}
-                  activeCard={"total"}
+                <ProductOrdersTable
+                     tHeadData={tableHeadData}
+                     tRowData={rowData}
+                     edit={"serviceOrder"}
+                     activeCard={"total"}
                 />
-                {/* </div> */}
               </div>
             </div>
           </div>
