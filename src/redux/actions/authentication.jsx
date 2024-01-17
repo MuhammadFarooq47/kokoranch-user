@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { io } from "socket.io-client";
 
-const socket = io.connect("http://192.168.100.33:3030");
+const socket = io.connect("https://kokoranch-backend-45665121adb2.herokuapp.com");
 
 const LOGIN = (credentials, setLoading, navigate) => {
   return async (dispatch) => {

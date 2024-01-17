@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
 import BlankUserImg from "../assets/images/blank-user-img.png";
 // //
-export const apiUrl = "http://192.168.100.33:3030";
+export const apiUrl = "https://kokoranch-backend-45665121adb2.herokuapp.com";
+// export const apiUrl = "http://192.168.100.33:3030";
 export const socketURL = apiUrl;
 // export const imageUrl = (image) => `${apiUrl}/api/images/${image}`;
 export const imageUrl = (image) => `https://kokoranch-development.s3.ap-south-1.amazonaws.com/${image}`;

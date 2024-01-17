@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 
 let Get = async (route, accessToken, showAlert = true, additionalFn) => {
   const options = accessToken
+    // console.log("🚀 ~ Get ~ options:", options)
     ? {
         headers: {
           Accept: "application/json",
@@ -23,6 +24,7 @@ let Get = async (route, accessToken, showAlert = true, additionalFn) => {
       };
   try {
     const response = await axios.get(route, options);
+    console.log("🚀 ~ Get ~ response:", response)
     return response;
   } catch (error) {
     additionalFn && additionalFn();

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -23,8 +23,10 @@ import {MdRateReview} from "react-icons/md";
 import {SiGumtree} from "react-icons/si";
 import {IoSettingsSharp} from "react-icons/io5";
 import { io } from "socket.io-client";
+import { Get } from "../../../Axios/AxiosFunctions";
+import { BaseURL } from "../../../config/apiUrl";
 
-const socket = io.connect("http://192.168.100.33:3030");
+const socket = io.connect("https://kokoranch-backend-45665121adb2.herokuapp.com");
 
 export default function VendorSideBar({ children }) {
   const {user} = useSelector((state) => state.authReducer)
@@ -44,6 +46,8 @@ export default function VendorSideBar({ children }) {
 const [trader] = useState("Trader")
 const [popupOpenLogin, setPopupOpenLogin] = useState(false);
 const [popupOpen, setPopupOpen] = useState(false);
+const [roomsLength, setRoomsLength] = useState();
+// console.log("🚀 ~ roomsLength:", roomsLength)
 
 
   const storageToken = localStorage.getItem("token");
@@ -53,6 +57,23 @@ const [popupOpen, setPopupOpen] = useState(false);
     dispatch(LOGOUT(storageToken, navigate))
 
   }
+  const token = localStorage.getItem("token")
+
+  const getRooms = async () => {
+    // const apiUrl = BaseURL("chat/rooms");
+    const apiUrl = BaseURL("chats/rooms"
+    );
+    const response = await Get(apiUrl, token);
+    // console.log("🚀 ~ file: index.js:67 ~ Sidebar getRooms ~ response:", response?.data?.data?.length)
+    if (response !== undefined) {
+      setRoomsLength(response?.data?.data?.length);
+    }
+  };
+
+  useEffect(() => {
+    getRooms()
+  }, [])
+
   return (
     <> 
      {/* Popup start*/}
@@ -207,7 +228,7 @@ const [popupOpen, setPopupOpen] = useState(false);
                 {/* <img src={inbox} style={{ width: "8%", marginRight: "5px" }} /> */}
                 <BsChatLeft size={20} />
                 &nbsp; Inbox
-                <span className="count">3</span>
+                <span className="count"> {roomsLength} </span>
               </div>
             </NavLink>
           </h4>

@@ -94,7 +94,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
 
   useEffect(() => {
     getRooms();
-    socketRef.current = io("http://192.168.100.33:3030");
+    socketRef.current = io("https://kokoranch-backend-45665121adb2.herokuapp.com");
   
     socketRef.current.emit("join", user?._id);
   }, []);

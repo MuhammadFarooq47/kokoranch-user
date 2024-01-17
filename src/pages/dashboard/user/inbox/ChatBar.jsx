@@ -9,7 +9,7 @@ import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 import UserSideMenu from "../../../../components/userSideMenu";
 
-const socket = io.connect("http://192.168.100.33:3030");
+const socket = io.connect("https://kokoranch-backend-45665121adb2.herokuapp.com");
 
 export default function ChaBar({ setSidebar, sidebar }) {
   const [innerSidebar, setInnerSidebar] = useState(true);
@@ -92,7 +92,7 @@ export default function ChaBar({ setSidebar, sidebar }) {
 
   useEffect(() => {
     getRooms();
-    socketRef.current = io("http://192.168.100.33:3030");
+    socketRef.current = io("https://kokoranch-backend-45665121adb2.herokuapp.com");
   
    socket.emit("join", user?._id);
   }, []);

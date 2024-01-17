@@ -119,7 +119,7 @@ const Chat = () => {
     const apiUrl = BaseURL("chats/rooms"
     );
     const response = await Get(apiUrl, token);
-    console.log("🚀 ~ file: index.js:114 ~ getRooms ~ response:", response)
+    console.log("🚀 ~ file: index.js:114 ~ getRooms ~ response:", response?.data?.data?.length)
     if (response !== undefined) {
       setRoomsData(response?.data?.data);
     }
