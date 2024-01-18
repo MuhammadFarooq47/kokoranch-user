@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaRegWindowClose } from "react-icons/fa";
 import { LOGOUT } from "../../redux/actions/authentication";
@@ -7,6 +7,8 @@ import { FaSignOutAlt } from "react-icons/fa";
 import Popup from "../popUp/popUp";
 import Images from "../../constants/images";
 import { FaAngleRight } from "react-icons/fa";
+import { BaseURL } from "../../config/apiUrl";
+import { Get } from "../../Axios/AxiosFunctions";
 
 export default function UserSideMenu({ children }) {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -14,6 +16,7 @@ export default function UserSideMenu({ children }) {
   const [popupOpen, setPopupOpen] = useState(false);
 const [vendor] = useState("Vendor")
 const [trader] = useState("Trader")
+const [roomsLength, setRoomsLength] = useState();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,6 +30,23 @@ const [trader] = useState("Trader")
     dispatch(LOGOUT(storageToken, navigate))
 
   }
+
+  const token = localStorage.getItem("token")
+
+  const getRooms = async () => {
+    // const apiUrl = BaseURL("chat/rooms");
+    const apiUrl = BaseURL("chats/rooms"
+    );
+    const response = await Get(apiUrl, token);
+    // console.log("🚀 ~ file: index.js:67 ~ Sidebar getRooms ~ response:", response?.data?.data?.length)
+    if (response !== undefined) {
+      setRoomsLength(response?.data?.data?.length);
+    }
+  };
+
+  useEffect(() => {
+    getRooms()
+  }, [])
 
   return (
     <>
@@ -82,10 +102,23 @@ const [trader] = useState("Trader")
                   Address Book
                 </NavLink>
               </h4>
-              <h4 className="fs-4">
+              <h4 className="fs-4" style={{display: "flex", justifyContent: "space-between"}}>
                 <NavLink to="/inbox" className="user-link">
                   Inbox
                 </NavLink>
+                <span className="count" style={{
+                  fontSize: "10px", 
+                  backgroundColor: "#14a384", 
+                  padding: "1rem",
+                  width: "0.1rem",
+                  height: "0.1rem", 
+                  borderRadius: "50%",
+                  position: "absolute",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  left: "6rem",
+                  fontWeight: "600" }}> {roomsLength} </span>
               </h4>
             </div>
             <div>
