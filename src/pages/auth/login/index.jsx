@@ -33,7 +33,7 @@ export default function Login() {
   const onsubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-
+    console.log("credintials", credidentials)
     dispatch(LOGIN(credidentials, setLoading, navigate)).catch((error) => {
       setError(error); // Set the error message if there's an error
       setModalShow(true); // Show the modal
