@@ -1,5 +1,5 @@
 import MultiRangeSlider from 'multi-range-slider-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { FaAngleDown } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 // import {
@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import ProductCard from '../../../components/productCard'
 import Images from '../../../constants/images'
 import MainSlider from '../../../components/MainSlider'
-import Pagination from '../../../components/pagination'
+import Pagination from '../../../components/pagination/Pagination'
 import { useSelector, useDispatch } from 'react-redux'
 // import { GET_All_PRODUCTS } from '../../../redux/actions/products';
 import { GET_FEATURED_PRODUCTS } from '../../../redux/actions/products';
@@ -24,6 +24,9 @@ export default function Products() {
   )
   const [loading, setloading] = useState(false)
   const { featuredProducts } = useSelector((state) => state.ProductsReducers)
+  console.log("🚀 ~ Products ~ featuredProducts:", featuredProducts)
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
   // SLIDER CODE
   const [price, setPrice] = useState({
     minPrice: 0,
@@ -149,6 +152,14 @@ export default function Products() {
     }
   }
 
+  // For pagination
+  let PageSize = 8;
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return featuredProducts.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]);
+
   // const handleFilterProducts = () => {
   //   dispatch(
   //     GET_All_PRODUCTS(
@@ -167,7 +178,6 @@ export default function Products() {
 dispatch(GET_FEATURED_PRODUCTS())
   }, [])
 
-  const plant = [1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5]
   // useEffect(() => {
   //   dispatch(GET_All_PRODUCTS())
   // }, [])
@@ -503,13 +513,13 @@ dispatch(GET_FEATURED_PRODUCTS())
                 </div>
               </div>
               
-              {featuredProducts?.length <= 0 ? (
+              {currentTableData?.length <= 0 ? (
                <DataNotFound />
               ) : (
-                featuredProducts.map((element, index) => {
+                currentTableData.map((element, index) => {
                   return (
                     <div
-                      className="col-12 col-md-6 col-lg-3 col-sm-6"
+                      className="col-12 col-md-6 col-lg-3 col-sm-6 mt-5"
                       key={index}
                     >
                       <ProductCard
@@ -526,9 +536,15 @@ dispatch(GET_FEATURED_PRODUCTS())
 
             </div>
           </div>
-          {featuredProducts?.length > 0 ? (
+          {currentTableData?.length > 0 ? (
   <div className="col-12">
-    <Pagination />
+    <Pagination
+        className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={featuredProducts?.length}
+        pageSize={PageSize}
+        onPageChange={page => setCurrentPage(page)}
+      />
   </div>
 ) : null}
         </div>
