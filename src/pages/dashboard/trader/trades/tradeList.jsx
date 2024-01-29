@@ -54,7 +54,7 @@ export default function TradeList({
 
   useEffect( async () => {
 try {
-  const response = await axios.get("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//trades/my-trades", {
+  const response = await axios.get("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/trades/my-trades", {
     headers:{
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,

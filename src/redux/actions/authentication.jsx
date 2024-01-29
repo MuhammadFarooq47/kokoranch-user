@@ -102,7 +102,7 @@ const VENDOR_TRADER_REGISTER = (credentials, setLoading, navigate) => {
   return async (dispatch) => {
     try {
       setLoading(true);
-      const response = await axios.post("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//users/signup", credentials, null, "");
+      const response = await axios.post("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/users/signup", credentials, null, "");
       toast.success("Registration Successfull");
       setLoading(false);
       navigate("/signup-success");
@@ -136,7 +136,7 @@ const UPDATE_USER = (data) => {
       const token = localStorage.getItem("token");
 
       const response = await axios.patch(
-        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//users/updateMe",
+        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/users/updateMe",
         formData,
         {
           headers: {
@@ -175,7 +175,7 @@ const UPDATE_VENDOR = (data) => {
       const token = localStorage.getItem("token");
 
       const response = await axios.patch(
-        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//users/updateMe",
+        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/users/updateMe",
         formData,
         {
           headers: {
@@ -214,7 +214,7 @@ const UPDATE_TRADER = (formData) => {
       const token = localStorage.getItem("token");
 
       const response = await axios.patch(
-        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//users/updateMe",
+        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/users/updateMe",
         formData,
         {
           headers: {

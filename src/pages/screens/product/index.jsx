@@ -275,7 +275,7 @@ export default function Product({ isFavorite }) {
   const [message, setMessage] = useState('')
   const sendMessage = async () => {
     try {
-      const response = await axios.post('https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//chats/send-message', {
+      const response = await axios.post('https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/chats/send-message', {
         to: currentProduct?.user?._id,
         from: user?._id,
         message: {

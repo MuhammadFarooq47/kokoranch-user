@@ -6,7 +6,7 @@ import axios from "axios";
 const CREATE_TRADE_ACTION = (formdata) => {
   return async (dispatch) => {
  try {
-    const response = await axios.post("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//trades", formdata, {
+    const response = await axios.post("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/trades", formdata, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -48,7 +48,7 @@ function EditServiceDetails({ sidebar, setSidebar }) {
   useEffect(async () => {
     try {
       const response = await axios.get(
-        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//agricultural-services-categories"
+        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/agricultural-services-categories"
       );
       setServiceName(response?.data);
     } catch (error) {

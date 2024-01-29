@@ -52,7 +52,7 @@ function ProductShippingDetailEdit({ sidebar, setSidebar }) {
       }
     } else if (location?.state?.edit == "edit") {
       try {
-        const res = await axios.patch(`https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//shipping-details/${user?._id}`, data);
+        const res = await axios.patch(`https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/shipping-details/${user?._id}`, data);
         if (res.success == false) {
           toast.error(res.message);
         } else {
