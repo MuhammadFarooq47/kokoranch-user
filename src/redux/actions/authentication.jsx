@@ -81,7 +81,7 @@ const REGISTER = (credentials, setLoading, navigate) => {
   return async (dispatch) => {
     try {
       setLoading(true);
-      const response = await axios.post("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1//users/signup", credentials, null, "");
+      const response = await axios.post("https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/users/signup", credentials, null, "");
       toast.success("Registration Successfull");
       setLoading(false);
       navigate("/signup-success");
