@@ -24,7 +24,7 @@ const ProductOrderDetails = ({ setSidebar, sidebar }) => {
     formData.append("status", orderStatus);
     try {
       const res = await axios.patch(
-        `https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/product-orders/${location?.state?.data?._id}`,
+        `https://kokoranch-backend.vercel.app/api/v1/product-orders/${location?.state?.data?._id}`,
         {
          status: orderStatus
         },

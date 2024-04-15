@@ -26,7 +26,7 @@ import { io } from "socket.io-client";
 import { Get } from "../../../Axios/AxiosFunctions";
 import { BaseURL } from "../../../config/apiUrl";
 
-const socket = io.connect("https://kokoranch-backend-45665121adb2.herokuapp.com");
+const socket = io.connect("https://kokoranch-backend.vercel.app");
 
 export default function VendorSideBar({ children }) {
   const {user} = useSelector((state) => state.authReducer)

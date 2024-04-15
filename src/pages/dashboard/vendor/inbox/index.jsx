@@ -77,7 +77,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
     try {
 
       const response = await axios.get(
-        "https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/chats/rooms",
+        "https://kokoranch-backend.vercel.app/api/v1/chats/rooms",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -94,7 +94,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
 
   useEffect(() => {
     getRooms();
-    socketRef.current = io("https://kokoranch-backend-45665121adb2.herokuapp.com");
+    socketRef.current = io("https://kokoranch-backend.vercel.app");
   
     socketRef.current.emit("join", user?._id);
   }, []);
@@ -110,7 +110,7 @@ export default function MyProfile({ setSidebar, sidebar }) {
      socketRef.current.emit("chatJoin", user?._id, '6569ab8d078c201299775b5c')
      socketRef.current.emit("mark-as-read", '6569ab8d078c201299775b5c', user?.role)
       const response = await axios.get(
-        `https://kokoranch-backend-45665121adb2.herokuapp.com/api/v1/chats/single-chat?room=6569ab8d078c201299775b5c`,
+        `https://kokoranch-backend.vercel.app/api/v1/chats/single-chat?room=6569ab8d078c201299775b5c`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
